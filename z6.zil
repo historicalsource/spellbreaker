@@ -1,0 +1,63 @@
+"Z6 for
+				MAGE
+	(c) Copyright 1985 Infocom, Inc. All Rights Reserved."
+
+<COND (<GASSIGNED? ZILCH>
+       <SETG ZDEBUGGING? <>>)
+      (ELSE
+       <SETG ZDEBUGGING? T>)>
+
+<PRINC "
+*** MAGE: Interactive Fantasy ***
+">
+
+ON!-INITIAL
+OFF!-INITIAL
+
+;<REPEAT (CHR)
+	<PRINC "Debugging? (Y or N): " ,OUTCHAN>
+	<SET CHR <TYI>>
+	<COND (<MEMQ .CHR "Yy ">
+	       <PRINC " Debugging!
+" ,OUTCHAN>
+	       <RETURN <SETG ZDEBUGGING? T>>)
+	      (<MEMQ .CHR "Nn">
+	       <PRINC " No debugging!
+" ,OUTCHAN>
+	       <RETURN <SETG ZDEBUGGING? <>>>)
+	      (ELSE
+	       <PRINC " ??
+" ,OUTCHAN>)>>
+
+<DEFINE DEBUG-CODE ('X "OPTIONAL" ('Y T))
+	<COND (,ZDEBUGGING? .X)(ELSE .Y)>>
+
+<SNAME "Z6">
+
+<SET REDEFINE T>
+
+<COND (<NOT <GASSIGNED? ZILCH>>
+       <SETG WBREAKS <STRING !\" !,WBREAKS>>)>
+
+<COND (<GASSIGNED? ZILCH>
+       <ID 0>)>
+
+<CONSTANT SERIAL 0>
+
+<INSERT-FILE "MISC" T>
+<INSERT-FILE "PARSER" T>
+<INSERT-FILE "SYNTAX" T>
+<INSERT-FILE "DEBUG" T>
+<INSERT-FILE "RECORD" T>
+<INSERT-FILE "INTERRUPTS" T>
+<INSERT-FILE "VERBS" T>
+<INSERT-FILE "MAGIC" T>
+<INSERT-FILE "GLOBALS" T>
+<INSERT-FILE "GUILD" T>
+<INSERT-FILE "C1" T>
+<INSERT-FILE "C2" T>
+<INSERT-FILE "C3" T>
+<INSERT-FILE "C4" T>
+
+<PROPDEF SIZE 5>
+<PROPDEF CAPACITY 0>
