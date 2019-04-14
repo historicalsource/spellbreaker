@@ -1,0 +1,900 @@
+<OBJECT BURIN
+	(IN PLAYER)
+	(DESC "magic burin")
+<ROOM DULL-ROOM
+      (IN ROOMS)
+      (DESC "Nondescript Room")
+      (OUT PER DULL-ROOM-EXIT)
+      (SOUTH PER DULL-ROOM-EXIT)
+<OBJECT EARTH-CUBE
+	(DESC "cube")
+<ROOM EARTH-ROOM
+      (IN ROOMS)
+      (DESC "Packed Earth")
+      (NORTH PER MAGIC-BOX-EXIT)
+      (EAST TO HALL-OF-STONE)
+      (WEST TO CAVE-ENTRANCE)
+      (SOUTH TO CLIFF-MIDDLE)
+      (DOWN PER MIDAIR-EXIT)
+<ROOM HALL-OF-STONE
+      (IN ROOMS)
+      (DESC "Hall of Stone")
+      (NORTH TO SOUTH-SNAKE-ROOM)
+      (SOUTH TO RUINS-ROOM)
+<ROOM NORTH-SNAKE-ROOM
+      (IN ROOMS)
+      (DESC "North of Serpent")
+      (SOUTH PER SNAKE-ROOM-EXIT)
+      (NORTH TO TEMPLE-ROOM)
+      (EAST PER SNAKE-ROOM-EXIT)
+      (WEST PER SNAKE-ROOM-EXIT)
+<ROOM SOUTH-SNAKE-ROOM
+      (IN ROOMS)
+      (DESC "Smooth Room")
+      (NORTH PER SNAKE-ROOM-EXIT)
+      (SOUTH TO HALL-OF-STONE)
+      (EAST PER SNAKE-ROOM-EXIT)
+      (WEST PER SNAKE-ROOM-EXIT)
+<OBJECT SNAKE
+	(IN LOCAL-GLOBALS)
+	(DESC "serpent")
+<ROOM TEMPLE-ROOM
+      (IN ROOMS)
+      (DESC "Temple")
+      (SOUTH TO NORTH-SNAKE-ROOM)
+<OBJECT IDOL
+	(IN TEMPLE-ROOM)
+	(DESC "rodent idol")
+<OBJECT TEETH
+	(IN IDOL)
+	(DESC "fangs")
+<OBJECT MOUTH
+	(IN IDOL)
+	(DESC "mouth")
+<OBJECT OPAL
+	(IN IDOL)
+	(DESC "opal eye")
+<OBJECT OPAL-SHARD
+	(DESC "opal shard")
+<OBJECT ZIPPER
+	(IN RUINS-ROOM)
+	(DESC "zipper")
+<ROOM RUINS-ROOM
+      (IN ROOMS)
+      (DESC "Ruins Room")
+      (NORTH TO HALL-OF-STONE)
+      (SOUTH "The ruins end here.")
+      (DOWN TO RUINED-PIPE IF SMALL-FLAG)
+<OBJECT RUINS-CHANNEL
+	(IN RUINS-ROOM)
+	(DESC "channel")
+<OBJECT RUINS-INFLOW
+	(IN RUINS-ROOM)
+	(DESC "inflow pipe")
+<OBJECT RUINS-OUTFLOW
+	(IN RUINS-ROOM)
+	(DESC "outflow pipe")
+<ROOM CLIFF-TOP
+      (IN ROOMS)
+      (DESC "Cliff Top")
+      (DOWN TO CLIFF-MIDDLE)
+      (UP PER CLIFF-TOP-EXIT) ;"BOULDER-1"
+<ROOM BOULDER-1
+      (IN ROOMS)
+      (DESC "Boulder")
+      (UP TO BOULDER-2)
+      (DOWN TO CLIFF-TOP)
+<ROOM BOULDER-2
+      (IN ROOMS)
+      (DESC "Boulder")
+      (UP TO BOULDER-3)
+      (DOWN TO BOULDER-1)
+<ROOM BOULDER-3
+      (IN ROOMS)
+      (DESC "Boulder")
+      (UP TO MOUNTAIN-TOP)
+      (DOWN TO BOULDER-2)
+<ROOM MOUNTAIN-TOP
+      (IN ROOMS)
+      (DESC "Mountain Top")
+      (IN PER HUT-ROOM-EXIT)
+      (WEST PER HUT-ROOM-EXIT)
+      (DOWN PER CLIFF-TOP-EXIT ;CLIFF-TOP)
+<ROOM HUT-ROOM
+      (IN ROOMS)
+      (DESC "Stone Hut")
+      (OUT PER HUT-ROOM-EXIT ;MOUNTAIN-TOP)
+      (EAST PER HUT-ROOM-EXIT ;MOUNTAIN-TOP)
+<OBJECT HUT
+	(IN LOCAL-GLOBALS)
+	(DESC "stone hut")
+<OBJECT HERMIT
+	(IN HUT-ROOM)
+	(DESC "hermit")
+<OBJECT GLOBAL-CLIFF
+	(IN LOCAL-GLOBALS)
+	(DESC "cliff")
+<OBJECT GLOBAL-ROCKS
+	(IN LOCAL-GLOBALS)
+	(DESC "rock")
+<ROOM CLIFF-MIDDLE
+      (IN ROOMS)
+      (DESC "Cliff Middle")
+      (UP TO CLIFF-TOP)
+      (DOWN TO CLIFF-BOTTOM)
+<ROOM CLIFF-BOTTOM
+      (IN ROOMS)
+      (DESC "Cliff Bottom")
+      (UP TO CLIFF-MIDDLE)
+      (DOWN "You're at the bottom already.")
+      (WEST TO CAVE-ENTRANCE)
+      (EAST "There's no path that way.")
+      (SOUTH "There's no path that way.")
+<OBJECT GLOBAL-CAVE
+	(IN LOCAL-GLOBALS)
+	(DESC "cave")
+<ROOM CAVE-ENTRANCE
+      (IN ROOMS)
+      (DESC "Cave Entrance")
+      (EAST TO CLIFF-BOTTOM)
+      (IN TO OGRE-CAVE)
+      (NORTH TO OGRE-CAVE)
+      (UP "There's no path that way.")
+<ROOM OGRE-CAVE
+      (IN ROOMS)
+      (DESC "Cave")
+      (OUT TO CAVE-ENTRANCE)
+      (SOUTH TO CAVE-ENTRANCE)
+      (DOWN PER OGRE-BEDROOM-EXIT)
+<ROOM OGRE-BEDROOM
+      (IN ROOMS)
+      (DESC "Ogre Lair")
+      (UP TO OGRE-CAVE)
+      (OUT TO OGRE-CAVE)
+<OBJECT MAGIC-BOX
+	(IN OGRE-BEDROOM)
+	(DESC "gold box")
+<OBJECT OGRE
+	(IN OGRE-CAVE)
+	(DESC "ogre")
+;<OBJECT CLUB
+	(IN OGRE)
+	(DESC "club")
+<OBJECT WATER-CUBE
+	(IN MAGIC-BOX)
+	(DESC "cube")
+<ROOM WATER-ROOM
+      (IN ROOMS)
+      (DESC "Water Room")
+      (NORTH TO OUBLIETTE)
+      (EAST PER MAGIC-BOX-EXIT)
+      (SOUTH TO OCEAN-ROOM)
+<ROOM OCEAN-ROOM
+      (IN ROOMS)
+      (DESC "Mid-Ocean")
+<ROOM LOST-IN-OCEAN
+      (IN ROOMS)
+      (DESC "Open Ocean")
+<ROOM OCEAN-FLOOR
+      (IN ROOMS)
+      (DESC "Ocean Floor")
+      (UP TO OCEAN-ROOM)
+<OBJECT GROUPER-NEST
+	(IN OCEAN-FLOOR)
+	(DESC "grouper nest")
+<OBJECT BOTTLE
+	(IN OCEAN-ROOM)
+	(DESC "bottle")
+<OBJECT GROUPER
+	(IN OCEAN-ROOM)
+	(DESC "grouper")
+<ROOM OUBLIETTE
+      (IN ROOMS)
+      (DESC "Oubliette")
+      (DOWN PER OUBLIETTE-DOWN-EXIT)
+      (UP PER OUBLIETTE-UP-EXIT) ;"PRISON"
+<OBJECT ICEBERG
+	(DESC "ice floe")
+<OBJECT INFLOW
+	(IN OUBLIETTE)
+	(DESC "inflow pipe")
+<OBJECT OUTFLOW
+	(IN OUBLIETTE)
+	(DESC "outflow pipe")
+<ROOM IN-CHANNEL
+      (IN ROOMS)
+      (DESC "In Channel")
+      (UP TO OUBLIETTE)
+      (WEST TO IN-PIPE)
+      (EAST "The current is too strong." ;IN-PIPE-2)
+<OBJECT WATER-PIPE
+	(IN LOCAL-GLOBALS)
+	(DESC "pipe")
+<OBJECT OUBLIETTE-CHANNEL
+	(IN OUBLIETTE)
+	(DESC "channel")
+<ROOM IN-PIPE
+      (IN ROOMS)
+      (DESC "In Pipe")
+      (EAST "The current is too strong." ;IN-CHANNEL)
+      (WEST TO IN-PIPE-2)
+<ROOM IN-PIPE-2
+      (IN ROOMS)
+      (DESC "In Pipe")
+      (EAST "The current is too strong." ;IN-PIPE)
+      (WEST TO RUINED-PIPE)
+<OBJECT CHUNK
+	(IN IN-PIPE-2)
+	(DESC "crack")
+<ROOM RUINED-PIPE
+      (IN ROOMS)
+      (DESC "Ruined Pipe")
+      (EAST "The current is too strong." ;IN-PIPE-2)
+      (WEST TO IN-SEWER)
+      (UP TO RUINS-ROOM)
+      (OUT TO RUINS-ROOM)
+<ROOM IN-SEWER
+      (IN ROOMS)
+      (DESC "In Pipe")
+      (EAST "The current is too strong." ;RUINED-PIPE)
+<ROOM PRISON
+      (IN ROOMS)
+      (DESC "Dungeon")
+      (DOWN PER PRISON-DOWN-EXIT ;OUBLIETTE)
+      (UP TO GUARD-TOWER)
+      (EAST TO CELL-HALL-EAST)
+<OBJECT TRAP-DOOR
+	(IN LOCAL-GLOBALS)
+	(DESC "trap door")
+<ROOM CELL-HALL-EAST
+      (IN ROOMS)
+      (DESC "Dungeon East End")
+      (WEST TO PRISON)
+      (NORTH TO CELL-EAST)
+<ROOM CELL-EAST
+      (IN ROOMS)
+      (DESC "Dungeon Cell")
+      (SOUTH TO CELL-HALL-EAST)
+<OBJECT CABINET
+	(IN CELL-EAST)
+	(DESC "massive cabinet")
+<OBJECT PAST-CABINET
+	(IN PAST-CELL-EAST)
+	(DESC "massive cabinet")
+<OBJECT KEY
+	(IN BELBOZ)
+	(DESC "wrought iron key")
+<OBJECT DEAD-BOOK
+	(IN CABINET)
+	(DESC "moldy book")
+<ROOM GUARD-TOWER
+      (IN ROOMS)
+      (DESC "Guard Tower")
+      (DOWN TO PRISON)
+      (UP "You'll need to flap your wings harder than that.")
+<OBJECT ROC
+	(DESC "roc")
+<ROOM ROC-NEST
+      (IN ROOMS)
+      (DESC "In Roc Nest")
+      (OUT "The nest is perched on a pinnacle of rock. It's a long way down.")
+<OBJECT EGG
+	(IN ROC-NEST)
+	(DESC "roc egg")
+<OBJECT BABY-ROC
+	(DESC "roc chick")
+<OBJECT AIR-CUBE
+	(IN MOUTH)
+	(DESC "cube")
+<ROOM AIR-ROOM
+      (IN ROOMS)
+      (DESC "Air Room")
+      (NORTH TO GLACIER-ROOM)
+      (WEST TO BAZAAR)
+      (SOUTH PER MIDAIR-EXIT) ;"EITHER WARNING OR MIDAIR"
+      (DOWN PER MAGIC-BOX-EXIT)
+<ROOM GLACIER-ROOM
+      (IN ROOMS)
+      (DESC "Glacier")
+<ROOM EMPORIUM
+      (IN ROOMS)
+      (DESC "Emporium")
+      (WEST TO BAZAAR IF EMPORIUM-DOOR IS OPEN)
+      (OUT TO BAZAAR IF EMPORIUM-DOOR IS OPEN)
+<OBJECT EMPORIUM-DOOR
+	(IN LOCAL-GLOBALS)
+	(DESC "shop door")
+<OBJECT ZORKMID
+	(IN MOUNTAIN-TOP)
+	(DESC "gold coin")
+<OBJECT MERCHANT
+	(IN EMPORIUM)
+	(DESC "merchant")
+<ROOM BAZAAR
+      (IN ROOMS)
+      (DESC "Bazaar")
+      (EAST PER EMPORIUM-EXIT)
+      (IN PER EMPORIUM-EXIT)
+<OBJECT RANDOM-CARPET
+	(DESC "scruffy red carpet")
+<OBJECT MAGIC-CARPET
+	(DESC "beautiful blue carpet")
+<OBJECT CARPET-LABEL
+	(IN MAGIC-CARPET)
+	(DESC "label")
+<ROOM MIDAIR
+      (IN ROOMS)
+      (DESC "Midair")
+<ROOM LOST-IN-CLOUDS
+      (IN ROOMS)
+      (DESC "In Thick Clouds")
+<ROOM LOST-ON-LAND
+      (IN ROOMS)
+      (DESC "Wilderness")
+<OBJECT FIRE-CUBE
+	(IN PILLAR-ROOM)
+	(DESC "cube")
+<ROOM FIRE-ROOM
+      (IN ROOMS)
+      (DESC "Fire Room")
+      (SOUTH TO CLIFF-TOP)
+      (NORTH TO VOLCANO-ROOM)
+      (EAST PER MAGIC-BOX-EXIT)
+<ROOM VOLCANO-ROOM
+      (IN ROOMS)
+      (DESC "Volcano")
+<ROOM VOLCANO-BASE
+      (IN ROOMS)
+      (DESC "Volcano Base")
+<OBJECT LAVA-ROCK
+	(DESC "lava fragment")
+<ROOM OUTCROPPING-ROOM
+      (IN ROOMS)
+      (DESC "Outcropping")
+<OBJECT OUTCROPPING
+	(IN LOCAL-GLOBALS)
+	(DESC "outcropping")
+<OBJECT DARK-CUBE
+	(IN OTHER-ROCK)
+	(DESC "cube")
+<ROOM DARK-ROOM
+      (IN ROOMS)
+      (DESC "Dark Room")
+      (DOWN TO DARK-CAVE)
+      (UP PER MAGIC-BOX-EXIT)
+<ROOM DARK-CAVE
+      (IN ROOMS)
+      (DESC "Dark Cave")
+      (DOWN TO GRUE-CAVE)
+<ROOM GRUE-CAVE
+      (IN ROOMS)
+      (DESC "Grue Cave")
+      (UP TO DARK-CAVE)
+      (IN TO LIGHT-POOL)
+      (DOWN TO LIGHT-POOL)
+<ROOM LIGHT-POOL
+      (IN ROOMS)
+      (DESC "Light Pool")
+      (OUT TO GRUE-CAVE)
+      (UP TO GRUE-CAVE)
+<ROOM PILLAR-ROOM
+      (IN ROOMS)
+      (DESC "On Pillar")
+      (DOWN TO LIGHT-POOL)
+<OBJECT PILLAR
+	(IN LOCAL-GLOBALS)
+	(DESC "pillar")
+<OBJECT MIND-CUBE
+	(IN MAZE-1)
+	(DESC "cube")
+<ROOM MIND-ROOM
+      (IN ROOMS)
+      (DESC "No Place")
+      (EAST PER SCALES-ROOM-EXIT)
+      (SOUTH PER PLAIN-ROOM-EXIT)
+      (WEST PER MIND-BOX-EXIT)
+<ROOM INNER-VAULT
+      (IN ROOMS)
+      (DESC "Inner Vault")
+      (OUT TO SCALES-ROOM IF VAULT-DOOR IS OPEN)
+      (NORTH TO SCALES-ROOM IF VAULT-DOOR IS OPEN)
+<OBJECT VAULT-DOOR
+	(IN LOCAL-GLOBALS)
+	(DESC "vault door")
+<ROOM SCALES-ROOM
+      (IN ROOMS)
+      (DESC "Outer Vault")
+      (OUT PER IRON-DOOR-EXIT)
+      (NORTH PER IRON-DOOR-EXIT)
+      (SOUTH TO INNER-VAULT IF VAULT-DOOR IS OPEN)
+<OBJECT IRON-DOOR
+	(IN LOCAL-GLOBALS)
+	(DESC "iron door")
+<OBJECT TREASURE
+	(IN INNER-VAULT)
+	(DESC "treasure")
+<OBJECT JUNK
+	(DESC "pile of junk")
+<OBJECT ALARM-FAIRY
+	(DESC "alarm fairy")
+<OBJECT PILE-1
+	(IN SCALES-ROOM)
+	(DESC "first pile")
+<OBJECT PILE-2
+	(IN SCALES-ROOM)
+	(DESC "second pile")
+<OBJECT CUBE-1
+	(IN PILE-1)
+	(DESC "cube")
+<OBJECT CUBE-2
+	(IN PILE-1)
+	(DESC "cube")
+<OBJECT CUBE-3
+	(IN PILE-1)
+	(DESC "cube")
+<OBJECT CUBE-4
+	(IN PILE-1)
+	(DESC "cube")
+<OBJECT CUBE-5
+	(IN PILE-1)
+	(DESC "cube")
+<OBJECT CUBE-6
+	(IN PILE-1)
+	(DESC "cube")
+<OBJECT CUBE-7
+	(IN PILE-2)
+	(DESC "cube")
+<OBJECT CUBE-8
+	(IN PILE-2)
+	(DESC "cube")
+<OBJECT CUBE-9
+	(IN PILE-2)
+	(DESC "cube")
+<OBJECT CUBE-10
+	(IN PILE-2)
+	(DESC "cube")
+<OBJECT CUBE-11
+	(IN PILE-2)
+	(DESC "cube")
+<ROOM PLAIN-ROOM
+      (IN ROOMS)
+      (DESC "Plain")
+<OBJECT LINES
+	(IN LOCAL-GLOBALS)
+	(DESC "lines")
+<OBJECT ROCK
+	(IN PLAIN-ROOM)
+	(DESC "green eyed rock")
+<OBJECT OTHER-ROCK
+	(IN PLAIN-ROOM)
+	(DESC "brown eyed rock")
+<OBJECT LIGHT-CUBE
+	(IN GROUPER-NEST)
+	(DESC "cube")
+<ROOM LIGHT-ROOM
+      (IN ROOMS)
+      (DESC "Light Room")
+      (SOUTH PER MAGIC-BOX-EXIT)
+      (WEST TO VOLCANO-BASE)
+<OBJECT LIFE-CUBE
+	(IN HUT-ROOM)
+	(DESC "cube")
+<ROOM LIFE-ROOM
+      (IN ROOMS)
+      (DESC "Soft Room")
+      (EAST PER MAGIC-BOX-EXIT)
+      (SOUTH TO MEADOW-ROOM)
+<ROOM MEADOW-ROOM
+      (IN ROOMS)
+      (DESC "Meadow")
+<OBJECT SHEARS
+	(IN MEADOW-ROOM)
+	(DESC "pair of pruning shears")
+<OBJECT WEED
+	(IN MEADOW-ROOM)
+	(DESC "weed")
+<OBJECT DEATH-CUBE
+	(IN PRISON)
+	(DESC "cube")
+<ROOM DEATH-ROOM
+      (IN ROOMS)
+      (DESC "Boneyard")
+      (OUT TO BELWIT-SQUARE)
+      (NORTH TO BELWIT-SQUARE)
+      (WEST PER MAGIC-BOX-EXIT)
+<OBJECT CHANGE-CUBE
+	(IN CHUNK)
+	(DESC "cube")
+<ROOM CHANGE-ROOM
+      (IN ROOMS)
+      (DESC "Changing Room")
+      (NORTH TO BARE-ROOM)
+      (WEST TO MAZE-ANTEROOM)
+      (EAST PER MAGIC-BOX-EXIT)
+<ROOM BARE-ROOM
+      (IN ROOMS)
+      (DESC "Bare Room")
+<ROOM MAZE-ANTEROOM
+      (IN ROOMS)
+      (DESC "Carving Room")
+      (NORTH TO MAZE-9 IF MAZE-EXIT-FLAG)
+<OBJECT COMPASS-CARVING
+	(IN MAZE-ANTEROOM)
+	(DESC "carving")
+<OBJECT COMPASS-ROSE
+	(IN BARE-ROOM)
+	(DESC "compass rose")
+<OBJECT NORTH-RUNE
+	(IN LOCAL-GLOBALS)
+	(DESC "north rune")
+<OBJECT EAST-RUNE
+	(IN LOCAL-GLOBALS)
+	(DESC "east rune")
+<OBJECT WEST-RUNE
+	(IN LOCAL-GLOBALS)
+	(DESC "west rune")
+<OBJECT SOUTH-RUNE
+	(IN LOCAL-GLOBALS)
+	(DESC "south rune")
+<OBJECT NE-RUNE
+	(IN LOCAL-GLOBALS)
+	(DESC "northeast rune")
+<OBJECT NW-RUNE
+	(IN LOCAL-GLOBALS)
+	(DESC "northwest rune")
+<OBJECT SE-RUNE
+	(IN LOCAL-GLOBALS)
+	(DESC "southeast rune")
+<OBJECT SW-RUNE
+	(IN LOCAL-GLOBALS)
+	(DESC "southwest rune")
+<ROOM MAZE-1
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (SOUTH TO MAZE-4)
+      (SE TO MAZE-5)
+      (EAST TO MAZE-2)
+<OBJECT OCTAGONAL-HOLE
+	(IN MAZE-2)
+	(DESC "octagonal hole")
+<OBJECT MAZE-2-DOOR
+	(IN MAZE-2)
+	(DESC "alabaster plug")
+<ROOM MAZE-2
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (WEST TO MAZE-1 IF OCTAGONAL-HOLE IS OPEN)
+      (SW TO MAZE-4)
+      (SOUTH TO MAZE-5)
+      (SE TO MAZE-6)
+      (EAST TO MAZE-3)
+<ROOM MAZE-3
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (WEST TO MAZE-2)
+      (SW TO MAZE-5)
+      (SOUTH TO MAZE-6)
+<ROOM MAZE-4
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (NORTH TO MAZE-1)
+      (NE TO MAZE-2)
+      (EAST TO MAZE-5)
+      (SE TO MAZE-8)
+      (SOUTH TO MAZE-7)
+<ROOM MAZE-5
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (NORTH TO MAZE-2)
+      (EAST TO MAZE-6)
+      (SOUTH TO MAZE-8)
+      (WEST TO MAZE-4)
+<ROOM MAZE-6
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (NORTH TO MAZE-3)
+      (SOUTH TO MAZE-9)
+      (SW TO MAZE-8)
+      (WEST TO MAZE-5)
+      (NW TO MAZE-2)
+<ROOM MAZE-7
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (NORTH TO MAZE-4)
+      (NE TO MAZE-5)
+      (EAST TO MAZE-8)
+<ROOM MAZE-8
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (WEST TO MAZE-7)
+      (NW TO MAZE-4)
+      (NORTH TO MAZE-5)
+      (NE TO MAZE-6)
+      (EAST TO MAZE-9)
+<ROOM MAZE-9
+      (IN ROOMS)
+      (DESC "Octagonal Room")
+      (WEST TO MAZE-8)
+      (NW TO MAZE-5)
+      (NORTH TO MAZE-6)
+      (SOUTH TO MAZE-ANTEROOM)
+<OBJECT MAGIC-CUBE
+	(IN OUTCROPPING-ROOM)
+	(DESC "cube")
+<ROOM MAGIC-ROOM
+      (IN ROOMS)
+      (DESC "Magic Room")
+      (NORTH TO MEADOW-ROOM)
+      (EAST PER MAGIC-DOOR-EXIT)
+      (SOUTH PER MAGIC-BOX-EXIT)
+<OBJECT TIME-CUBE
+	(DESC "cube")
+<ROOM TIME-ROOM
+      (IN ROOMS)
+      (DESC "Sand Room")
+      (UP TO PAST-RUINS-ROOM)
+      (DOWN TO PAST-CELL-EAST)
+<ROOM PAST-RUINS-ROOM
+      (IN ROOMS)
+      (DESC "Ruins Room")
+      (NORTH "The water is too deep and cold.")
+      (SOUTH "The water is too deep and cold.")
+<OBJECT SACK
+	(IN PAST-RUINS-ROOM)
+	(DESC "sack")
+<ROOM PAST-CELL-EAST
+      (IN ROOMS)
+      (DESC "Dungeon Cell")
+      (SOUTH PER PAST-CELL-EAST-EXIT)
+<OBJECT CELL-DOOR
+	(IN LOCAL-GLOBALS)
+	(DESC "cell door")
+<OBJECT CONNECTIVITY-CUBE
+	(IN ROC-NEST)
+	(DESC "cube")
+<ROOM CONNECTIVITY-ROOM
+      (IN ROOMS)
+      (DESC "String Room")
+      (EAST PER MAGIC-BOX-EXIT)
+      (SOUTH TO RETREAT)
+<OBJECT QWORD
+	(IN GLOBAL-OBJECTS)
+	(DESC "handwritten word")
+<OBJECT GLOBAL-OBJECTS
+<OBJECT LOCAL-GLOBALS
+	(IN GLOBAL-OBJECTS)
+<OBJECT ROOMS
+	(IN TO ROOMS)>
+<OBJECT INTNUM
+	(IN GLOBAL-OBJECTS)
+	(DESC "number")
+<OBJECT PSEUDO-OBJECT
+	(IN GLOBAL-OBJECTS)
+	(DESC "pseudo")
+<OBJECT IT
+	(IN GLOBAL-OBJECTS)
+	(DESC "it")
+<OBJECT NOT-HERE-OBJECT
+	(DESC "it")
+<OBJECT LIGHT
+	(IN GLOBAL-OBJECTS)
+	(DESC "light")
+<OBJECT GLOBAL-HOLE
+	(IN LOCAL-GLOBALS)
+	(DESC "hole")
+<OBJECT CEILING
+	(IN GLOBAL-OBJECTS)
+	(DESC "ceiling")
+<OBJECT ICE
+	(IN GLOBAL-OBJECTS)
+	(DESC "ice")
+<OBJECT AIR
+	(IN GLOBAL-OBJECTS)
+	(DESC "air")
+<OBJECT HANDS
+	(IN GLOBAL-OBJECTS)
+	(DESC "your hand")
+<OBJECT HEAD
+	(IN GLOBAL-OBJECTS)
+	(DESC "your head")
+<OBJECT EYES
+	(IN GLOBAL-OBJECTS)
+	(DESC "your eyes")
+<OBJECT PLAYER
+	(IN COUNCIL-CHAMBER)
+	(DESC "it")
+<OBJECT ME
+	(IN GLOBAL-OBJECTS)
+	(DESC "yourself")
+<OBJECT GLOBAL-ROOM
+	(IN GLOBAL-OBJECTS)
+	(DESC "room")
+<OBJECT NORTH-WALL
+	(IN GLOBAL-OBJECTS)
+	(DESC "north wall")
+<OBJECT EAST-WALL
+	(IN GLOBAL-OBJECTS)
+	(DESC "east wall")
+<OBJECT WEST-WALL
+	(IN GLOBAL-OBJECTS)
+	(DESC "west wall")
+<OBJECT SOUTH-WALL
+	(IN GLOBAL-OBJECTS)
+	(DESC "south wall")
+<OBJECT NE-WALL
+	(IN GLOBAL-OBJECTS)
+	(DESC "northeast wall")
+<OBJECT NW-WALL
+	(IN GLOBAL-OBJECTS)
+	(DESC "northwest wall")
+<OBJECT SE-WALL
+	(IN GLOBAL-OBJECTS)
+	(DESC "southeast wall")
+<OBJECT SW-WALL
+	(IN GLOBAL-OBJECTS)
+	(DESC "southwest wall")
+<OBJECT DIRT
+	(IN GLOBAL-OBJECTS)
+	(DESC "dirt")
+<OBJECT GROUND
+	(IN GLOBAL-OBJECTS)
+	(DESC "ground")
+<OBJECT CORRIDOR
+	(IN GLOBAL-OBJECTS)
+	(DESC "passage")
+<OBJECT WALLS
+	(IN GLOBAL-OBJECTS)
+	(DESC "wall")
+<OBJECT GLOBAL-GRUE
+	(IN GLOBAL-OBJECTS)
+	(DESC "lurking grue")
+<OBJECT GRUE
+	(IN LOCAL-GLOBALS)
+	(DESC "grue")
+<OBJECT LOCAL-WATER
+	(DESC "water")
+<OBJECT WATER
+	(IN LOCAL-GLOBALS)
+	(DESC "water")
+<ROOM RETREAT
+      (IN ROOMS)
+      (DESC "Enchanters' Retreat")
+<OBJECT BELBOZ
+	(IN RETREAT)
+	(DESC "Belboz")
+<OBJECT GLOBAL-SLEEP
+	(IN GLOBAL-OBJECTS)
+	(DESC "sleep")
+<OBJECT MAGIC
+	(IN GLOBAL-OBJECTS)
+	(DESC "magic")
+<OBJECT KNIFE
+	(IN PLAYER)
+	(DESC "knife")
+<ROOM GUILD-HALL
+      (IN ROOMS)
+      (DESC "Guild Hall")
+      (NORTH TO COUNCIL-CHAMBER)
+      (SOUTH TO BELWIT-SQUARE)
+      (OUT TO BELWIT-SQUARE)
+<OBJECT BREAD
+	(IN GUILD-HALL)
+	(DESC "chunk of rye bread")
+<OBJECT FISH
+	(IN GUILD-HALL)
+	(DESC "smoked fish")
+<ROOM COUNCIL-CHAMBER
+      (IN ROOMS)
+      (DESC "Council Chamber")
+      (SOUTH TO GUILD-HALL)
+      (OUT TO GUILD-HALL)
+<OBJECT SORCERER
+	(IN COUNCIL-CHAMBER)
+	(DESC "sorcerer")
+<OBJECT SPEAKER
+	(IN COUNCIL-CHAMBER)
+	(DESC "speaker")
+<OBJECT ORKAN
+	(IN COUNCIL-CHAMBER)
+	(DESC "Orkan of Thriff")
+<OBJECT SNEFFLE
+	(IN COUNCIL-CHAMBER)
+	(DESC "Sneffle")
+<OBJECT HOOBLY
+	(IN COUNCIL-CHAMBER)
+	(DESC "Hoobly")
+<OBJECT GZORNENPLATZ
+	(IN COUNCIL-CHAMBER)
+	(DESC "Gzornenplatz")
+<OBJECT ARDIS
+	(IN COUNCIL-CHAMBER)
+	(DESC "Ardis")
+<ROOM BELWIT-SQUARE
+      (IN ROOMS)
+      (DESC "Belwit Square")
+      (NORTH TO GUILD-HALL)
+      (EAST "You wander around for a while and end up back in the square.")
+      (WEST "You wander around for a while and end up back in the square.")
+      (SOUTH "A remarkably surly guard blocks your way.")
+<OBJECT SHADOW
+	(IN COUNCIL-CHAMBER)
+	(DESC "shadowy figure")
+<OBJECT CLOUD
+	(IN BELWIT-SQUARE)
+	(DESC "cloud of orange smoke")
+<ROOM CASTLE
+      (IN ROOMS)
+      (DESC "Castle")
+<OBJECT HYPERCUBE
+	(DESC "construction")
+<OBJECT SPELL-BOOK
+	(IN PLAYER)
+	(DESC "spell book")
+<OBJECT BLORPLE-SPELL 
+	(IN CASTLE) ;"so MOBY-FIND can find it"
+	(DESC "blorple spell")
+<OBJECT LESOCH-SPELL 
+	(IN SPELL-BOOK)
+	(DESC "lesoch spell")
+<OBJECT SNAVIG-SPELL 
+	(IN CASTLE) ;"so MOBY-FIND can find it"
+	(DESC "snavig spell")
+<OBJECT GIRGOL-SCROLL 
+	(IN CASTLE) ;"so MOBY-FIND can find it"
+	(DESC "flimsy scroll")
+<OBJECT GIRGOL-SPELL 
+	(IN GIRGOL-SCROLL)
+	(DESC "girgol spell")
+<OBJECT JINDAK-SPELL 
+	(IN SPELL-BOOK)
+	(DESC "jindak spell")
+<OBJECT ESPNIS-SCROLL 
+	(IN OGRE-BEDROOM)
+	(DESC "dusty scroll")
+<OBJECT ESPNIS-SPELL
+	(IN ESPNIS-SCROLL)
+	(DESC "espnis spell")
+<OBJECT TINSOT-SCROLL 
+	(IN GLACIER-ROOM)
+	(DESC "white scroll")
+<OBJECT TINSOT-SPELL 
+	(IN TINSOT-SCROLL)
+	(DESC "tinsot spell")
+<OBJECT THROCK-SCROLL 
+	(IN CLIFF-MIDDLE)
+	(DESC "dirty scroll")
+<OBJECT THROCK-SPELL 
+	(IN THROCK-SCROLL)
+	(DESC "throck spell")
+<OBJECT CASKLY-SCROLL 
+	(IN ROC-NEST)
+	(DESC "stained scroll")
+<OBJECT CASKLY-SPELL 
+	(IN CASKLY-SCROLL)
+	(DESC "caskly spell")
+<OBJECT LISKON-SCROLL 
+	(IN BOTTLE)
+	(DESC "damp scroll")
+<OBJECT LISKON-SPELL
+	(IN LISKON-SCROLL)
+	(DESC "liskon spell")
+<OBJECT MALYON-SPELL 
+	(IN SPELL-BOOK)
+	(DESC "malyon spell")
+<OBJECT GNUSTO-SPELL 
+	(IN SPELL-BOOK)
+	(DESC "gnusto spell")
+<OBJECT FROTZ-SPELL
+	(IN SPELL-BOOK)
+	(DESC "frotz spell")
+<OBJECT REZROV-SPELL
+	(IN SPELL-BOOK)
+	(DESC "rezrov spell")
+<OBJECT YOMIN-SPELL
+	(IN SPELL-BOOK)
+	(DESC "yomin spell")
+<OBJECT SPELL-COPY 
+	(DESC "original")
+<OBJECT BLANK-SCROLL 
+	(IN PAST-CABINET)
+	(DESC "vellum scroll")

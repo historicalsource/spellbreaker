@@ -1,0 +1,39 @@
+    -Spell-	-English-
+
+ s  AIMFIZ	transport yourself to someone's location
+e   BLORB	STRONG-BOX-SPELL
+e   CLEESH	NEWT-SPELL
+e   EXEX	HASTE-SPELL
+e   FILFRE	CREDITS-SPELL
+es  FROTZ	LIGHT-SPELL
+ s  FWEEP	turn caster into a bat
+ s  GASPAR	resurrection
+es  GNUSTO	WRITE-MAGIC-SPELL
+ s  GOLMAC	travel temporally
+e   GONDAR	QUENCH-SPELL
+e   GUNCHO	BANISH-SPELL
+es  IZYUK	FLY-SPELL
+e   KREBF	REPAIR-SPELL
+e   KULCAD	DISPEL-SPELL
+ s  MALYON	bring life to inanimate objects
+ s  MEEF	cause plants to wilt
+e   MELBOR	PROTECTION-SPELL
+e   NITFOL	TALK-TO-ANIMALS-SPELL
+e   OZMOO	CHEAT-DEATH-SPELL
+ s  PULVER	cause liquids to dry up
+es  REZROV	OPEN-SPELL
+ s  SWANZO	exorcise an inhabiting presence
+ s  VARDIK	shield a mind from an evil spirit
+e   VAXUM	CHARM-SPELL
+ s  VEZZA	view the future
+ s  YOMIN	mind probe
+ s  YONK	augment the power of certain spells
+e   ZIFMIA	SUMMON-SPELL
+
+    -Potion-	-English-
+
+ s  BERZIO	obviate need for food and drink
+ s  BLORT	see in the dark
+ s  FLAXO	exquisite torture
+ s  FOOBLE	increase coordination
+ s  VILSTU	obviate need for breathing

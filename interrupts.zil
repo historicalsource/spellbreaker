@@ -5,7 +5,7 @@
 ;"GENERICS"
 
 <ROUTINE GENERIC-CUBE-F (TBL LEN
-			 "AUX" F (CNT 1) (LAST? <>) (CONT <>) CUBE?)
+			 "AUX" F (CNT 1) (CONT <>) CUBE?)
 	 <COND (<VERB? ASK-ABOUT TELL-ME-ABOUT COUNT>
 		<GET .TBL .CNT>)
 	       (ELSE
@@ -50,7 +50,9 @@
 	       (ELSE ,RANDOM-CARPET)>>
 
 <ROUTINE GENERIC-HOLE-F (TBL LEN)
-	 <COND (<EQUAL? ,HERE ,MAZE-2> ,OCTAGONAL-HOLE)
+	 <COND (<OR <IN? ,OCTAGONAL-HOLE ,HERE>
+		    <EQUAL? ,HERE ,MAZE-2>>
+		,OCTAGONAL-HOLE)
 	       (ELSE ,GLOBAL-HOLE)>>
 
 <ROUTINE GENERIC-RANDOM-F (TBL LEN)
@@ -338,7 +340,7 @@ construction it made, the figure approaches the center. ">
 "It grows smaller and smaller, and just before it disappears, the hypercube
 vanishes with a pop, and " THE ,MAGIC-CUBE " melts in your hand like an
 ice cube." CR CR
-"You find yourself back in Belwit Square, all the Guildmasters and even
+"You find yourself back in Belwit Square, all the guildmasters and even
 Belboz crowding around you. \"A new age begins today,\" says Belboz after
 hearing your story. \"The age of magic is ended, as it must, for as magic
 can confer absolute power, so it can also produce absolute evil. We may
@@ -449,6 +451,8 @@ head." CR>)
 <GLOBAL AWAKE -1>
 
 <ROUTINE I-TIRED ("AUX" (FORG <>))
+	 <QUEUE I-TIRED 8>
+	 <COND (<HELD? ,MAGIC-CUBE> <RTRUE>)>
 	 <COND (<G? ,LOAD-ALLOWED 10>
 		<SETG LOAD-ALLOWED <- ,LOAD-ALLOWED 10>>)>
 	 <COND (<G? ,FUMBLE-NUMBER 1>
@@ -459,8 +463,6 @@ head." CR>)
 		       <SETG SPELL-ROOM <- ,SPELL-ROOM 1>>)>
 		<COND (<EQUAL? ,SPELL-ROOM 0>
 		       <SET FORG T>)>)>
-	 <QUEUE I-TIRED 8>
-	 <COND (<HELD? ,MAGIC-CUBE> <RTRUE>)>
 	 <SETG AWAKE <+ ,AWAKE 1>>
 	 <COND (<G? ,AWAKE 8>
 		<TELL
@@ -538,17 +540,22 @@ their appointment.">)
 		       <QUEUE I-AVALANCHE -1>
 		       <TELL CR
 "Tons of rock and dirt continue their downward plunge." CR>)>)>
-	 <COND (<EQUAL? .TF? ,OGRE-BEDROOM ,OGRE-CAVE>
+	 <COND (<AND <EQUAL? .TF? ,OGRE-BEDROOM ,OGRE-CAVE>
+		     <EQUAL? ,HERE ,OGRE-BEDROOM ,OGRE-CAVE>>
 		<I-OGRE-KILLS-YOU T>)>
-	 <COND (<EQUAL? .TF? ,PAST-RUINS-ROOM>
+	 <COND (<AND <EQUAL? .TF? ,PAST-RUINS-ROOM>
+		     <EQUAL? ,HERE ,PAST-RUINS-ROOM>>
 		<QUEUE I-WATER-RISING 3>
 		<TELL CR
 "The water begins to rise again." CR>)>
-	 <COND (<EQUAL? .TF? ,CASTLE>
+	 <COND (<AND <EQUAL? .TF? ,CASTLE>
+		     <EQUAL? ,HERE ,CASTLE>>
 		<COND (<EQUAL? ,SHADOW-COUNT 8>
 		       <TELL CR
 "\"Fool!\" chortles the shadow." CR>)>
 		<RTRUE>)>>
+
+<GLOBAL OGRE-MURDEROUS? <>>
 
 <ROUTINE I-OGRE-KILLS-YOU ("OPTIONAL" (GIRGOL? <>))
 	 <COND (<OR <TIME-FROZEN?>
@@ -557,6 +564,9 @@ their appointment.">)
 		<QUEUE I-OGRE-KILLS-YOU 2>
 		<RFALSE>)>
 	 <COND (<EQUAL? ,HERE ,OGRE-CAVE ,OGRE-BEDROOM>
+		<COND (<IN? ,PLAYER ,ZIPPER>
+		       <SETG OGRE-MURDEROUS? T>
+		       <RTRUE>)>
 		<COND (<NOT .GIRGOL?> <CRLF>)>
 		<TELL
 "The ogre, impatient with your presence and your impudent intrusion, ">
@@ -566,7 +576,7 @@ their appointment.">)
 		<JIGS-UP>)>>
 
 <ROUTINE I-ESPNIS ()
-	 <COND (<EQUAL? ,TIME-STOPPED? ,HERE>
+	 <COND (<TIME-FROZEN?>
 		<QUEUE I-ESPNIS 2>)
 	       (<NOT ,ESPNIS?> <RFALSE>)>
 	 <COND (<IN? ,ESPNIS? ,HERE>
@@ -596,12 +606,21 @@ tail again in the process." CR>)
 			      <TELL
 "With a rather unsettling lack of uniformity, " THE .SF " returns
 to its former size.">
-			      <COND (<AND <IN? .SF ,WINNER>
-					  <EQUAL? .SF ,WEED>
+			      <COND (<AND <EQUAL? .SF ,WEED>
 					  <FSET? ,WEED ,RMUNGBIT>>
-				     <MOVE .SF ,HERE>
-				     <TELL
-" It's too heavy to carry.">)>
+				     <COND (<IN? .SF ,WINNER>
+					    <MOVE .SF ,HERE>
+					    <TELL
+" It's too heavy to carry.">)
+					   (<EQUAL? <LOC .SF> ,BOTTLE>
+					    <MOVE .SF <META-LOC ,BOTTLE>>
+					    <REMOVE ,BOTTLE>
+					    <TELL
+" It bursts the bottle!">)
+					   (<EQUAL? <LOC .SF>
+						    ,MAGIC-CARPET
+						    ,RANDOM-CARPET>
+					    <MOVE .SF <META-LOC .SF>>)>)>
 			      <CRLF>)>)>)
 	       (ELSE
 		<SETG SMALL-FLAG <>>
@@ -762,8 +781,12 @@ curtain above you. If you don't do something soon, you will die!" CR>)
 				<G? ,ROCK-SLIDE-COUNT 3>>>
 		       <DEQUEUE I-AVALANCHE>
 		       <SETG ROCK-SLIDE-COUNT 0>
+		       <COND (<IN? ,PLAYER ,ZIPPER>
+			      <TELL
+"Although you can't see or feel it, y">)
+			     (ELSE <TELL "Y">)>
 		       <JIGS-UP
-"You are swept away down the cliff face by thousands of tons of rock.
+"ou are swept away down the cliff face by thousands of tons of rock.
 A huge cloud of dust blowing away down the valley is your only memorial.">)
 		      (<EQUAL? ,HERE ,CLIFF-TOP ,CLIFF-MIDDLE ,CLIFF-BOTTOM>
 		       <ROCKS-TUMBLING>)>)>>
@@ -816,11 +839,15 @@ A huge cloud of dust blowing away down the valley is your only memorial.">)
 	 <REPEAT ()
 		 <COND (<NOT .F> <RETURN>)>
 		 <SET N <NEXT? .F>>
-		 <COND (<EQUAL? .F ,WATER-CUBE ,PLAYER ,GROUPER> T)
-		       (<OR <NOT <FSET? .F ,CONTBIT>>
+		 <COND (<EQUAL? .F ,PLAYER ,GROUPER> T)
+		       (<AND <EQUAL? .F ,WATER-CUBE>
+			     <QUEUED? I-CUBE-SINKS>>
+			T)
+		       (<OR <EQUAL? .F ,ZIPPER>
+			    <NOT <FSET? .F ,CONTBIT>>
 			    <AND <FSET? .F ,OPENBIT>
 				 <PROB 75>>>
-			<MOVE .F ,OCEAN-FLOOR>
+				<MOVE .F ,OCEAN-FLOOR>
 			<FCLEAR .F ,NDESCBIT>
 			<COND (<EQUAL? ,HERE .RM>
 			       <TELL
@@ -954,7 +981,9 @@ are open again." CR>)>)>)>>
 <ROUTINE I-ROC ()
 	 <COND (<EQUAL? ,HERE ,GUARD-TOWER>
 		<SETG ROC-COUNT <+ ,ROC-COUNT 1>>
-		<COND (<G? ,ROC-COUNT 4>
+		<COND (<IN? ,PLAYER ,ZIPPER>
+		       <RFALSE>)
+		      (<G? ,ROC-COUNT 4>
 		       <DEQUEUE I-ROC>
 		       <ROC-GRABS-PLAYER>
 		       <CRLF>

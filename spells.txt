@@ -1,0 +1,51 @@
+---Summary of magic spells---
+			   Earth
+                             Air
+                               Fire
+                                 Water
+				   Dark/Light
+				     Mind
+				       Death/Life
+					 Change
+					   Magic
+					     Time
+					       Connectivity
+-------------------------|-----------------------
+    Spell   English      | E A F W D I X C M T =
+-------------------------|-----------------------
+ s *AIMFIZ  go to person |           I         =
+e   BLORB   strong box   | E               M
+  6 BLORPLE connections  |                 M   =
+e   CLEESH  newt         |       W       C
+e   EXEX    haste        |     F             T
+e  *FILFRE  fireworks    |     F   D
+es  FROTZ   light        |         D     C
+ s  FWEEP   bat          |   A           C
+ s  GASPAR  resurrect    |   A         X
+  6 GIRGOL  stop time    |               C   T
+es  GNUSTO  write magic  |               C M
+ s  GOLMAC  time travel  |                 M T
+e   GONDAR  quench       |     F       X
+e  *GUNCHO  banish       |             X       =
+es  IZYUK   fly          |   A           C
+e   KREBF   repair       |               C     =
+e  *KULCAD  dispel       |           I     M
+  6 LESOCH  wind         |   A F
+ s  MALYON  animate      |     F       X
+ s  MEEF    wilt         |       W     X
+e   MELBOR  protection   | E               M
+e   NITFOL  animal talk  |           I   C
+e   OZMOO   cheat death  |             X     T
+ s  PULVER  dry up       |     F W
+es  REZROV  open         | E             C
+  6 SNAVIG  grue         | E             C
+ s  SWANZO  exorcise     |             X   M
+ s  VARDIK  mind shield  | E         I
+e   VAXUM   charm        |   A       I
+ s  VEZZA   view future  |           I       T
+ s  YOMIN   mind probe   |         D I
+ s *YONK    augment      |                 M T
+e   ZIFMIA  summon       |           I         =
+-------------------------|-----------------------
+                           E A F W D I X C M T =
+

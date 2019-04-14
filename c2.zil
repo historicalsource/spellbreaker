@@ -169,16 +169,19 @@ to reach the bottom." CR>>
       (FLAGS RWATERBIT ONBIT)
       (GLOBAL WATER)>
 
+<ROUTINE EMERGE-AND-DROWN ()
+	 <COND (<NOT <EQUAL? ,CHANGED? ,GROUPER>>
+		<JIGS-UP
+"You have reemerged beneath the water. There is no air here.
+You drown.">)>>
+
 <ROUTINE OCEAN-FLOOR-F (RARG)
 	 <COND (<EQUAL? .RARG ,M-LOOK>
 		<TELL
 "You are deep beneath the waves, near a small pile of rocks and broken
 coral that make up the nest of a grouper." CR>)
 	       (<EQUAL? .RARG ,M-ENTER>
-		<COND (<NOT <EQUAL? ,CHANGED? ,GROUPER>>
-		       <JIGS-UP
-"You have reemerged beneath the ocean. There is no air here.
-You drown.">)>)
+		<EMERGE-AND-DROWN>)
 	       (<EQUAL? .RARG ,M-BEG>
 		<COND (<VERB? WALK SWIM>
 		       <COND (<EQUAL? ,CHANGED? ,GROUPER>
@@ -207,7 +210,7 @@ surface." CR CR>
 		      (<EQUAL? ,CHANGED? ,GROUPER>
 		       <FUN-IN-OCEAN>)>)>>
 
-<GLOBAL ATE-AS-GROUPER? <>>
+<GLOBAL ATE-AS-GROUPER?:FLAG <>>
 
 <OBJECT GROUPER-NEST
 	(IN OCEAN-FLOOR)
@@ -346,9 +349,9 @@ a few moments, its curiosity unsated." CR>)>>
       (FLAGS RLANDBIT)
       (GLOBAL TRAP-DOOR WATER)>
 
-<GLOBAL WATER-FLAG 0> ;"how full is oubliette?"
-<GLOBAL FREEZE-FLAG 0> ;"how much ice is there?"
-<GLOBAL FREEZE-COUNT 0> ;"how near death from hypothermia?"
+<GLOBAL WATER-FLAG:NUMBER 0> ;"how full is oubliette?"
+<GLOBAL FREEZE-FLAG:NUMBER 0> ;"how much ice is there?"
+<GLOBAL FREEZE-COUNT:NUMBER 0> ;"how near death from hypothermia?"
 
 <ROUTINE OUBLIETTE-DOWN-EXIT ()
 	 <COND (,SMALL-FLAG 
@@ -517,7 +520,7 @@ hypothermia.">>
 		      (<VERB? RUB>
 		       <TELL "It's cold." CR>)>)>>
 
-<GLOBAL WATER-HEIGHTS
+<GLOBAL WATER-HEIGHTS:TABLE
 	<PLTABLE "one-quarter" "half" "three-quarters" "completely">>
 
 <OBJECT INFLOW
@@ -735,12 +738,12 @@ and even as a ruin, its essence is still perfect." CR>)>>
       (THINGS <PSEUDO (MOSSY SLIME MOSS-PSEUDO)
 		      (<> MOSS MOSS-PSEUDO)>)>
 
-<GLOBAL LONG-PIPE-DESC
+<GLOBAL LONG-PIPE-DESC:STRING
 "You are inside a small ceramic pipe nearly filled with fast-flowing cold
 water. The walls of the pipe are slippery and overgrown with mossy slime
 wherever an irregularity shields the growth from the force of the water. ">
 
-<GLOBAL LONG-PIPE-DESC-2
+<GLOBAL LONG-PIPE-DESC-2:STRING
 "Going east (against the current) would be nearly impossible. Going west
 is almost unavoidable.">
 
@@ -851,7 +854,7 @@ confused, you are dashed against the rocks at the bottom of the cistern.">)>>
       (EAST TO CELL-HALL-EAST)
       (ACTION PRISON-F)
       (FLAGS RLANDBIT)
-      (GLOBAL TRAP-DOOR STAIRS EAST-WALL)
+      (GLOBAL TRAP-DOOR EAST-WALL)
       (THINGS <PSEUDO (<> SLIME MOSS-PSEUDO)
 		      (<> MOSS MOSS-PSEUDO)
 		      (<> FUNGUS MOSS-PSEUDO)>)>
@@ -966,6 +969,7 @@ spell.")
 			    <NOT <FSET? .L ,OPENBIT>>>
 		       <TELL-OPEN-CLOSED .L>)
 		      (<AND <VERB? OPEN>
+			    <EQUAL? ,PRSO ,CABINET ,PAST-CABINET>
 			    <NOT <FSET? ,PRSO ,OPENBIT>>>
 		       <FSET ,PRSO ,OPENBIT>
 		       <TELL "Opened." CR>)>)
@@ -1025,6 +1029,7 @@ materializes before you!" CR>
 		       <TELL
 "The cabinet bursts open">
 		       <COND (<AND <NOT <IN? ,PLAYER ,CABINET>>
+				   <NOT <IN? ,PLAYER ,PAST-CABINET>>
 				   <FIRST? ,PRSO>>
 			      <TELL ", revealing ">
 			      <PRINT-CONTENTS ,PRSO>)>
@@ -1084,7 +1089,7 @@ as you watch. While not good as new, the book looks much better">)>
 		       <TELL "There's no spell in ">
 		       <THE-PRSO>)>)>>
 
-<GLOBAL DEAD-BOOK-SCORE 15>
+<GLOBAL DEAD-BOOK-SCORE:NUMBER 15>
 
 <ROUTINE CELL-PSEUDO ()
 	 <COND (<VERB? EXAMINE LOOK-INSIDE>
@@ -1124,7 +1129,7 @@ bright red and yellow coruscations. The only exit is down." CR>)
 		<SETG ROC-COUNT 0>
 		<QUEUE I-ROC -1>)>>
 
-<GLOBAL SEEN-TOWER? <>>
+<GLOBAL SEEN-TOWER?:FLAG <>>
 
 <ROUTINE ROC-GRABS-PLAYER ("OPTIONAL" (FALL? <>))
 	 <MOVE ,ROC ,HERE>
@@ -1338,7 +1343,7 @@ ravenous like all young birds, gobbles you down.">)>)>>
 		      (ELSE
 		       <TELL "a " 'CONNECTIVITY-CUBE>)>
 		<TELL " there." CR>)
-	       (<OR <HOSTILE-VERB?> <VERB? OPEN>>
+	       (<OR <HOSTILE-VERB?> <VERB? OPEN RAISE>>
 		<COND (<IMMOBILIZED?> <RTRUE>)
 		      (<IN? ,ROC ,HERE>
 		       <TELL

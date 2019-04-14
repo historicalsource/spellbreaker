@@ -1,0 +1,1813 @@
+Instruction Manual for
+
+Archmage
+
+Welcome to the world of the Enchanter saga -- a world founded on magic,
+
+where guilds of magicians have mastered the powers of sorcery; a
+
+world now threatened with destruction.
+
+	You distinguished yourself among the young Enchanters by
+
+defeating the evil warlock Krill, whose attempt to subjugate the land
+
+was thwarted by your cleverness, as your inexperience allowed you to
+
+succeed where others might have failed.  This earned you a place on the
+
+Circle of Enchanters, second only to the great Belboz the Necromancer.
+
+Then Belboz himself was nearly destroyed, and your rescue of him from
+
+the evil demon Jeearr earned you the ultimate honor given a mage, the
+
+leadership of the Circle of Enchanters.
+
+	Now, a crisis has befallen the kingdom.  Magic itself seems to
+
+be failing.  Spells fail to work or go strangely awry, the populace is
+
+confused and restive, and even the Enchanters Guild is baffled.  A great
+
+conclave of the Guildmasters is ordained, and it is at this conclave
+
+that the final conflict between good and evil begins to unfold.
+
+	If you're familiar with Infocom's interactive fiction, you may
+
+not feel like reading this entire manual.  However, you should at least
+
+read about the use of magic (on page x).  Also look at the appendix of
+
+recognized verbs (on page x); some of the verbs listed are found in all
+
+Infocom stories, while others are included especially for Archmage.  All
+
+wizards will want to familiarize themselves with this list.
+
+Table of Contents
+
+
+An Overview								Page N
+
+   *What is interactive fiction?
+   
+   *Moving around
+   
+   *Turns and scoring
+
+Tips for Novices							Page N
+
+   Nine useful pointers about interactive fiction
+
+Communicating with Archmage				  		Page N
+
+   *Basic sentences
+   
+   *Complex sentences
+   
+   *Talking to characters in the story
+
+   *Vocabulary limitations
+
+
+Spell Casting							        Page N
+
+   *Using your spell book
+
+   *Memorizing spells
+
+   *Casting spells
+
+
+Starting and Stopping						        Page N
+
+   *Starting Archmage ("Booting up")
+   
+   *Saving and restoring
+   
+   *Quitting and restarting
+
+Appendix A: Important Commands						Page N
+
+Appendix B: Some Recognized Verbs					Page N
+
+Appendix C: Archmage Complaints						Page N
+
+Appendix D: Sample Transcript and Map					Page N
+
+Appendix E: We're Never Satisfied					Page N
+
+Appendix F: If You Have Technical Problems				Page N
+
+Appendix G: About the Author						Page N
+
+Appendix H: Copyright and Warranty Information				Page N
+
+Appendix I: Quick Reference Guide					Page N
+
+   This briefly describes the most important things to know about
+   
+   interactive fiction. It is vital that you know all these things before 
+   
+   you begin your adventure.
+
+                     An Overview
+
+
+Interactive fiction is a story in which you are the main character.
+
+Your own thinking and imagination determine the actions of that
+
+character and guide the story from start to finish.
+
+
+   Each work of interactive fiction, such as Archmage, presents you with
+
+a series of locations, items, characters, and events. You can interact
+
+with these in a variety of ways.
+
+
+   Some wizards have the power to transport themselves with a mere
+
+twitch of the toes. Most of the others, alas, must walk. To move from
+
+place to place, type the direction you want to go. When you find
+
+yourself in a new location, it's a good idea to become familiar with
+
+your surroundings by exploring the nearby rooms and reading each
+
+description carefully. (You may notice that Archmage occasionally refers to
+
+a location as a "room," even if you are outdoors.) As you explore, it is
+
+helpful to make a map of the geography.
+
+
+   An important element of interactive fiction is puzzle-solving. You should
+
+think of a locked door or a ferocious beast not as a permanent obstacle,
+
+but merely as a puzzle to be tackled. Solving puzzles will frequently
+
+involve bringing a certain item with you, and then using it in the proper
+
+way.
+
+
+   In Archmage, time passes only in response to your input. You might
+
+imagine a clock that ticks once for each sentence you type, and the story
+
+progresses only at each tick. Nothing happens until you type a sentence
+
+and press the RETURN (or ENTER) key, so you can plan your turns as slowly
+
+and carefully as you want. 
+
+
+   To measure your progress, Archmage keeps track of your score. You
+
+may get points for solving puzzles, performing certain actions, or
+
+visiting certain locations. A perfect score is to be strived for, but of
+
+course a true Enchanter is above such mundane considerations and will
+
+consult the score only to measure progress toward more worthy goals. 
+
+                     Tips for Novices
+
+
+1. In bygone days, Enchanters could recall even the tiniest events in
+
+their lives and project them upon the clouds to the great amusement of
+
+the populace. Since you do not currently possess that skill, it's a good
+
+idea to draw a map. It should include each location, the directions
+
+connecting it to adjoining locations, and any interesting objects there.
+
+(See the small sample map that goes along with the sample transcript on
+
+page N.) Note there are 10 possible directions, plus IN and OUT.
+
+
+2. Examine all objects you come across. Most objects in the story that you can 
+
+pick up are important for solving one or more of the puzzles you'll run into. 
+
+
+3. Save your place often. That way, if you mess up or get "killed,"
+
+you won't have to start over from the beginning. See page N for instructions.
+
+
+4. Read the story carefully. There are often clues in the descriptions of
+
+locations and objects, as well as in labels, engravings, books, and so on.
+
+Even strange or dangerous actions may provide clues, and might prove to be
+
+fun! You can always save your position first if you want. Here's a silly
+
+example:
+
+   >GIVE THE MAGIC GERANIUM TO THE WOLF
+
+   The wolf considers, for a moment, eating the geranium instead of you.
+
+   Then he decides the better of it. He comes closer and closer.
+
+
+In addition to learning something about the culinary preferences of
+
+wolves, you have a clue that perhaps feeding something else (a steak?)
+
+to the wolf would be more useful.
+
+
+5. Unlike other "adventure games" you may have played, there are many
+
+possible routes to the end of Archmage. Some puzzles have more than one
+
+solution; other puzzles don't need to be solved at all. Sometimes you
+
+will have to solve one puzzle in order to obtain the item(s) or
+
+information you need to solve another puzzle.
+
+
+6. You may find it helpful to go through Archmage with another
+
+person. Different people may find different puzzles easy and can often
+
+complement each other.
+
+
+7. If you really have difficulty, you can order a hint booklet and a complete
+
+map using the order form in your package. You don't need this
+
+booklet to enjoy the story, but it will make solving the puzzles easier.
+
+
+8. Read the sample transcript on page N to get a feel for how Infocom's
+
+interactive fiction works.
+
+
+9. You can word a command in many different ways. For example, if you
+
+wanted to pick up a dusty scroll, you could type in any of the following:
+
+   >GET SCROLL
+
+   >TAKE THE SCROLL
+
+   >PICK UP THE DUSTY SCROLL
+ 
+
+In fact, if the scroll is the only thing in sight that you can take,
+
+just typing TAKE would have been enough. But more about that in the next
+
+section ...
+
+
+
+               Communicating with Archmage
+
+In Archmage, you type your sentence in plain English each
+
+time you see the prompt (>). Archmage usually acts as if your
+
+sentence begins "I want to...," although you shouldn't actually type
+
+those words. You can use words like THE if you want, and you can use
+
+capital letters if you want; Archmage doesn't care either way.
+
+
+   When you have finished typing a sentence, press the RETURN (or ENTER) key
+
+and Archmage will process your request. Archmage will then respond,
+
+telling you whether your request is possible at this point in the story,
+
+and what happened as a result.
+
+
+   Archmage recognizes your words by their first six letters, and all
+
+subsequent letters are ignored. Therefore, SILVER, SILVERsmith, and
+
+SILVERware would all be treated as the same word by Archmage.
+
+
+   To move around, just type the desired direction. You can use the eight
+
+compass directions: NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST,
+
+SOUTHEAST, and SOUTHWEST. You can abbreviate these to N, S, E, W,
+
+NE, NW, SE, and SW, respectively. You can use UP (or U) and DOWN (or D).
+
+IN and OUT will also work in certain places. 
+
+
+   Archmage understands many different kinds of sentences. Here are several
+
+examples. (Note some of these objects do not actually appear in
+
+Archmage.) 
+	
+   >WALK NORTH
+	
+   >DOWN
+	
+   >NE
+	
+   >GO UP
+	
+   >TAKE THE SPELL BOOK
+
+   >READ THE SCROLL
+
+   >LOOK UNDER THE BED
+
+   >GO OUT
+
+   >DROP THE NEWT INTO THE POT
+
+   >EXAMINE THE LARGE RED DEMON
+
+   >PUSH THE BLACK BUTTON
+
+   >SHOOT THE DEMON WITH THE LOADED GUN
+
+   >GIVE THE MAGIC WAND TO THE FROG
+
+   >LOOK UNDER THE STATUE
+
+   >READ THE CRUMBLY YELLOW SCROLL
+     
+
+
+   You can use multiple objects with certain verbs if you separate them
+
+by the word AND or by a comma. Some examples:
+	
+   >TAKE SWORD AND MAGIC KNIFE
+
+   >DROP THE SPRIG OF IVY, THE MISTLETOE, AND THE SPOTTED FROG
+
+   >PUT THE BAT'S FEET AND THE BLUE BUBBLY LIQUID IN THE BOWL 
+	
+
+   You can include several sentences on one input line if you separate them
+
+by the word THEN or by a period. (Note that each sentence will still
+
+count as a turn.) You don't need a period at the end of the input line.
+
+For example, you could type all of the following at once, before pressing
+
+the RETURN (or ENTER) key:
+	
+   >READ THE SCROLL. WRITE "BROKEN" ON IT. OPEN THE GARBAGE CAN THEN
+   
+   DROP THE SCROLL INTO THE GARBAGE CAN
+
+If Archmage doesn't understand one of the sentences on your input line, or
+
+if something unusual happens, it will ignore the rest of your input line
+
+(see "Archmage Complaints" on page N).
+
+   The words IT and ALL can be very useful. For example: 
+
+   >TAKE THE SCROLL. READ IT. PUT IT IN THE BOX
+
+   >CLOSE THE HEAVY METAL DOOR. LOCK IT
+        
+   >TAKE THE SILVER HELMET. SHINE IT. PUT IT ON
+
+   >TAKE ALL
+	
+   >EXAMINE ALL THE DUSTY SCROLLS
+	
+   >TAKE ALL EXCEPT THE WET EGG AND THE KEY
+   
+   >TAKE ALL FROM CABINET
+
+   >DROP ALL BUT THE PENCIL 
+	
+
+The word ALL refers to every visible object except those inside
+
+something else. If there were an apple on the ground and an orange
+
+inside a cabinet, TAKE ALL would take the apple but not the orange.
+
+
+   There are three kinds of questions that Archmage understands: WHO IS 
+
+(someone), WHERE IS (something), and WHAT IS (something). For example:  
+	
+   >WHO IS ORKAN?  
+	
+   >WHERE IS THE SPELL BOOK?
+
+   >WHAT IS A GRUE?
+
+
+   You can use quotes to say something "out loud."  For example:
+	
+   >SAY "HELLO" 
+
+
+   You can write a word on an object in the game if you want: 
+
+   >WRITE "GARLIC" ON THE BAG
+
+   >WRITE "VALUABLE" ON THE ANCIENT SCROLL
+
+   
+   You will meet other people and creatures in Archmage. You can "talk"
+
+to some of these beings by typing their name, then a comma, then
+
+whatever you want to say to them. Here are some examples: 
+
+   IMP, WHERE IS MY SPELL BOOK?
+
+   HENCHMAN, FOLLOW ME
+
+   ADVENTURER, KILL THE MONSTER THEN GIVE ME THE SWORD
+
+   SQUIRE, GIVE ME THE WAND. CLEAN OFF THE SANDALS
+
+Notice that in the last two examples, you are giving a person more than
+
+one command on the same input line.
+
+
+   Archmage tries to guess what you really mean when you don't give enough
+
+information. For example, if you say that you want to do something, but
+
+not what you want to do it to or with, Archmage will sometimes decide that
+
+there is only one possible object you could mean. When it
+
+does so, it will tell you. For example:
+
+   >UNLOCK THE DOOR
+
+   (with the key)
+
+   The door is now unlocked.
+
+
+   If your sentence is ambiguous, Archmage will ask what you really mean. You
+
+can answer most of these questions briefly by supplying the missing
+
+information, rather than typing the entire input again. You can do this
+
+only at the very next prompt. For example:
+
+   >SLICE THE SCROLL
+
+   What do you want to slice the scroll with?
+
+   >THE SCIMITAR
+
+   The scroll is reduced to paper dolls.
+
+or
+
+   >TAKE THE SCROLL
+
+   Which scroll do you mean, the evil enchanted scroll or the lovely
+
+   vellum scroll?
+   
+   >ENCHANTED
+
+   The evil in the scroll flows inexorably up your arm. It seems to be
+
+   seeking out your heart!
+   
+   
+   Archmage uses many words in its descriptions that it will not recognize in
+
+your sentences. For example, you might read, "The bright-red sun sets
+
+slowly into the horizon." However, if Archmage doesn't
+
+recognize the words SUN or HORIZON in your input, you can assume
+
+they are not important to your completion of the story, except to provide
+
+you with a more vivid description of where you are or what is going on.
+
+Archmage recognizes over 900 words, nearly all that you are likely to
+
+use in your sentences. If Archmage doesn't know a word you used, or
+
+any of its common synonyms, you are almost certainly trying something that
+
+is not important in continuing your adventure.
+
+                        Spell Casting
+
+Spells are a way of performing magic. Each spell is known by the
+
+one-word name through which the spell can be used. Magic spells usually
+
+have a duration and sometimes a delay before they can be used again.
+
+Remember: Magic spells are dangerous things, particularly to wizards.
+
+Wizards' heightened abilities in this realm carry the penalty of
+
+heightened sensitivity to spells cast by others. Sometimes a spell which
+
+a mundane person would not even notice will have a profound effect upon
+
+you. 
+
+
+   As a certified wizard, you have a personal spell book,
+
+in which you record the spells you are capable of using. Your book
+
+contains a few spells before the story begins; others may be added
+
+during your travels.
+
+
+   You may find spell scrolls here and there. These are extremely
+
+valuable objects. They may be used directly to cast spells, but so doing
+
+uses up the spell and scroll permanently, so it is much better to write
+
+them into your spell book. Then, you can use them many times.
+
+
+   You may write newly found spells into your spell book by using the
+
+GNUSTO spell ("writes magic"), which you learned early in your career.
+
+Once a spell is written in your spell book, it may be used again and
+
+again. (Some spells are too powerful to be written into a spell book.
+
+Such spells may still be used if they are found on
+
+scrolls, but the spell will be gone after it is used.)
+
+
+   Reading your book lists the spells you have written, along with their
+
+meanings. You might experiment with the spells already in your book to
+
+learn their uses.
+
+
+   Before a spell in your book can actually be used, it must be
+
+memorized. Only a small number of spells can actually be memorized at
+
+one time, and when you use a spell you have memorized, you forget it.
+
+You must relearn a spell to use it again. The SPELLS command lets
+
+you know which spells are memorized and how many times each one has been 
+
+memorized. (This is helpful because a spell memorized twice can be used 
+
+twice before being forgotten.)
+
+
+   You can use spells either by saying CAST (the spell's name) AT/ON
+
+(something) or, more simply, by saying: (the spell's name) (something).
+
+Some spells are so general in application that they require no object --
+
+just typing the spell name is enough.
+
+
+   For example, suppose there were a spell named BOZBAR that you had
+
+written in your spell book or were carrying on a spell scroll. Both
+
+LEARN BOZBAR and MEMORIZE BOZBAR would make the spell available for
+
+immediate use. Then BOZBAR HORSE or CAST BOZBAR AT HORSE or CAST THE
+
+BOZBAR SPELL AT THE HORSE would all have the same effect: BOZBAR the
+
+poor horse.
+
+
+   Magic takes other forms besides classic spell casting. Magic potions,
+
+for instance, usually found in vials, work their magic when ingested.
+
+Many items throughout the land are imbued with magical qualites that can
+
+be revealed to the brave and inquisitive wizard.
+
+
+                     Starting and Stopping
+
+
+Starting the story: Now that you know what to expect in Archmage,
+
+it's time for you to "boot" your disk. To load Archmage, follow
+
+the instructions on the Reference Card in your package.
+
+
+   The story will begin with a description of the Council Chamber, the
+
+opening location.  Then the prompt (>) will appear,
+
+indicating that Archmage is waiting for your first command.
+
+
+   Here's a quick exercise to help you get accustomed to
+
+interacting with Archmage. Try the following command first:
+	
+   >GO SOUTH
+   
+Then press the RETURN (or ENTER) key. Archmage will respond with:
+
+   Annoyed guildmasters make way grudgingly.  You hear muttering about
+
+   "arrogant enchanters" as you try to leave the chamber.  Finally,
+
+   Orkan of Thriff, one of your colleagues, says "Stay.  Be quiet.
+
+   Don't embarrass us."
+
+Then Sneffle of the Guild of Bakers will speak for a while.  Try:  
+	
+   >LOOK AT SNEFFLE
+   
+After you press the RETURN (or ENTER) key, Archmage will respond:
+
+   Sneffle is a small doughy gentleman whose person is splotched here
+
+   and there with flour.
+   
+
+Saving and restoring: It will probably take you many days to complete
+
+Archmage. Using the SAVE feature, you can continue at a later time without
+
+having to start over from the beginning, just as you can place a bookmark
+
+in a book you are reading. SAVE puts a "snapshot" of your place in the
+
+story onto another disk. If you are cautious, you may want
+
+to save your place before (or after) trying something dangerous or tricky.
+
+That way, you can go back to that position later, even if you have gotten
+
+lost or "killed" since then.
+
+
+   To save your place in the story, type SAVE at the prompt (>), and then
+
+press the RETURN (or ENTER) key. Then follow the instructions for saving
+
+and restoring on your Reference Card. Some computers
+
+require a blank disk, initialized and formatted, for
+
+saves. Using a disk with data on it (not counting other Archmage saves) may
+
+result in the loss of that data, depending on your computer.  You can
+
+save your position as often as you like by using additional blank disks.
+
+
+   You can restore a saved position any time you want. To do so, type
+
+RESTORE at the prompt (>), and press the RETURN (or ENTER) key. Then 
+
+follow the instructions on your Reference
+
+Card. You can then continue the story from the point where you used the
+
+SAVE command. You can type LOOK for a description of where you are.
+
+
+Quitting and restarting: If you want to start over from the beginning,
+
+type RESTART and press the RETURN (or ENTER) key. (This is usually
+
+faster than re-booting.) Just to make sure, Archmage will ask if you
+
+really want to start over. If you do, type Y or YES and press the RETURN
+
+(or ENTER) key.
+
+
+   If you want to stop entirely, type QUIT and press the RETURN (or ENTER)
+
+key. Once again, Archmage will ask if this is really what you want
+
+to do.
+
+
+   Remember when you RESTART or QUIT: if you want to be able to return to
+
+your current position, you must first do a SAVE.
+                        
+
+Appendix A
+
+Important Commands
+
+
+There are a number of one-word commands which you can type instead of a
+
+sentence. You can use them over and over as needed. Some count as a
+
+turn, others do not. Type the command after the prompt (>) and press the
+
+RETURN (or ENTER) key.
+
+
+AGAIN - Archmage will usually respond as if you had repeated your previous
+
+sentence. Among the cases where AGAIN will not work is if you were just
+
+talking to another character. You can abbreviate AGAIN to G.
+
+
+BRIEF - This tells Archmage to give you the full description of a location
+
+only the first time you enter it. On subsequent visits, Archmage will tell
+
+you only the name of the location and the objects present. This is how
+
+Archmage will normally act, unless you tell it otherwise using the VERBOSE
+
+or SUPERBRIEF commands.
+
+
+DIAGNOSE - Archmage will give you a medical report of your physical
+
+condition, and will tell you whether you're tired, thirsty, or hungry. 
+
+
+INVENTORY - Archmage will list what you are carrying. You can abbreviate
+
+INVENTORY to I.
+
+
+LOOK - This tells Archmage to describe your location in full detail.
+
+You can abbreviate LOOK to L.
+
+
+OOPS - If you accidentally mistype a word, such that Archmage doesn't
+
+understand the word, you can correct yourself on the next line by typing
+
+OOPS and the correct word.  Suppose, for example, you typed PUT THE BOOJ
+
+ON THE DUSTY SHELF and were told "[I don't know the word 'booj.']"  You
+
+could type OOPS BOOK rather than retyping the entire sentence.
+
+
+QUIT - This lets you stop.  If you want to save your position before
+
+quitting, follow the instructions in the "Starting and Stopping" section
+
+on page N. You can abbreviate QUIT to Q.
+
+
+RESTART - This stops the story and starts over from the beginning.
+
+
+RESTORE - This restores a position made using the SAVE command. See
+
+"Starting and Stopping" on page N for more details.
+
+
+SAVE - This makes a "snapshot" of your current position onto your
+
+storage disk. You can return to a saved position in the future using
+
+the RESTORE command. See "Starting and Stopping" on page N for more details.
+
+
+SCORE - Archmage will show your current score and a ranking which is
+
+based on that score. 
+
+
+SCRIPT - This command tells your printer to begin making a transcript of
+
+the story as you venture onwards. A transcript may aid your memory but is not
+
+necessary. It will work only on certain computers; read
+
+your Reference Card for details.
+
+
+SPELLS - This command lists the spells you currently have memorized from
+
+your spell book.
+
+
+SUPERBRIEF - This commands Archmage to display only the name of a place
+
+you have entered, even if you have never been there before. In this mode,
+
+Archmage will not even mention which objects are present. Of course,
+
+you can always get a description of your location, and the items there, by
+
+typing LOOK. In SUPERBRIEF mode, the blank line between turns will be
+
+eliminated. This mode is meant for players who are already very familiar
+
+with the geography. Also see VERBOSE and BRIEF.
+
+
+TIME - This gives you the current time of day in the story. You can
+
+abbreviate TIME to T.
+
+
+UNSCRIPT - This commands your printer to stop making a transcript.
+
+
+VERBOSE - This tells Archmage that you want a complete description of each
+
+location, and the objects in it, every time you enter a location, even if
+
+you've been there before. Also see BRIEF and SUPERBRIEF.
+
+
+VERSION - Archmage responds by showing you the release number and the
+
+serial number of your copy of the story. Please include this information
+
+if you ever report a "bug" in the story. 
+
+
+WAIT - This will cause time in the story to pass. Normally, between turns,
+
+nothing happens in the story. You could leave your computer, take a nap,
+
+and return to the story to find that nothing has changed. You can use
+
+WAIT to make time pass in the story without doing anything. For example,
+
+you can wait for a specific time, or wait for an event to happen, etc. 
+
+You can abbreviate WAIT to Z.
+
+Appendix B
+
+Some Recognized Verbs
+
+
+This is only a partial list of the verbs that Archmage understand.
+
+There are many more. Remember you can use a variety of prepositions
+
+with them. For example, LOOK can become LOOK INSIDE, LOOK BEHIND, LOOK
+
+UNDER, LOOK THROUGH, LOOK AT, and so on.
+
+
+ASK
+
+ATTACK
+
+BOARD
+
+BURN
+
+CAST
+
+CLIMB
+
+CLOSE
+
+COUNT
+
+CROSS
+
+CUT
+
+DESTROY
+
+DIG
+
+DISEMBARK
+
+DRINK
+
+DROP
+
+EAT
+
+ENTER
+
+EXAMINE
+
+EXIT
+
+EXTINGUISH
+
+FILL
+
+FIND
+
+FLY
+
+FOLLOW
+
+GIVE
+
+JUMP
+
+KICK
+
+KILL
+
+KISS
+
+KNOCK
+
+LAUNCH
+
+LIE
+
+LIGHT
+
+LISTEN
+
+LOCK
+
+LOOK
+
+MEMORIZE
+
+MOVE
+
+OFFER
+
+OPEN
+
+POINT
+
+POUR
+
+PULL
+
+PUSH
+
+PUT
+
+RAISE
+
+READ
+
+SEARCH
+
+SHAKE
+
+SHOUT
+
+SHOW
+
+SLEEP
+
+SLIDE
+
+SMELL
+
+SPRAY
+
+STAND
+
+SWIM
+
+TAKE
+
+TELL
+
+THROW
+
+TIE
+
+TOUCH
+
+TURN
+
+UNLOCK
+
+UNTIE
+
+WAKE
+
+WALK
+
+WAVE
+
+WRITE
+
+Appendix C
+
+Archmage Complaints
+
+
+Archmage will complain if you type a sentence that confuses it completely.
+
+Archmage will then ignore the rest of the input line. (Unusual events, such
+
+as being attacked, may also cause Archmage to ignore the rest of the
+
+sentences you typed, since the event may have changed your situation
+
+drastically.) Some of Archmage's complaints:
+
+
+
+I DON'T KNOW THE WORD "________". The word you typed is not in the
+
+story's vocabulary. Sometimes using a synonym or rephrasing will help.
+
+If not, Archmage probably doesn't know the idea you were trying to get
+
+across.
+
+
+YOU USED THE WORD "________" IN A WAY THAT I DON'T UNDERSTAND.
+
+Archmage knows the word you typed, but couldn't use it in that
+
+sense. Usually this is because Archmage knows the word as a
+
+different part of speech. For example, if you typed TURN ON THE LIGHT,
+
+you are using LIGHT as a noun, but Archmage might know LIGHT only
+
+as a verb, as in LIGHT THE LAMP.
+
+
+THERE WAS NO VERB IN THAT SENTENCE! Unless you are answering a
+
+question, each sentence must have a verb (or a command) in it somewhere.
+
+
+THERE SEEMS TO BE A NOUN MISSING IN THAT SENTENCE. This usually means
+
+your sentence was incomplete, such as EAT THE BLUE or PUT THE BOOK IN THE.
+
+
+THERE WERE TOO MANY NOUNS IN THAT SENTENCE. An example is PUT THE SOUP
+
+IN THE BOWL WITH THE LADLE, which has three noun "phrases," one more
+
+than Archmage can digest in a single action.
+
+
+I BEG YOUR PARDON? You pressed the RETURN (or ENTER) key without typing
+
+anything.
+
+
+IT'S TOO DARK TO SEE! In the story, there is not enough light for you to
+
+perform your action.
+
+
+YOU CAN'T SEE ANY ________ HERE. The object you referred to was not
+
+accessible to you. It may be somewhere else, inside a closed container,
+
+and so on.
+
+
+THE OTHER OBJECT(S) THAT YOU MENTIONED ISN'T (AREN'T) HERE. You referred
+
+to one or more objects in the same sentence, some of which aren't
+
+present or accessible.
+
+
+I CAN'T USE MULTIPLE (IN)DIRECT OBJECTS WITH "________" You can use
+
+multiple objects (that is, nouns or noun phrases separated by AND or a
+
+comma) or the word ALL only with certain verbs. Among
+
+the more useful of these verbs are TAKE, DROP, and PUT.  An example of a
+
+verb that will not work with multiple objects is EXAMINE; you couldn't
+
+say EXAMINE ALL or EXAMINE THE BOWL AND THE SWORD.
+
+
+YOU CAN'T GO THAT WAY. There is no passage or exit in the direction you
+
+want to move.
+
+
+I DON'T UNDERSTAND THAT SENTENCE. The sentence you typed may have been
+
+gibberish, such as TAKE ROPE WITH READ. Or, you may have typed a
+
+reasonable sentence but used a syntax that Archmage does not recognize,
+
+such as WAVE OVER THE MOUNTAIN. Try rephrasing the sentence.
+
+
+Appendix D
+
+Sample Transcript and Map
+
+
+This transcript is not from Archmage, but it does show most of the
+
+usual things you can do in the story. It contains several simple puzzles
+
+and their solutions, and it will give you a good idea of how Infocom's
+
+interactive fiction works. The player's sentences appear in capital
+
+letters after each prompt (>). The map represents the terrain in the
+
+sample transcript as you might have drawn it.
+
+
+[diagram 1 goes here]
+
+
+Road Near Brook
+
+You're standing on a wide, bumpy north-south road.  An impenetrable
+
+forest lies to the east, and a babbling brook runs along the road to the
+
+west.  A sign is leaning against a pile of pebbles and small stones.
+
+
+>READ THE SIGN
+
+The sign has two arrows: one pointing north marked "To Greener
+
+Pastures," and one pointing south marked "To Gornforb's Grocery."
+
+
+>GO NORTH
+
+Road Near Bridge
+
+A small wooden bridge to the west spans the brook and leads (you can
+
+see) to sunny, open pastures, where birds sing and swoop playfully.  A
+
+wide road leading south runs parallel with the brook and disappears into
+
+the dark shadows.  An impenetrable forest lies to the east, and north of
+
+here is a marsh.
+
+
+On the far side of the bridge is a troll, either dead or sleeping.
+
+
+Guarding the bridge here is a buck-toothed cyclops weilding a mace.  He
+
+scowls as you approach.
+
+
+>WEST
+
+The cyclops roars at you, swings his mace, and tries to bite you.  You
+
+jump out of the way.
+
+
+>INVENTORY
+
+You are carrying:
+
+	your spell book
+
+	a pouch containing several gold nuggets
+
+
+The cyclops spits out a horrible assortment of syllables that you barely
+
+decipher as a demand for all your valuables.
+
+
+>READ THE SPELL BOOK
+
+My Spell Book
+
+gnusto spell: write a magic spell into your spell book
+
+frotz spell: cause an object to give off light
+
+urbzig spell: turn a dangerous object into a harmless one
+
+
+The cyclops again utters some threatening sounds, this time louder.
+
+
+>SPELLS
+
+The gnusto spell is yours forever.  Other than that, you have the urbzig
+
+spell committed to memory once and the frotz spell committed to memory
+
+once.
+
+
+The cyclops raises his mace above his head and leans back, preparing to
+
+leap at you and strike you full force with the mace!
+
+
+>CAST THE URBZIG SPELL ON THE CYCLOPS
+
+The cyclops is replaced by a moth, which flutters away.  The mace falls
+
+to the ground.
+
+
+>TAKE THE MAXE
+
+I don't know the word "maxe".
+
+
+>OOPS MACE
+
+The mace is much too heavy for you to lift, let alone carry.
+
+
+>WEST
+
+Bridge
+
+You're standing on a small wooden bridge spanning a babbling brook.  You
+
+can see sunny, open pastures west of here, where birds sing and swoop
+
+playfully.  As you cross the bridge, the boards creak loudly.
+
+
+The troll wakes up and pulls a long nasty knife out his shabby clothes. 
+
+He points the knife in your direction as he hisses, "Gold!  Give me your
+
+gold!" 
+
+
+>MEMORIZE URBZIG
+
+urbzig spell: Using your best study habits, you commit the urbzig spell
+
+to memory.
+
+
+The troll jabs the knife in your direction, his blood-red eyes dripping
+
+with greed.  "Give me your gold, and maybe you'll live!" he hisses.
+
+
+>URBZIG TROLL
+
+You speak the words of the spell perfectly, but nothing happens!
+
+
+The troll seems surprised. "Your magic fails you, eh?  Ha!"  He adjusts
+
+his grip on the long nasty knife and walks slowly toward you, looking
+
+for the most vulnerable part of your throat.
+
+
+>GO EAST THEN SOUTH
+
+Road Near Bridge
+
+There is a mace here.
+
+
+Road Near Brook
+
+A sign is leaning against a pile of pebbles and small stones.
+ 
+
+>WEST
+
+Just as you're about to step into the babbling brook, you see giant
+
+electric eels light up in anticipation of electrocuting and devouring
+
+you.  You step back away from the brook.
+
+
+>SOUTH
+
+Road Outside Gornforb's
+
+The wide, bumpy road continues north and south here.  Nestled among the
+
+thick forest foliage is a stone building with a closed black door and no
+
+windows.  Above the door is a sign.
+
+
+>READ THE SIGN
+
+"Gornforb's Grocery 
+
+Open Every Day
+
+(Proprietor May be Napping -- Knock Several Times)" 
+
+
+>KNOCK ON THE DOOR
+
+You knock on the door.
+
+
+>AGAIN
+
+You knock again on the door.
+
+
+>AGAIN
+
+You knock again on the door.
+
+
+Suddenly the door opens, and you hear a voice inside say "Come in, come
+
+in!" 
+
+
+>GO INTO THE HUT
+
+As you step into the hut, the door shuts quickly behind you, leaving you
+
+in total darkness.  You can't see a thing.
+
+
+Darkness
+
+A voice in the dark mumbles something about not being able to find a
+
+match.
+
+
+>FROTZ THE SPELL BOOK
+
+There is an almost blinding flash of light as the spell book begins to
+
+glow!  It slowly fades to a less painful level, but the spell book is
+
+now quite usable as a light source.
+
+
+Gornforb's Grocery
+
+You're standing in a nearly empty store.  A closed black door leads
+
+north.   Several empty glass jars, an empty bag, and a pencil are all
+
+you see on the dusty shelves.
+
+
+Gornforb, the storekeeper, continues to look in all the empty jars.  "I
+
+think there's a match in here SOMEWHERE."
+
+
+>TAKE THE EMPTY BAG
+
+"No, no,"  says Gornforb.  "No bag unless you buy something."  Gornforb
+
+looks about and picks up the pencil.  "Here.  This will cost you 100
+
+gold nuggets."
+
+
+>OFFER 1 GOLD NUGGET
+
+"2 gold nuggets, and not a zorkmid cheaper!"  says Gornforb sternly.
+
+
+>BUY THE PENCIL
+
+Gornforb takes 2 gold nuggets from you, hands you the pencil, and opens
+
+the door.  "Thank you, come again, come again."
+
+
+>GORNFORB, GIVE ME THE PAPER BAG
+
+"Help yourself, take it if you want it, thank you, come again, come
+
+again."  He stands by the door, impatiently waiting for you to leave.
+
+
+>TAKE THE BAG
+
+Taken.
+
+
+"Good day, good day," says Gornforb impatiently.
+
+
+>LEAVE THE STORE
+
+As you step outside, the black door slams shut behind you.
+
+
+Road Outside Gornforb's
+
+
+>NORTH
+
+Road Near Brook
+
+A sign is leaning against a pile of pebbles and small stones.
+
+
+>TAKE PEBBLES THEN PUT THE PEBBLES IN THE BAG
+
+Taken.
+
+
+Okay, the pebbles are now in the bag.
+
+
+>WRITE "GOLD" ON THE BAG
+
+Okay, the bag now has "gold" written on it.
+
+
+>N.W
+
+Road Near Bridge
+
+There is a mace here.  
+
+
+Bridge
+
+As you cross the bridge, the boards creak loudly.
+
+The troll hears you coming and quickly puts his long nasty knife to your
+
+throat.  "This time you shall not live!"
+
+
+>SHOW THE BAG TO THE TROLL
+
+The troll's blood-red eyes bulge disgustingly when he sees the
+
+word "gold" on the bag.  He drops his knife and reaches for the
+
+bag. 
+
+
+>PUT THE BAG INTO THE BROOK
+
+"Gold!" shrieks the troll with pleasure, as he dives into the brook
+
+after the bag.  Suddenly you hear another shriek, this time of agony;
+
+some thrashing in the water below you; and then all is quiet, save for
+
+the singing of the birds to the west.
+
+
+>GO WEST
+
+Greener Pastures, Near the Bridge
+
+This is the edge of one of the most idyllic spots in the land.  Rare and
+
+beautiful birds quickly encircle you, sensing no maliciousness in your
+
+heart.  They look at you with curiosity and wonder, and then hundreds
+
+of them grab hold of your clothes and lift you up up up over magnificent
+
+fields of green and gold to a destination not discussed in this sample
+
+transcript.    
+
+
+Appendix E
+
+We're Never Satisfied
+
+
+Here at the Cambridge-by-the-Sea chapter of the Infocom Game Writers
+
+Guild, we take great pride in the quality of our stories.
+
+Even after they're "out the door," we're constantly
+
+improving, honing, and perfecting them.
+
+
+   Your input is important. No matter how much testing we do, it seems
+
+some "bugs" never crawl into view until thousands of you begin doing all
+
+those wild and crazy things to the story. If you find a bug, or if you
+
+think a certain puzzle was too hard or too easy, or if you have some
+
+other suggestion, or if you'd just like to tell us your opinion of the
+
+story, drop us a note! We love every excuse to stop working, and a letter
+
+from you is just such an excuse! Write to:
+
+   Infocom, Inc.
+
+   125 CambridgePark Drive
+
+   Cambridge, MA 02140 
+
+   Attn: ORKAN
+
+
+Appendix F
+
+If You Have Technical Problems
+
+
+You can call the Infocom Technical Support Team to report "bugs" and
+
+technical problems, but not for hints to solve puzzles, at
+
+(617) 576-3190. If your disk develops a problem within ninety (90) days 
+
+after purchase, we will replace it at no charge. Otherwise, there is a
+
+replacement fee of $5 (U.S. currency). If you call to report a bug,
+
+please provide your release number, which you can find by typing
+
+VERSION. Please return your registration card if you'd like to be on our
+
+mailing list and receive our newsletter, The New Zork Times.
+
+
+Appendix G
+
+About the Author
+
+Dave Lebling was born in Washington, D. C. and grew up in
+
+suburban Maryland.  He attended the Massachusetts Institute
+
+of Technology, and worked at MIT's Laboratory for Computer
+
+Science, where he developed an interest in computer
+
+entertainments.  He was a co-author of the original mainframe
+
+Zork.  He has co-authored Zork I, Zork II, Zork III, and Enchanter,
+
+and written Starcross and Suspect on his own.  He is married and
+
+lives in a suburb of Boston, where his appetite for the printed
+
+word is restrained only by the volume of his house.
+
+
+Appendix H
+
+Copyright and Warranty Information
+
+
+Limited Warranty
+
+This software product and the attached instructional materials are sold
+
+"AS IS," without warranty as to their performance. The entire risk as to
+
+the quality and performance of the computer software program is assumed
+
+by the user.
+
+
+   However, to the original purchaser of a disk prepared by Infocom and
+
+carrying the Infocom label on the disk jacket, Infocom, Inc. warrants
+
+the medium on which the program is recorded to be free from defects in
+
+materials and faulty workmanship under normal use and service for a
+
+period of ninety (90) days from the date of purchase. If during this
+
+period a defect on the medium should occur, the medium may be returned
+
+to Infocom, Inc. or to an authorized Infocom, Inc. dealer, and Infocom,
+
+Inc. will replace the medium without charge to you. Your sole and
+
+exclusive remedy in the event of a defect is expressly limited to
+
+replacement of the medium as provided above. This warranty gives you
+
+specific legal rights and you may also have other rights which vary from
+
+state to state.
+
+
+
+   THE ABOVE WARRANTIES FOR GOODS ARE IN LIEU OF ALL WARRANTIES, EXPRESS,
+
+IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY IMPLIED
+
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE AND
+
+OF ANY OTHER WARRANTY OBLIGATION ON THE PART OF INFOCOM, INC. SOME
+
+STATES DO NOT ALLOW LIMITATIONS ON HOW LONG AN IMPLIED WARRANTY LASTS,
+
+SO THE ABOVE LIMITATION MAY NOT APPLY TO YOU.  IN NO EVENT
+
+SHALL INFOCOM, INC. OR ANYONE ELSE WHO HAS BEEN INVOLVED IN THE
+
+CREATION AND PRODUCTION OF THIS COMPUTER SOFTWARE PROGRAM BE LIABLE FOR
+
+INDIRECT, SPECIAL, OR CONSEQUENTIAL DAMAGES, SUCH AS, BUT NOT LIMITED
+
+TO, LOSS OF ANTICIPATED PROFITS OR BENEFITS RESULTING FROM THE USE OF
+
+THIS PROGRAM, OR ARISING OUT OF ANY BREACH OF THIS WARRANTY. SOME STATES
+
+DO NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL
+
+DAArchmageS, SO THE ABOVE LIMITATION MAY NOT APPLY TO YOU.
+
+
+   N.B. After the warranty period, a defective Infocom disk may be returned to
+
+Infocom, Inc. with a check or money order for $5.00 U.S. currency for
+
+replacement. 
+
+
+Copyright
+
+The enclosed software product is copyrighted and all rights are reserved
+
+by Infocom, Inc. It is published exclusively by Infocom, Inc. The
+
+distribution and sale of this product are intended for the use of the
+
+original purchaser only and for use only on the computer system
+
+specified. Lawful users of this program are hereby licensed only to read
+
+the program from its medium into memory of a computer solely for the
+
+purpose of executing the program. Copying (except for one backup copy on those 
+
+systems which provide for it -- see Reference Card), duplicating, selling, or
+
+otherwise distributing this product is a violation of the law.
+
+
+   This manual and all other documentation contained herein are copyrighted
+
+and all rights reserved by Infocom, Inc. These documents may not, in
+
+whole or in part, be copied, photocopied, reproduced, translated, or
+
+reduced to any electronic medium or machine-readable form without prior
+
+consent, in writing, from Infocom, Inc.
+
+
+
+   Willful violations of the Copyright Law of the United States can result
+
+in civil damages of up to $50,000 in addition to actual damages, plus
+
+criminal penalties of up to one year imprisonment and/or $10,000 fine.
+
+Zork is a registered trademark of Infocom, Inc.
+
+Archmage, Enchanter, Starcross, and Suspect are trademarks of Infocom, Inc.
+
+(c) 1985 Infocom, Inc.
+
+
+Printed in U.S.A.
+
+Appendix I
+
+Quick Reference Guide
+
+
+1. To start the story ("boot up"), see the separate Reference Card in
+
+your Archmage package.
+
+
+2. When you see the prompt (>) on your screen, Archmage is waiting
+
+for your input. There are four kinds of sentences or commands that
+
+Archmage understands:
+
+
+A. Direction commands: To move from place to place, just type the direction
+
+you want to go: N (or NORTH), E, S, W, NE, SE, NW, SW, U (or UP), D, IN, OUT.
+
+
+B. Actions: Just type whatever you want to do. Some examples: READ THE
+
+BOOK or OPEN THE DOOR or LOOK THROUGH THE WINDOW or MEMORIZE THE BOZBAR SPELL.
+
+Once you're familiar with simple commands, you'll want to use more complex 
+
+ones as described in "Communicating with Archmage" on page N.
+
+
+C. Commands given to other characters: To talk to characters in the
+
+story, type their name, then a comma, then what you want to say to them.
+
+For example: ADVENTURER, GIVE ME THE AXE or OLD MAN, GO WEST.
+
+
+D. Special one-word commands: Some one-word commands, such as INVENTORY or
+
+DIAGNOSE, give you specific information or affect your output. A list of
+
+these appears in the "Important Commands" appendix on page N.
+
+
+3. Important! After typing your sentence or command, you must press the
+
+RETURN (or ENTER) key before Archmage will respond.
+
+
+4. On most computers, your screen will have a special line called the status
+
+line. It tells you the name of your current location, your score, and 
+
+the number of turns you have taken.
+
+
+5. You can pick up and carry many of the items you'll find in the story.
+
+For example, if you type TAKE THE FLASK, you will be carrying it.
+
+Type INVENTORY to see a list of the items you are carrying.
+
+
+6. When you want to stop, save your place for later, or start
+
+over, read the "Starting and Stopping" section on page N.
+
+
+7. If you have trouble, refer to the specific section of the manual
+
+for more detailed instructions.
+
+
+
+
+

@@ -187,30 +187,29 @@
 
 <GLOBAL FAILED "Failed.|">
 
-<ROUTINE FINISH ("OPTIONAL" (REPEATING <>))
+<ROUTINE FINISH ("AUX" WRD)
+	 <V-SCORE>
 	 <CRLF>
 	 %<DEBUG-CODE <TELL-C-INTS>>
-	 <COND (<NOT .REPEATING>
-		<V-SCORE>
-		<CRLF>)>
-	 <TELL
+	 <REPEAT ()
+		 <CRLF>
+		 <TELL
 "Would you like to restart the game from the beginning, restore a saved
 game position, or end this session of the game?|
 (Type RESTART, RESTORE, or QUIT):|
 >">
-	 <READ ,P-INBUF ,P-LEXV>
-	 <COND (<EQUAL? <GET ,P-LEXV 1> ,W?RESTAR>
-	        <RESTART>
-		<TELL ,FAILED>
-		<FINISH T>)
-	       (<EQUAL? <GET ,P-LEXV 1> ,W?RESTOR>
-		<COND (<RESTORE>
-		       <TELL ,OKAY>)
-		      (T
-		       <TELL ,FAILED>
-		       <FINISH T>)>)
-	       (T
-		<QUIT>)>>
+		 <READ ,P-INBUF ,P-LEXV>
+		 <SET WRD <GET ,P-LEXV 1>>
+		 <COND (<EQUAL? .WRD ,W?RESTAR>
+			<RESTART>
+			<TELL ,FAILED>)
+		       (<EQUAL? .WRD ,W?RESTOR>
+			<COND (<RESTORE>
+			       <TELL ,OKAY>)
+			      (T
+			       <TELL ,FAILED>)>)
+		       (<EQUAL? .WRD ,W?QUIT ,W?Q>
+			<QUIT>)>>>
 
 <ROUTINE YES? ()
 	 <PRINTI "?|
@@ -276,21 +275,17 @@ game position, or end this session of the game?|
 <GLOBAL COPR-NOTICE
 " a transcript of interaction with SPELLBREAKER.">
 
-<ROUTINE V-VERSION ("AUX" (CNT 17))
-	 <TELL <COND (<PROB 99> "SPELLBREAKER")
-		     (ELSE "MAGE")>
-"|
+<ROUTINE V-VERSION ()
+	 <TELL
+"SPELLBREAKER|
 An Interactive Fantasy|
 Copyright (c) 1985 by Infocom, Inc. All rights reserved.|
 SPELLBREAKER is a trademark of Infocom, Inc.|
 Release ">
 	 <PRINTN <BAND <GET 0 1> *3777*>>
 	 <TELL " / Serial number ">
-	 <REPEAT ()
-		 <COND (<G? <SET CNT <+ .CNT 1>> 23>
-			<RETURN>)
-		       (T
-			<PRINTC <GETB 0 .CNT>>)>>
+	 <DO (CNT 18 23)
+	     <PRINTC <GETB 0 .CNT>>>
 	 <CRLF>>
 
 <ROUTINE V-$VERIFY ()
@@ -344,14 +339,11 @@ Release ">
 		<PERFORM ,V?TELL ,PRSO>
 		<RTRUE>)>>
 
-<ROUTINE FIND-IN (WHERE WHAT "AUX" W)
-	 <SET W <FIRST? .WHERE>>
-	 <REPEAT ()
-		 <COND (<NOT .W> <RFALSE>)
-		       (<AND <FSET? .W .WHAT>
-			     <VISIBLE? .W>>
-			<RETURN .W>)>
-		 <SET W <NEXT? .W>>>>
+<ROUTINE FIND-IN (WHERE WHAT)
+	 <MAP-CONTENTS (W .WHERE)
+		       (END <RFALSE>)
+		       <COND (<AND <FSET? .W .WHAT> <VISIBLE? .W>>
+			      <RETURN .W>)>>>
 
 "V-ASK-FOR -- transform into PRSO, GIVE PRSI TO ME"
 
@@ -380,7 +372,10 @@ Release ">
 
 <ROUTINE PRE-BOARD ("AUX" AV)
 	 <SET AV <LOC ,WINNER>>
-	 <COND (<FSET? ,PRSO ,VEHBIT>
+	 <COND (<OR <FSET? ,PRSO ,VEHBIT>
+		    <AND <EQUAL? ,PRSO ,PSEUDO-OBJECT>
+			 <EQUAL? <GETP ,PSEUDO-OBJECT ,P?ACTION>
+				 ,POOL-PSEUDO>>>
 		<COND (<EQUAL? .AV ,PRSO>
 		       <TELL ,YOU-ARE ,PERIOD>)
 		      (<AND <FSET? .AV ,VEHBIT>
@@ -590,14 +585,6 @@ the luncheon.">
 		      (ELSE
 		       <TELL ,NOW-BLACK>)>)>>
 
-<ROUTINE V-ENTER ("AUX" VEHICLE)
-	 <COND (<SET VEHICLE <FIND-IN ,HERE ,VEHBIT>>
-		<PERFORM ,V?BOARD .VEHICLE>
-		<RTRUE>)
-	       (<GETPT ,HERE ,P?IN>
-		<DO-WALK ,P?IN>)
-	       (ELSE <V-WALK-AROUND>)>>
-
 <ROUTINE PRE-EXAMINE ()
 	 <COND (<NOT ,LIT>
 		<TELL ,TOO-DARK>)>>
@@ -626,7 +613,8 @@ is glowing brightly." CR>)
 	 <TELL "You see nothing special about "><THE-PRSO>>
 
 <ROUTINE V-EXIT ()
-	 <COND (<AND ,PRSO <FSET? ,PRSO ,VEHBIT>>
+	 <COND (<AND <NOT <EQUAL? ,PRSO ,ROOMS>>
+		     <FSET? ,PRSO ,VEHBIT>>
 		<PERFORM ,V?DISEMBARK ,PRSO>
 		<RTRUE>)
 	       (<GETPT ,HERE ,P?OUT>
@@ -965,7 +953,8 @@ before you leaped.">)
 <ROUTINE V-OPEN ("AUX" F STR)
 	 <COND (<OR <AND <NOT <FSET? ,PRSO ,CONTBIT>>
 		         <NOT <FSET? ,PRSO ,DOORBIT>>>
-		    <FSET? ,PRSO ,SCROLLBIT>>
+		    <FSET? ,PRSO ,SCROLLBIT>
+		    <FSET? ,PRSO ,SURFACEBIT>>
 		<TELL "You must tell me how to do that to ">
 		<A-PRSO>)
 	       (<NOT <EQUAL? <GETP ,PRSO ,P?CAPACITY> 0>>
@@ -1021,23 +1010,19 @@ before you leaped.">)
 	       (ELSE
 		<YOU-CANT-X-THAT "pour">)>>
 
-<ROUTINE EMPTY-ALL (FROM TO "AUX" (F <FIRST? .FROM>) N R)
-	 <COND (<NOT .F>
+<ROUTINE EMPTY-ALL (FROM TO "AUX" F N R)
+	 <COND (<NOT <FIRST? .FROM>>
 		<TELL CTHE .FROM " is empty." CR>)
 	       (ELSE
-		<REPEAT ()
-			<COND (.F
-			       <SET N <NEXT? .F>>
-			       <TELL D .F ": ">
-			       <SET R
-				    <COND (.TO
-					   <PERFORM ,V?PUT .F .TO>)
-					  (ELSE
-					   <PERFORM ,V?DROP .F>)>>
-			       <COND (<EQUAL? .R ,M-FATAL> <RTRUE>)
-				     (ELSE <SET F .N>)>)
-			      (T
-			       <RTRUE>)>>)>>
+		<MAP-CONTENTS (F N .FROM)
+			<TELL D .F ": ">
+			<SET R
+			     <COND (.TO
+				    <PERFORM ,V?PUT .F .TO>)
+				   (ELSE
+				    <PERFORM ,V?DROP .F>)>>
+			<COND (<EQUAL? .R ,M-FATAL> <RTRUE>)>>
+		<RTRUE>)>>
 
 <ROUTINE V-PUMP ()
 	 <TELL "It's not clear how." CR>>
@@ -1300,6 +1285,11 @@ the ogre destroys you.">)
 don't know how much it hurt.">)
 		      (ELSE
 		       <IMPOSSIBLE-TO-SLEEP>)>)
+	       (<AND <NOT .FORCE?>
+		     <OR <IN? ,PLAYER ,CABINET>
+			 <IN? ,PLAYER ,PAST-CABINET>>>
+		<TELL
+"It's too cramped in here to sleep comfortably." CR>)
 	       (T
 		<COND (<EQUAL? ,HERE ,GLACIER-ROOM>
 		       <SETG FREEZE-COUNT 9>)>
@@ -1330,8 +1320,10 @@ don't know how much it hurt.">)
 			     (<IN? ,PLAYER ,ZIPPER>
 			      <TELL "in the nothingness">)
 			     (ELSE
-			      <MOVE ,PLAYER ,HERE>
-			      <TELL "on the floor">)>
+			      <TELL "on the floor">
+			      <COND (<NOT <IN? ,PLAYER ,HERE>>
+				     <TELL " next to " THE <LOC ,PLAYER>>
+				     <MOVE ,PLAYER ,HERE>)>)>
 		       <TELL " and">)>
 		<TELL " drift off, renewing your powers and
 refreshing your mind. Time passes as you snore blissfully." CR CR>
@@ -1353,7 +1345,6 @@ possessions!">)>)>
 		<CRLF>
 		<WEAR-OFF-SPELLS>
 		<RTRUE>)>>
-
 
 <GLOBAL DREAMS
 	<LTABLE 0	 
@@ -1483,7 +1474,7 @@ smokes."
 
 <ROUTINE NOT-IN-VEHICLE? ("AUX" (V <LOC ,WINNER>))
 	 <AND ,PRSO
-	      <NOT <EQUAL? ,PRSO .V>>
+	      <NOT <EQUAL? ,PRSO .V ,ROOMS>>
 	      <NOT <HELD? ,PRSO>>
 	      <NOT <HELD? ,PRSO .V>>>>
 
@@ -1514,13 +1505,22 @@ smokes."
 		<END-QUOTE>)>>
 
 <ROUTINE V-THANK ()
-	 <COND (<FSET? ,PRSO ,PERSON>
+	 <COND (<NOT ,PRSO>
+		<TELL "You're welcome, I guess." CR>)
+	       (<FSET? ,PRSO ,PERSON>
 		<UNINTERESTED ,PRSO>)
 	       (T
 		<HOW-DO-YOU> <A-PRSO?>)>>
 
 <ROUTINE V-THROUGH ("AUX" M)
-	<COND (<FSET? ,PRSO ,VEHBIT>
+	<COND (<EQUAL? ,PRSO ,ROOMS>
+	       <COND (<SET M <FIND-IN ,HERE ,VEHBIT>>
+		      <PERFORM ,V?BOARD .M>
+		      <RTRUE>)
+		     (<GETPT ,HERE ,P?IN>
+		      <DO-WALK ,P?IN>)
+		     (ELSE <V-WALK-AROUND>)>)
+	      (<FSET? ,PRSO ,VEHBIT>
 	       <PERFORM ,V?BOARD ,PRSO>
 	       <RTRUE>)
 	      (<NOT <FSET? ,PRSO ,TAKEBIT>>
@@ -1760,21 +1760,17 @@ to take it as well." CR>)>
 		<RTRUE>)>>
 
 <ROUTINE CCOUNT (OBJ "AUX" (CNT 0) X)
-	 <COND (<SET X <FIRST? .OBJ>>
-		<REPEAT ()
-			<SET CNT <+ .CNT 1>>
-			<COND (<NOT <SET X <NEXT? .X>>>
-			       <RETURN>)>>)>
-	 .CNT>
+	 <MAP-CONTENTS (X .OBJ)
+		       (END <RETURN .CNT>)
+	      <SET CNT <+ .CNT 1>>>>
 
 ;"WEIGHT: Gets sum of SIZEs of supplied object, recursing to nth level."
 
 <ROUTINE WEIGHT (OBJ "AUX" CONT (WT 0))
 	 <COND (<EQUAL? .OBJ ,ZIPPER ,SPELL-BOOK> T)
-	       (<SET CONT <FIRST? .OBJ>>
-		<REPEAT ()
-			<SET WT <+ .WT <WEIGHT .CONT>>>
-			<COND (<NOT <SET CONT <NEXT? .CONT>>> <RETURN>)>>)>
+	       (ELSE
+		<MAP-CONTENTS (CONT .OBJ)
+			      <SET WT <+ .WT <WEIGHT .CONT>>>>)>
 	 <+ .WT <GETP .OBJ ,P?SIZE>>>
 
 ^\L
@@ -2033,6 +2029,8 @@ long description (fdesc or ldesc), otherwise will print short."
 <ROUTINE JIGS-UP ("OPTIONAL" (DESC <>))
 	 <SETG WINNER ,PLAYER>
 	 <COND (.DESC <TELL .DESC>)>
+	 <COND (<EQUAL? ,HERE ,INNER-VAULT ,SCALES-ROOM>
+		<MAKE-JUNK>)>
 	 <FORGET-ALL>
 	 <SETG FALLING? <>>
 	 <TELL "|
@@ -2089,6 +2087,8 @@ start all over with someone else. All this effort, too.">>
 			<COND (<AND <FSET? .F ,TAKEBIT>
 				    <NOT <EQUAL? .F .IGNORE>>> 
 			       <SET 1ST? T>
+			       <COND (<IN? ,PLAYER .F>
+				      <MOVE ,PLAYER ,HERE>)>
 			       <COND (.TO <MOVE .F .TO>)
 				     (ELSE <REMOVE .F>)>)>
 			<SET F .N>)
@@ -2136,6 +2136,9 @@ start all over with someone else. All this effort, too.">>
 		<RTRUE>)
 	       (<AND <SEE-INSIDE? .L>
 		     <VISIBLE? .L>>
+		<RTRUE>)
+	       (<AND <EQUAL? ,HERE ,VOLCANO-ROOM>
+		     <EQUAL? .L ,OUTCROPPING-ROOM>>
 		<RTRUE>)
 	       (T
 		<RFALSE>)>>
@@ -2388,3 +2391,6 @@ CTHE ,PRSI ,HAS-NO-SURFACE ,PERIOD>>
 	 <COND (<EQUAL? ,PRSO ,ROOMS>
 		<TELL "Don't get a sore neck." CR>)
 	       (ELSE <PERFORM ,V?WHAT ,PRSO> <RTRUE>)>>
+
+<ROUTINE V-EMPATHIZE ()
+	 <TELL "A nice sentiment." CR>>

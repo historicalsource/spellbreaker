@@ -431,7 +431,7 @@ without a " 'SPELL-BOOK ,PERIOD>
 They slip out of your memory as soon as you cram them in." CR>
 				     <RTRUE>)
 				    (<NOT <G? ,SPELL-ROOM 0>>
-				     <FORGET-SPELL>
+				     <FORGET-SPELL ,PRSO>
 				     <SETG SPELL-ROOM 1>
 				     <SET FORGET T>)>)>
 		       <SETG SPELL-ROOM <- ,SPELL-ROOM 1>>
@@ -466,24 +466,24 @@ likely that something may have been forgotten in the shuffle." CR>)>
 " The spell is long and complicated.">)>
 	 <CRLF>>
 
-<ROUTINE FORGET-SPELL ("AUX" F TBL (NUM 0) (SP <>))
-	 <SET F <FIRST? ,SPELL-BOOK>>
+<ROUTINE FORGET-SPELL (SPL "AUX" F CNT TBL (NUM 0) (SP <>))
 	 <SET TBL ,FORGET-TBL>
-	 <REPEAT ()
-		 <COND (<NOT .F> <RETURN>)
-		       (<G? <GETP .F ,P?COUNT> 0>
-			<SET SP .F>
-			<PUT .TBL 1 .F>
-			<SET NUM <+ .NUM 1>>
-			<SET TBL <REST .TBL 2>>)>
-		 <SET F <NEXT? .F>>>
+	 <MAP-CONTENTS (F ,SPELL-BOOK)
+		       <DO (CNT <GETP .F ,P?COUNT> 1 -1)
+			   <SET SP .F>
+			   <PUT .TBL 1 .F>
+			   <SET NUM <+ .NUM 1>>
+			   <SET TBL <REST .TBL 2>>>>
+	 <COND (<AND <G? .NUM 0>
+		     <EQUAL? <GETP .SP ,P?COUNT> .NUM>>
+		<PUTP .SP ,P?COUNT <- .NUM 1>>
+		<RTRUE>)>
+	 <PUT ,FORGET-TBL 0 .NUM>
 	 <COND (<ZERO? .NUM> <RTRUE>)>
-	 <COND (<G? .NUM 1>
-		<PUT ,FORGET-TBL 0 .NUM>
-		<SET SP <RANDOM-ELEMENT ,FORGET-TBL>>)>
-	 <PUTP .SP ,P?COUNT <- <GETP .SP ,P?COUNT> 1>>>
+	 <SET SPL <RANDOM-ELEMENT ,FORGET-TBL>>
+	 <PUTP .SPL ,P?COUNT <- <GETP .SPL ,P?COUNT> 1>>>
 
-<GLOBAL FORGET-TBL <LTABLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0>>
+<GLOBAL FORGET-TBL <LTABLE 0 0 0 0 0 0 0 0 0 0>>
 
 <ROUTINE FORGET-ALL ("AUX" F)
 	 <SETG SPELL-ROOM ,SPELL-MAX>
@@ -769,7 +769,7 @@ on which it is written." CR>
 	  ;GASPAR-SPELL
 	  ;YONK-SPELL
 
-<ROUTINE V-SPELLS ("AUX" S (ANY <>) (OS <>) TMP)
+<ROUTINE V-SPELLS ("AUX" CNT S (ANY <>) (OS <>) TMP)
 	 <TELL
 "The gnusto, rezrov, and frotz spells are yours forever. Other than that,
 you have ">
@@ -1229,7 +1229,7 @@ the gnusto spell will work on it." CR>)>)>>
 		<V-NO-OP>)>>
 
 <ROUTINE V-MALYON ()
-	 <COND (<TIME-FROZEN?>
+	 <COND (<EQUAL? ,TIME-STOPPED? ,HERE>
 		<TELL ,NOTHING-HAPPENS>)
 	       (<FSET? ,PRSO ,PERSON>
 		<TELL
@@ -1253,7 +1253,7 @@ little jig, and a moment later returns to normal." CR>)
 		    <FSET? ,PRSO ,DOORBIT>>
 		<COND (<FSET? ,PRSO ,OPENBIT>
 		       <ALREADY-OPEN>)
-		      (<TIME-FROZEN?>
+		      (<EQUAL? ,TIME-STOPPED? ,HERE>
 		       <TELL ,NOTHING-HAPPENS>)
 		      (<NOT <FSET? ,PRSO ,SCROLLBIT>>
 		       <TELL "Silently, ">

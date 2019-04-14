@@ -24,166 +24,43 @@
 
 ;"SUSPECT tell macro and friends"
 
-<COND (<GASSIGNED? ZILCH> ;"version for when compiling"
-       <DEFMAC TELL ("ARGS" A)
-	       <FORM PROG ()
-		     !<MAPF ,LIST
-			    <FUNCTION ("AUX" E P O)
-				 <COND (<EMPTY? .A> <MAPSTOP>)
-				       (<SET E <NTH .A 1>>
-					<SET A <REST .A>>)>
-				 <COND (<TYPE? .E ATOM>
-					<COND (<OR <=? <SET P <SPNAME .E>>
-						       "CRLF">
-						   <=? .P "CR">>
-					       <MAPRET '<CRLF>>)
-					      ;(<=? .P "V">
-						<MAPRET '<VPRINT>>)
-					      (<EMPTY? .A>
-					       <ERROR INDICATOR-AT-END? .E>)
-					      (ELSE
-					       <SET O <NTH .A 1>>
-					       <SET A <REST .A>>
-					       <COND (<OR <=? <SET P <SPNAME .E>>
-							      "DESC">
-							  <=? .P "D">
-							  <=? .P "OBJ">
-							  <=? .P "O">>
-						      <MAPRET
-						       <PFORM DPRINT .O>>)
-						     (<=? .P "CD">
-						      <MAPRET
-						       <PFORM CDPRINT .O>>)
-						     (<=? .P "THE">
-						      <MAPRET
-						       <PFORM THE-PRINT .O>>)
-						     (<=? .P "CTHE">
-						      <MAPRET
-						       <PFORM CTHE-PRINT .O>>)
-						     (<OR <=? .P "A">
-							  <=? .P "AN">>
-						      <MAPRET
-						       <PFORM PRINTA .O>>)
-						     (<OR <=? .P "NUM">
-							  <=? .P "N">>
-						      <MAPRET
-						       <FORM PRINTN .O>>)
-						     (<OR <=? .P "CHAR">
-							  <=? .P "CHR">
-							  <=? .P "C">>
-						      <MAPRET
-						       <FORM PRINTC
-							     <CHTYPE .O FIX>>>)
-						     (ELSE
-						      <MAPRET
-						       <FORM PRINT
-							     <FORM GETP .O .E>>>)>)>)
-				       (<TYPE? .E STRING ZSTRING>
-					<MAPRET
-					 <COND (<==? <LENGTH .E> 1>
-						<FORM PRINTC
-						      <CHTYPE <1 .E> FIX>>)
-					       (ELSE
-						<FORM PRINTI .E>)>>)
-				       (<AND <TYPE? .E FORM>
-					     <==? <NTH .E 1> QUOTE>>
-					<MAPRET
-					 <FORM PRINTD
-					       <MAKE-GVAL <NTH .E 2>>>>)
-				       (<TYPE? .E FORM LVAL GVAL>
-					<MAPRET <FORM PRINT .E>>)
-				       (ELSE <ERROR UNKNOWN-TYPE .E>)>>>>>)
-      (ELSE ;"version for when interpreting"
-       <DEFINE TELL ("TUPLE" A)
-	       <MAPR <>
-		     <FUNCTION ("AUX" E P O)
-			  <COND (<EMPTY? .A> <MAPLEAVE>)
-				(<SET E <NTH .A 1>>
-				 <SET A <REST .A>>)>
-			  <COND (<TYPE? .E ATOM>
-				 <COND (<OR <=? <SET P <SPNAME .E>>
-						"CRLF">
-					    <=? .P "CR">>
-					<CRLF>)
-				       ;(<=? .P "V"> <VPRINT>)
-				       (<AND <GASSIGNED? .E>
-					     <TYPE? ,.E OBJECT>>
-					<PRINTD ,.E>)
-				       (<EMPTY? .A>
-					<ERROR INDICATOR-AT-END? .E>)
-				       (ELSE
-					<SET O <NTH .A 1>>
-					<SET A <REST .A>>
-					<COND (<OR <=? <SET P <SPNAME .E>>
-						       "DESC">
-						   <=? .P "D">
-						   <=? .P "OBJ">
-						   <=? .P "O">>
-					       <DPRINT .O>)
-					      (<=? .P "CD">
-					       <DPRINT .O T>)
-					      ;(<=? .P "HE/SHE">
-						<HE/SHE-PRINT .O>)
-					      ;(<=? .P "HIM/HER">
-						<HIM/HER-PRINT .O>)
-					      ;(<=? .P "HIS/HER">
-						<HIM/HER-PRINT .O T>)
-					      (<=? .P "THE">
-					       <THE-PRINT .O>)
-					      (<=? .P "CTHE">
-					       <CTHE-PRINT .O>)
-					      (<OR <=? .P "A">
-						   <=? .P "AN">>
-					       <PRINTA .O>)
-					      (<OR <=? .P "NUM">
-						   <=? .P "N">>
-					       <PRINTN .O>)
-					      (<OR <=? .P "CHAR">
-						   <=? .P "CHR">
-						   <=? .P "C">>
-					       <PRINTC .O>)
-					      (ELSE
-					       <PRINT <GETP .O .E>>)>)>)
-				(<TYPE? .E STRING ZSTRING>
-				 <PRINTI .E>)
-				(<AND <TYPE? .E FORM>
-				      <==? <NTH .E 1> QUOTE>>
-				 <PRINTD <GVAL <NTH .E 2>>>)
-				(<TYPE? .E FORM LVAL GVAL>
-				 <PRINT .E>)
-				(ELSE <ERROR UNKNOWN-TYPE .E>)>>>>
-)>
+<TELL-TOKENS (CRLF CR)		<CRLF>
+	     (NUM N) *		<PRINTN .X>
+	     (CHAR CHR C) *	<PRINTC .X>
+	     D ,PRSO		<DPRINT-PRSO>
+	     D ,PRSI		<DPRINT-PRSI>	
+	     D *		<DPRINT .X>
+	     CD ,PRSO		<CDPRINT-PRSO>
+	     CD ,PRSI		<CDPRINT-PRSI>
+	     CD *		<CDPRINT .X>
+	     THE ,PRSO		<THE-PRINT-PRSO>
+	     THE ,PRSI		<THE-PRINT-PRSI>
+	     THE *		<THE-PRINT .X>
+	     CTHE ,PRSO		<CTHE-PRINT-PRSO>
+	     CTHE ,PRSI		<CTHE-PRINT-PRSI>
+	     CTHE *		<CTHE-PRINT .X>
+	     (A AN) ,PRSO	<PRINTA-PRSO>
+	     (A AN) ,PRSI	<PRINTA-PRSI>
+	     (A AN) *		<PRINTA .X>>
 
-<DEFINE PFORM (APP OBJ "AUX" A)
-	<COND (<AND <TYPE? .OBJ LVAL GVAL>
-		    <MEMQ <SET A <CHTYPE .OBJ ATOM>> '[PRSO PRSI]>>
-	       <COND (<==? .APP DPRINT>
-		      <COND (<==? .A PRSO> <FORM DPRINT-PRSO>)
-			    (ELSE <FORM DPRINT-PRSI>)>)
-		     (<==? .APP CDPRINT>
-		      <COND (<==? .A PRSO> <FORM CDPRINT-PRSO>)
-			    (ELSE <FORM CDPRINT-PRSI>)>)
-		     (<==? .APP THE-PRINT>
-		      <COND (<==? .A PRSO> <FORM THE-PRINT-PRSO>)
-			    (ELSE <FORM THE-PRINT-PRSI>)>)
-		     (<==? .APP CTHE-PRINT>
-		      <COND (<==? .A PRSO> <FORM CTHE-PRINT-PRSO>)
-			    (ELSE <FORM CTHE-PRINT-PRSI>)>)
-		     (<==? .APP PRINTA>
-		      <COND (<==? .A PRSO> <FORM PRINTA-PRSO>)
-			    (ELSE <FORM PRINTA-PRSI>)>)
-		     (ELSE <ERROR .APP .OBJ>)>)
-	      (<ASSIGNED? EXT>
-	       <FORM .APP .OBJ .EXT>)
-	      (ELSE
-	       <FORM .APP .OBJ>)>>
-
-<DEFINE MAKE-GVAL (E)
-	<COND (<OR <GASSIGNED? MUDDLE>
-		   <NOT <TYPE? .E ATOM>>>
-	       <FORM GVAL .E>)
-	      (ELSE
-	       <CHTYPE .E GVAL>)>>
+;<TELL-TOKENS (CRLF CR) <CRLF>
+	     (DESC D OBJ O) <DPRINT .X>
+	     CD <CDPRINT .X>
+	     THE <THE-PRINT .X>
+	     CTHE <CTHE-PRINT .X>
+	     (A AN) <PRINTA .X>
+	     (NUM N) <PRINTN .X>
+	     (CHAR CHR C) <PRINTC .X>
+	     <DPRINT ,PRSO> <DPRINT-PRSO>
+	     <DPRINT ,PRSI> <DPRINT-PRSI>
+	     <CDPRINT ,PRSO> <CDPRINT-PRSO>
+	     <CDPRINT ,PRSI> <CDPRINT-PRSI>
+	     <THE-PRINT ,PRSO> <THE-PRINT-PRSO>
+	     <THE-PRINT ,PRSI> <THE-PRINT-PRSI>
+	     <CTHE-PRINT ,PRSO> <CTHE-PRINT-PRSO>
+	     <CTHE-PRINT ,PRSI> <CTHE-PRINT-PRSI>
+	     <PRINTA ,PRSO> <PRINTA-PRSO>
+	     <PRINTA ,PRSI> <PRINTA-PRSI>>
 
 <ROUTINE CTHE-PRINT-PRSO ()
 	 <THE-PRINT ,PRSO T>>
@@ -830,18 +707,15 @@ be include when the crunch comes."
 
 <GLOBAL CLOCK-WAIT <>>
 
-<GLOBAL C-TABLE %<COND (<GASSIGNED? ZILCH>
-			'<ITABLE NONE 26>)
-		       (T
-			'<ITABLE NONE 52>)>>
+<GLOBAL C-TABLE <ITABLE 13 <> <>>>
 
-<CONSTANT C-TABLELEN 52>
-<GLOBAL C-INTS 52>
+<CONSTANT C-INTLEN 4>	;"length of an interrupt entry in bytes"
+<CONSTANT C-RTN 0>	;"word offset of routine name"
+<CONSTANT C-TICK 1>	;"word offset of count"
+
+<CONSTANT C-TABLELEN 52>	;"length of interrupt table in bytes"
+<GLOBAL C-INTS 52>		;"start of queued interrupts in bytes"
 %<DEBUG-CODE <GLOBAL C-MAXINTS 52>>
-
-<CONSTANT C-INTLEN 4>	;"length of an interrupt entry"
-<CONSTANT C-RTN 0>	;"offset of routine name"
-<CONSTANT C-TICK 1>	;"offset of count"
 
 <ROUTINE DEQUEUE (RTN)
 	 <COND (<SET RTN <QUEUED? .RTN>>
@@ -888,7 +762,7 @@ be include when the crunch comes."
 	 <COND (%<COND (<GASSIGNED? ZILCH>
 			'<G? .INT ,CLOCK-HAND>)
 		       (ELSE
-			'<L=? <LENGTH .INT> <LENGTH ,CLOCK-HAND>>)>
+			'<L? <LENGTH .INT> <LENGTH ,CLOCK-HAND>>)>
 		<SET TICK <- <+ .TICK 3>>>)>
 	 <PUT .INT ,C-TICK .TICK>
 	 .INT>
@@ -950,7 +824,7 @@ be include when the crunch comes."
 		   <COND (<N==? <LENGTH .OBJ> 3>
 			  <ERROR BAD-THING .OBJ>)>
 		   <MAPRET <COND (<NTH .OBJ 2>
-				  <VOC <SPNAME <NTH .OBJ 2>>>)>
+				  <VOC <SPNAME <NTH .OBJ 2>> NOUN>)>
 			   <COND (<NTH .OBJ 1>
 				  <VOC <SPNAME <NTH .OBJ 1>> ADJECTIVE>)>
 			   <3 .OBJ>>>

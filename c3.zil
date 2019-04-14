@@ -42,7 +42,7 @@ floor opens into thin air which goes a long way down before anything
 solid is reached." CR>
 		<RFALSE>)>>
 
-<GLOBAL FALL-WARNING? <>>
+<GLOBAL FALL-WARNING?:FLAG <>>
 
 <ROUTINE AIR-ROOM-F (RARG)
 	 <COND (<EQUAL? .RARG ,M-LOOK>
@@ -233,7 +233,7 @@ of carpets">
 'RANDOM-CARPET " that's shabby and badly made">)>)>
 	 <TELL ,PERIOD>>
 
-<GLOBAL MERCHANT-FLAG <>>
+<GLOBAL MERCHANT-FLAG:FLAG <>>
 
 <ROUTINE MERCHANT-F ("OPTIONAL" (RARG <>) "AUX" PREV)
 	 <SETG MERCHANT-FLAG T>
@@ -445,7 +445,7 @@ thief!\"">
 		<KICKED-OUT>
 		<RTRUE>)>>
 
-<GLOBAL ASKED-FOR <>>
+<GLOBAL ASKED-FOR:FLAG <>>
 
 <ROUTINE KICKED-OUT ("AUX" (L <LOC ,PLAYER>))
 	 <COND (<FSET? .L ,VEHBIT>
@@ -462,10 +462,10 @@ thief!\"">
 "The merchant says, \"Time is money, and you've wasted too much of mine!\"">
 		<KICKED-OUT>)>>
 
-<GLOBAL YOUR-OFFER 0>
-<GLOBAL MERCHANT-WANTS 900>
-<GLOBAL MERCHANT-COUNT 0>
-<GLOBAL MERCHANT-SAYS
+<GLOBAL YOUR-OFFER:NUMBER 0>
+<GLOBAL MERCHANT-WANTS:NUMBER 900>
+<GLOBAL MERCHANT-COUNT:NUMBER 0>
+<GLOBAL MERCHANT-SAYS:TABLE
 	<PLTABLE
 "\"These carpets are the epitome of the weaver's art, woven
 by skilled native craftsmen with pride in their work. The Flatheads themselves
@@ -615,15 +615,18 @@ to fall apart.">
 			    <EQUAL? ,PRSI ,SHEARS ,KNIFE>>
 		       <CARPET-CRUMBLES>)>)>>
 
-<GLOBAL SITTING? <>>
+<GLOBAL SITTING?:FLAG <>>
+
+<ROUTINE IMPOSSIBLE-MANEUVER ()
+	 <TELL
+"An impossible maneuver under the circumstances." CR>>
 
 <ROUTINE CANT-GET-ON? ()
 	 <COND (<FSET? ,HERE ,RAIRBIT>
 		<TELL
 "A good thought, but a little too late to save you, I'm afraid." CR>)
 	       (<FSET? ,HERE ,RWATERBIT>
-		<TELL
-"Impossible under the circumstances." CR>)
+		<IMPOSSIBLE-MANEUVER>)
 	       (<HELD? ,PRSO>
 		<TELL
 ,YOU-HAVE-TO " put it down first." CR>)>>
@@ -848,13 +851,15 @@ fringe of the carpet starts to ruffle expectantly." CR>)
 		<TELL ,PERIOD>)>
 	 <RTRUE>>
 
-<GLOBAL RIPPLES "The carpet ripples excitedly">
+<GLOBAL RIPPLES:STRING "The carpet ripples excitedly">
 
 <ROUTINE GET-OFF-FIRST ()
 	 <TELL
 ,YOU-HAVE-TO " get off the carpet first." CR>>
 
 <ROUTINE CARPET-CRUMBLES ()
+	 <COND (<IN? ,PLAYER ,PRSO>
+		<MOVE ,PLAYER ,HERE>)>
 	 <REMOVE ,PRSO>
 	 <TELL
 "As the first thread is cut, the " 'PRSO " crumbles to dust." CR>>
@@ -911,7 +916,10 @@ Abdul el-Flathead|
 	       (<AND <VERB? CASKLY>
 		     <NOT <IN? ,CARPET-LABEL ,MAGIC-CARPET>>>
 		<TELL ,NOTHING-HAPPENS>)
-	       (<VERB? TAKE MUNG>
+	       (<OR <VERB? TAKE MUNG>
+		    <AND <VERB? CUT>
+			 ,PRSI
+			 <FSET? ,PRSI ,WEAPONBIT>>> 
 		<FSET ,PRSO ,RMUNGBIT>
 		<COND (<AND <IN? ,PLAYER ,MAGIC-CARPET>
 			    <FSET? ,HERE ,RAIRBIT>>
@@ -1014,9 +1022,9 @@ CR>)>)>>
 CTHE ,PRSO " falls, dwindling below you, never to be seen again." CR>)
 	       (ELSE <RTRUE>)>>
 
-<GLOBAL NS-COUNT 0>
-<GLOBAL EW-COUNT 0>
-<GLOBAL UD-COUNT 0>
+<GLOBAL NS-COUNT:NUMBER 0>
+<GLOBAL EW-COUNT:NUMBER 0>
+<GLOBAL UD-COUNT:NUMBER 0>
 
 <ROOM LOST-IN-CLOUDS
       (IN ROOMS)
@@ -1116,7 +1124,7 @@ is undisturbed by the heat." CR>)
 	 <TELL
 "A small patch of lava cools, but it is swept away." CR>>
 
-<GLOBAL SMELL-LAVA "It smells like boiling brimstone.|">
+<GLOBAL SMELL-LAVA:STRING "It smells like boiling brimstone.|">
 
 <ROUTINE LAVA-PSEUDO ()
 	 <COND (<VERB? EXAMINE TAKE SWIM THROUGH>
@@ -1166,7 +1174,7 @@ the flow." CR>)
 		       <SETG ROCK-ARRIVED? T>
 		       <QUEUE I-ROCK-ARRIVES 2>)>)>>
 
-<GLOBAL ROCK-ARRIVED? <>>
+<GLOBAL ROCK-ARRIVED?:FLAG <>>
 
 <OBJECT LAVA-ROCK
 	(DESC "lava fragment")
@@ -1225,7 +1233,7 @@ CTHE ,PRSI " hisses and sizzles when you touch the lava with it." CR>)>)
 	       (MOLTEN LAVA LAVA-PSEUDO)
 	       (<> MOUNTAIN VOLCANO-PSEUDO)>)>
 
-<GLOBAL GOT-MAGIC-CUBE? <>>
+<GLOBAL GOT-MAGIC-CUBE?:FLAG <>>
 
 <ROUTINE OUTCROPPING-ROOM-F (RARG)
 	 <COND (<EQUAL? .RARG ,M-LOOK>
@@ -1288,7 +1296,7 @@ flat top about four feet across which is roughly square.">
 and cubical.">)>
 		       <CLEVER-CONTENTS ,OUTCROPPING-ROOM
 					" On the top of the outcropping"
-					 ,MAGIC-CUBE>
+					,MAGIC-CUBE>
 		       <CRLF>)
 		      (<AND <VERB? PUT PUT-ON>
 			    <EQUAL? ,PRSI ,OUTCROPPING>>
@@ -1380,7 +1388,11 @@ light coming from ">
 		       <TELL " has been reduced
 to a thin, barely glowing stream of tiny blobs that drips, spurts
 and sputters uselessly to the ground. There it collects into a small pile
-which is slowly disappearing, perhaps by evaporation." CR>)>)>>
+which is slowly disappearing, perhaps by evaporation." CR>)>)
+	       (<EQUAL? .RARG ,M-ENTER>
+		<PUT <GETPT ,LIGHT ,P?SYNONYM> 2 ,W?PILE>)
+	       (<EQUAL? .RARG ,M-LEAVE>
+		<PUT <GETPT ,LIGHT ,P?SYNONYM> 2 ,W?LIGHTS>)>>
 
 <ROUTINE TELL-LIGHT-SOURCE ()
 	 <COND (<EQUAL? ,LIT ,WINNER>
@@ -1402,7 +1414,7 @@ which is slowly disappearing, perhaps by evaporation." CR>)>)>>
       (THINGS <PSEUDO (LIGHT POOL POOL-PSEUDO)>)>
 
 <ROUTINE POOL-PSEUDO ()
-	 <COND (<VERB? THROUGH> <DO-WALK ,P?DOWN>)
+	 <COND (<VERB? THROUGH BOARD> <DO-WALK ,P?DOWN>)
 	       (<VERB? EXAMINE> <PERFORM ,V?LOOK> <RTRUE>)
 	       (<AND <VERB? THROW DROP>
 		     <EQUAL? ,PRSI ,PSEUDO-OBJECT>>
@@ -1441,6 +1453,7 @@ center of the room." CR>)>)
 		       <I-GRUES-NOTICE T>
 		       <RTRUE>)>)
 	       (<EQUAL? .RARG ,M-ENTER>
+		<PUT <GETPT ,LIGHT ,P?SYNONYM> 2 ,W?PILE>
 		<COND (<NOT <EQUAL? ,CHANGED? ,GRUE>>
 		       <COND (<NOT <EQUAL? ,OHERE ,DARK-CAVE>>
 			      <QUEUE I-GRUES-NOTICE 1>
@@ -1455,7 +1468,9 @@ a larger area." CR CR>)
 "You make your way carefully in the almost non-existent light down to an
 area filled with dim shapes. They move about purposefully, making horrible
 gurgling noises. The floor is rough and jumbled near the walls, so you
-haven't been noticed yet." CR CR>)>)>)>>
+haven't been noticed yet." CR CR>)>)>)
+	       (<EQUAL? .RARG ,M-LEAVE>
+		<PUT <GETPT ,LIGHT ,P?SYNONYM> 2 ,W?LIGHTS>)>>
 
 <ROOM LIGHT-POOL
       (IN ROOMS)
@@ -1478,6 +1493,7 @@ which sticks up out of the light." CR>)
 			    <EQUAL? ,PRSO <> ,ROOMS ,PSEUDO-OBJECT>>
 		       <DO-WALK ,P?OUT>)>)
 	       (<EQUAL? .RARG ,M-ENTER>
+		<PUT <GETPT ,LIGHT ,P?SYNONYM> 2 ,W?PILE>
 		<QUEUE I-FRIED-GRUE 2>
 		<TELL
 "You enter the pool, which is composed of the accumulated dribbles of light
@@ -1486,7 +1502,9 @@ light tickles">
 		<COND (<EQUAL? ,CHANGED? ,GRUE>
 		       <TELL " at first, but then it begins to burn and your eyes are
 hurting severely">)>
-		<TELL ,PERIOD CR>)>>
+		<TELL ,PERIOD CR>)
+	       (<EQUAL? .RARG ,M-LEAVE>
+		<PUT <GETPT ,LIGHT ,P?SYNONYM> 2 ,W?LIGHTS>)>>
 
 <ROOM PILLAR-ROOM
       (IN ROOMS)
@@ -1509,13 +1527,17 @@ fear." CR>)
 		      (ELSE
 		       <TELL
 "almost imperceptible light. You can barely see dim shapes capering in
-the dark." CR>)>)>>
+the dark." CR>)>)
+	       (<EQUAL? .RARG ,M-ENTER>
+		<PUT <GETPT ,LIGHT ,P?SYNONYM> 2 ,W?PILE>)
+	       (<EQUAL? .RARG ,M-LEAVE>
+		<PUT <GETPT ,LIGHT ,P?SYNONYM> 2 ,W?LIGHTS>)>>
 
 <OBJECT PILLAR
 	(IN LOCAL-GLOBALS)
 	(DESC "pillar")
 	(SYNONYM PILLAR GLYPHS)
-	(ADJECTIVE MARBLE SHORT ERODED)
+	(ADJECTIVE MARBLE ERODED STUMP)
 	(FLAGS NDESCBIT SURFACEBIT READBIT)
 	(ACTION PILLAR-F)
 	(TEXT "The only readable ones say \"D.L. 1985.\"")>
@@ -1523,20 +1545,24 @@ the dark." CR>)>)>>
 <ROUTINE PILLAR-F ("AUX" (IGNORE? <>))
 	 <COND (<VERB? EXAMINE LOOK-INSIDE>
 		<TELL
-"This is a short, squat marble pillar covered with eroded glyphs. It
+"This is the stump of a marble pillar covered with eroded glyphs. It
 barely projects out of the pool of light. The grues seem awed by it.">
 		<COND (<AND <IN? ,FIRE-CUBE ,PILLAR-ROOM>
 			    <NOT <EQUAL? ,HERE ,PILLAR-ROOM>>>
 		       <SET IGNORE? ,FIRE-CUBE>
-		       <TELL
-" There is something small and white on the pillar.">)>
-		<CLEVER-CONTENTS ,PILLAR-ROOM
-				 " On top of the pillar"
-				 .IGNORE?>
+		       <COND (<EQUAL? ,HERE ,LIGHT-POOL>
+			      <TELL
+" You can't see the top of the pillar from here.">)
+			     (ELSE
+			      <TELL
+" There is something small and white on the pillar.">
+			      <CLEVER-CONTENTS ,PILLAR-ROOM
+					       " On top of the pillar"
+					       .IGNORE?>)>)>
 		<CRLF>)
 	       (<THROW-ONTO ,PILLAR ,PILLAR-ROOM>
 		<RTRUE>)
-	       (<VERB? CLIMB-ON CLIMB-FOO BOARD>
+	       (<VERB? CLIMB-ON CLIMB-UP CLIMB-FOO BOARD>
 		<COND (<EQUAL? ,HERE ,GRUE-CAVE>
 		       <TELL
 "It's in the pool, out of reach from here." CR>)
@@ -1645,7 +1671,7 @@ glassware are carelessly stacked in corners.">)>
 north side of the room whose lock mechanism is visible. ">
 		<DESCRIBE-VAULT-DOOR>)
 	       (<EQUAL? .RARG ,M-LEAVE>
-		<MAKE-JUNK>)>>
+		<COND (<VERB? BLORPLE> <MAKE-JUNK>)>)>>
 
 <OBJECT VAULT-DOOR
 	(IN LOCAL-GLOBALS)
@@ -1758,7 +1784,7 @@ five burly guards are coming." CR>)>)
 	(IN LOCAL-GLOBALS)
 	(DESC "iron door")
 	(SYNONYM DOOR)
-	(ADJECTIVE IRON NORTH N)
+	(ADJECTIVE IRON NORTH)
 	(FLAGS DOORBIT LOCKED)
 	(ACTION IRON-DOOR-F)>
 
@@ -1770,7 +1796,7 @@ five burly guards are coming." CR>)>)
 	       (<VERB? THROUGH>
 		<DO-WALK ,P?NORTH>)>>
 
-<GLOBAL SPELLS-USED 0>
+<GLOBAL SPELLS-USED:FLAG 0>
 
 <ROUTINE SCALES-ROOM-F (RARG "AUX" P1 P2)
 	 <COND (<EQUAL? .RARG ,M-LOOK>
@@ -1795,7 +1821,7 @@ five burly guards are coming." CR>)>)
 		       <TELL "a closed">)>
 		<TELL " iron door. To the south is the inner vault. Its
 steel door is ">
-		<COND (<FSET? ,IRON-DOOR ,OPENBIT>
+		<COND (<FSET? ,VAULT-DOOR ,OPENBIT>
 		       <TELL "open">)
 		      (ELSE
 		       <TELL "closed">)>
@@ -1831,9 +1857,10 @@ that they are.">)
 		<CUBES-TO-PILES>
 		<COND (,TIME-CUBE-SCORE?
 		       <SETG TREASURY-GUARDED? T>)>
-		<MAKE-JUNK>)>>
+		<COND (<VERB? BLORPLE>
+		       <MAKE-JUNK>)>)>>
 
-<GLOBAL FAKE-CUBE-LIST
+<GLOBAL FAKE-CUBE-LIST:TABLE
 	<LTABLE 0
 		CUBE-1 CUBE-2 CUBE-3 CUBE-4 CUBE-5 CUBE-6
 		CUBE-7 CUBE-8 CUBE-9 CUBE-10 CUBE-11 TIME-CUBE>>
@@ -1848,11 +1875,10 @@ that they are.">)
 	 <PUT .BUF 0 0>
 	 <SETG P-QNEXT .BUF>>
 
-<ROUTINE CUBES-TO-PILES ("AUX" (CNT 1) L)
+<ROUTINE CUBES-TO-PILES ("AUX" L)
 	 <SET L ,FAKE-CUBE-LIST>
-	 <REPEAT ()
-		 <COND (<IGRTR? CNT 13> <RETURN>)>
-		 <MOVE <GET .L .CNT> ,PILE-1>>
+	 <DO (CNT 2 13)
+	     <MOVE <GET .L .CNT> ,PILE-1>>
 	 <COND (<EQUAL? ,TIME-CUBE ,BLORPLE-OBJECT>
 		<REMOVE ,TIME-CUBE>
 		<COND (<NOT ,TIME-CUBE-SCORE?>
@@ -1863,37 +1889,31 @@ that they are.">)
 		     <LOC ,BLORPLE-OBJECT>>
 		<SETG BLORPLE-OBJECT <>>)>>
 
-<GLOBAL TIME-CUBE-SCORE? <>>
+<GLOBAL TIME-CUBE-SCORE?:FLAG <>>
 
-<ROUTINE JUGGLE-CUBES ("AUX" (CNT 1) BUF (P1 0) (P2 0) Q)
+<ROUTINE JUGGLE-CUBES ("AUX" BUF (P1 0) (P2 0) Q)
 	 <ROB ,PILE-1 ,SCALES-ROOM>
 	 <ROB ,PILE-2 ,SCALES-ROOM>
-	 <REPEAT ()
-		 <COND (<IGRTR? CNT 13> <RETURN>)>
-		 <SET Q <PICK-ONE ,FAKE-CUBE-LIST>>
-		 <FSET .Q ,NDESCBIT>
-		 <COND (<OR <EQUAL? .P2 6>
-			    <AND <L? .P1 6> <PROB 50>>>
-			<SET P1 <+ .P1 1>>
-			<MOVE .Q ,PILE-1>)
-		       (ELSE
-			<MOVE .Q ,PILE-2>
-			<SET P2 <+ .P2 1>>)>>
+	 <DO (CNT 2 13)
+	     <SET Q <PICK-ONE ,FAKE-CUBE-LIST>>
+	     <FSET .Q ,NDESCBIT>
+	     <COND (<OR <EQUAL? .P2 6>
+			<AND <L? .P1 6> <PROB 50>>>
+		    <SET P1 <+ .P1 1>>
+		    <MOVE .Q ,PILE-1>)
+		   (ELSE
+		    <MOVE .Q ,PILE-2>
+		    <SET P2 <+ .P2 1>>)>>
 	 <SET BUF ,P-QBUF>
-	 <SET Q <FIRST? ,PILE-1>>
-	 <REPEAT ()
-		 <COND (<NOT .Q> <RETURN>)>
-		 <PUTP .Q ,P?NAME .BUF>
-		 <PUT .BUF 0 <CUBE-ADJ .Q>>
-		 <SET BUF <REST .BUF 10>>
-		 <SET Q <NEXT? .Q>>>
-	 <SET Q <FIRST? ,PILE-2>>
-	 <REPEAT ()
-		 <COND (<NOT .Q> <RETURN>)>
-		 <PUTP .Q ,P?NAME .BUF>
-		 <PUT .BUF 0 <CUBE-ADJ .Q>>
-		 <SET BUF <REST .BUF 10>>
-		 <SET Q <NEXT? .Q>>>>
+	 <MAP-CONTENTS (Q ,PILE-1)
+		       <PUTP .Q ,P?NAME .BUF>
+		       <PUT .BUF 0 <CUBE-ADJ .Q>>
+		       <SET BUF <REST .BUF 10>>>
+	 <MAP-CONTENTS (Q ,PILE-2)
+		       <PUTP .Q ,P?NAME .BUF>
+		       <PUT .BUF 0 <CUBE-ADJ .Q>>
+		       <SET BUF <REST .BUF 10>>>
+	 <RTRUE>>
 
 <ROUTINE TELL-PILE (PILE OTHER)
 	 <TELL
@@ -1920,12 +1940,11 @@ that they are.">)
 		<RFALSE>)>>
 
 <ROUTINE MAKE-JUNK ()
-	 <COND (<VERB? BLORPLE>
-		<FCLEAR ,VAULT-DOOR ,OPENBIT>
-		<COND (<HELD? ,TREASURE>
-		       <MOVE ,JUNK <LOC ,TREASURE>>
-		       <FSET ,TREASURE ,NDESCBIT>
-		       <MOVE ,TREASURE ,INNER-VAULT>)>)>>
+	 <FCLEAR ,VAULT-DOOR ,OPENBIT>
+	 <COND (<HELD? ,TREASURE>
+		<MOVE ,JUNK <LOC ,TREASURE>>
+		<FSET ,TREASURE ,NDESCBIT>
+		<MOVE ,TREASURE ,INNER-VAULT>)>>
 
 <OBJECT JUNK
 	(SYNONYM JUNK PASTE GILT LEAD)
@@ -1947,22 +1966,21 @@ lead coins." CR>)
 		       <TELL "The junk looks valuable again." CR>)
 		      (ELSE <RTRUE>)>)>>
 
-<GLOBAL IS-GLOWING " is glowing with a faint blue glow.">
+<GLOBAL IS-GLOWING:STRING " is glowing with a faint blue glow.">
 
-<ROUTINE MEASURE (OBJ "AUX" (F <FIRST? .OBJ>) (CNT 0))
-	 <REPEAT ()
-		 <COND (<NOT .F> <RETURN .CNT>)
-		       (<GETP .F ,P?CUBE> ;"REAL CUBE"
-			<SET CNT <+ .CNT ,REAL-VALUE>>)
-		       (<GETPT .F ,P?NAME> ;"FAKE CUBE"
-			<SET CNT <+ .CNT ,FAKE-VALUE>>)
-		       (<OR <FSET? .F ,MAGICBIT>
-			    <FSET? .F ,SCROLLBIT>>
-			<SET CNT <+ .CNT 1>>)>
-		 <SET F <NEXT? .F>>>>
+<ROUTINE MEASURE (OBJ "AUX" F (CNT 0))
+	 <MAP-CONTENTS (F .OBJ)
+		       (<RETURN .CNT>)
+		       <COND (<GETP .F ,P?CUBE> ;"REAL CUBE"
+			      <SET CNT <+ .CNT ,REAL-VALUE>>)
+			     (<GETPT .F ,P?NAME> ;"FAKE CUBE"
+			      <SET CNT <+ .CNT ,FAKE-VALUE>>)
+			     (<OR <FSET? .F ,MAGICBIT>
+				  <FSET? .F ,SCROLLBIT>>
+			      <SET CNT <+ .CNT 1>>)>>>
 
-<GLOBAL REAL-VALUE 3>
-<GLOBAL FAKE-VALUE 2>
+<GLOBAL REAL-VALUE:NUMBER 3>
+<GLOBAL FAKE-VALUE:NUMBER 2>
 
 <OBJECT ALARM-FAIRY
 	(DESC "alarm fairy")
@@ -1993,8 +2011,8 @@ ceiling, out of reach, and jeers at you." CR>)
 "\"Missed me! Missed me! Now you have to kiss me!\" It plants a smooch
 on your cheek." CR>)>>
 
-<GLOBAL GUARDS-FLAG 0>
-<GLOBAL TREASURY-GUARDED? <>>
+<GLOBAL GUARDS-FLAG:NUMBER 0>
+<GLOBAL TREASURY-GUARDED?:FLAG <>>
 
 <OBJECT PILE-1
 	(IN SCALES-ROOM)
@@ -2016,32 +2034,29 @@ on your cheek." CR>)>>
 	(GENERIC GENERIC-RANDOM-F)
 	(ACTION PILE-F)>
 
-<GLOBAL WHITE-CUBE "featureless white cube">
+<GLOBAL WHITE-CUBE:STRING "featureless white cube">
 
-<ROUTINE PILE-LOOP (OBJ "AUX" (F <FIRST? .OBJ>) (1ST? T) (CNT 0) N CUBE?)
-	 <REPEAT ()
-		 <COND (<NOT .F>
-			<COND (<G? .CNT 0>
-			       <COND (<NOT .1ST?>
-				      <TELL " and ">)>
-			       <TELL N .CNT " " ,WHITE-CUBE>
-			       <COND (<G? .CNT 1> <TELL "s">)>)>
-			<RETURN>)>
-		 <SET N <NEXT? .F>>
-		 <SET CUBE? <GETPT .F ,P?NAME>>
-		 <COND (<OR <NOT .CUBE?> ;"not a cube?"
-			    <NOT <ZERO? <GETP .F ,P?NAME>>>>
-			<COND (<NOT .1ST?>
-			       <COND (<AND <NOT .N> <ZERO? .CNT>>
-				      <TELL " and ">)
-				     (ELSE <TELL ", ">)>)
-			      (T <SET 1ST? <>>)>
-			<COND (<NOT <GETPT .F ,P?NAME>>
-			       <TELL A .F>)
-			      (ELSE
-			       <TELL THE .F>)>)
-		       (ELSE <SET CNT <+ .CNT 1>>)>
-		 <SET F .N>>>
+<ROUTINE PILE-LOOP (OBJ "AUX" F N (1ST? T) (CNT 0) CUBE?)
+	 <MAP-CONTENTS (F N .OBJ)
+		       (END <COND (<G? .CNT 0>
+				   <COND (<NOT .1ST?>
+					  <TELL " and ">)>
+				   <TELL N .CNT " " ,WHITE-CUBE>
+				   <COND (<G? .CNT 1> <TELL "s">)>)>)
+		       <SET CUBE? <GETPT .F ,P?NAME>>
+		       <COND (<OR <NOT .CUBE?> ;"not a cube?"
+				  <NOT <ZERO? <GETP .F ,P?NAME>>>>
+			      <COND (<NOT .1ST?>
+				     <COND (<AND <NOT .N> <ZERO? .CNT>>
+					    <TELL " and ">)
+					   (ELSE <TELL ", ">)>)
+				    (T <SET 1ST? <>>)>
+			      <COND (<NOT <GETPT .F ,P?NAME>>
+				     <TELL A .F>)
+				    (ELSE
+				     <TELL THE .F>)>)
+			     (ELSE <SET CNT <+ .CNT 1>>)>>
+	 >
 
 <ROUTINE PILE-F ()
 	 <COND (<VERB? EXAMINE>
@@ -2066,6 +2081,11 @@ etc." CR>)
 		       <COND (<AND <NOT <HELD? ,PRSO>>
 				   <EQUAL? <ITAKE> ,M-FATAL <>>>
 			      <RTRUE>)
+			     (<EQUAL? ,PRSO
+				      ,MAGIC-CARPET ,RANDOM-CARPET ,ZIPPER>
+			      <MOVE ,PRSO ,HERE>
+			      <TELL
+"You put it on the floor near " THE ,PRSI ,PERIOD>)
 			     (ELSE
 			      <MOVE ,PRSO ,PRSI>
 			      <FSET ,PRSO ,TOUCHBIT>
@@ -2273,12 +2293,10 @@ on it." CR>)
 		<TELL "s">)>
 	 <TELL "." CR>>
 
-<ROUTINE CUBE-COUNT (OBJ "AUX" (CNT 0) (CONT <FIRST? .OBJ>))
-	 <REPEAT ()
-		 <COND (<NOT .CONT> <RETURN>)
-		       (<NOT <ZERO? <GETPT .CONT ,P?NAME>>>
-			<SET CNT <+ .CNT 1>>)
-		       (<FIRST? .CONT>
-			<SET CNT <+ .CNT <CUBE-COUNT .CONT>>>)>
-		 <SET CONT <NEXT? .CONT>>>
-	 .CNT>
+<ROUTINE CUBE-COUNT (OBJ "AUX" (CNT 0))
+	 <MAP-CONTENTS (CONT .OBJ)
+		       (END <RETURN .CNT>)
+		       <COND (<NOT <ZERO? <GETPT .CONT ,P?NAME>>>
+			      <SET CNT <+ .CNT 1>>)
+			     (<FIRST? .CONT>
+			      <SET CNT <+ .CNT <CUBE-COUNT .CONT>>>)>>>

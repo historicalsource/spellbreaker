@@ -40,7 +40,7 @@ spell scrolls." CR>)
 		<MAGIC-DOOR-EXIT>)
 	       (ELSE ,DULL-ROOM-RETURN)>>
 
-<GLOBAL DULL-ROOM-RETURN <>>
+<GLOBAL DULL-ROOM-RETURN:OBJECT <>>
 
 "EARTH"
 
@@ -646,7 +646,7 @@ see a fat, pointed tongue.">
 "There's no hinge there; it's not a door!" CR>)>)>>
 
 <ROUTINE WONT-FIT ()
-	 <TELL "It won't fit." CR>>
+	 <TELL "Your hand won't fit in." CR>>
 
 <ROUTINE MOUTH-CONTENTS ("AUX" STR)
 	 <SET STR " Sitting on the tongue">
@@ -739,7 +739,7 @@ ruin." CR>)>)>>
 <OBJECT ZIPPER
 	(IN RUINS-ROOM)
 	(DESC "zipper")
-	(SYNONYM ZIPPER HOLE POCKET POUCH)
+	(SYNONYM ZIPPER AABBCC ;"HOLE" POCKET POUCH)
 	(ADJECTIVE SILVER DIMLY LIT)
 	(ACTION ZIPPER-F)
 	(CONTFCN ZIPPER-F)
@@ -769,9 +769,8 @@ ruin." CR>)>)>>
 		       <MAKE-OUT>)>)
 	       (<EQUAL? .RARG ,M-BEG>
 		<COND (<AND <NOT-IN-VEHICLE?>
-			    <OR <VERB? TAKE>
-				<NOT <FSET? ,ZIPPER ,OPENBIT>>>>
-		       <TELL "That's outside." CR>)
+			    <NOT <VERB? FIND WHAT WHERE WHO>>>
+		       <TELL "That's not in here." CR>)
 		      (<AND <VERB? LOOK-INSIDE> <EQUAL? ,PRSO ,ZIPPER>>
 		       <PERFORM ,V?LOOK>
 		       <RTRUE>)
@@ -788,12 +787,14 @@ ruin." CR>)>)>>
 		      (<AND <VERB? OPEN REZROV>
 			    <EQUAL? ,PRSO ,ZIPPER>
 			    <NOT <FSET? ,ZIPPER ,OPENBIT>>>
+		       <PUT <GETPT ,ZIPPER ,P?SYNONYM> 1 ,W?HOLE>
 		       <FSET ,ZIPPER ,OPENBIT>
-		       <TELL
-"Opening the zipper reveals the outside world." CR>)
+		       <TELL "Opened. ">
+		       <CANT-SEE-OUTSIDE>)
 		      (<AND <VERB? CLOSE>
 			    <EQUAL? ,PRSO ,ZIPPER>
 			    <FSET? ,ZIPPER ,OPENBIT>>
+		       <PUT <GETPT ,ZIPPER ,P?SYNONYM> 1 ,W?ZIPPER>
 		       <FCLEAR ,ZIPPER ,OPENBIT>
 		       <TELL
 ,YOU-ARE-NOW "in a private little world of your own." CR>)
@@ -803,11 +804,17 @@ ruin." CR>)>)>>
 		      (<OR <VERB? DISEMBARK>
 			   <AND <VERB? DROP> <EQUAL? ,PRSO ,ZIPPER>>>
 		       <COND (<FSET? ,ZIPPER ,OPENBIT>
-			      <SETG LIT <LIT? ,HERE>>
-			      <MOVE ,PLAYER <LOC ,ZIPPER>>
-			      <MOVE ,ZIPPER ,PLAYER>
-			      <TELL
-"You get out of the hole." CR>)
+			      <COND (<NOT <LOC ,ZIPPER>>
+				     <EMERGE-AND-DROWN>)
+				    (ELSE
+				     <SETG LIT <LIT? ,HERE>>
+				     <MOVE ,PLAYER <LOC ,ZIPPER>>
+				     <MOVE ,ZIPPER ,PLAYER>
+				     <TELL
+"You get out of the hole." CR>
+				     <COND (,OGRE-MURDEROUS?
+					    <I-OGRE-KILLS-YOU>)>
+				     <RTRUE>)>)
 			     (ELSE
 			      <TELL
 ,YOU-HAVE-TO " open the " 'ZIPPER " first." CR>)>)>)
@@ -819,6 +826,7 @@ ruin." CR>)>)>>
 		       <TELL-OPEN-CLOSED ,ZIPPER>)
 		      (<AND <VERB? OPEN REZROV>
 			    <NOT <FSET? ,ZIPPER ,OPENBIT>>>
+		       <PUT <GETPT ,ZIPPER ,P?SYNONYM> 1 ,W?HOLE>
 		       <FSET ,ZIPPER ,OPENBIT>
 		       <COND (<NOT ,LIT> <SETG LIT <LIT? ,HERE>>)>
 		       <TELL
@@ -831,6 +839,7 @@ ruin." CR>)>)>>
 the area.">)>
 		       <CRLF>)
 		      (<AND <VERB? CLOSE> <FSET? ,ZIPPER ,OPENBIT>>
+		       <PUT <GETPT ,ZIPPER ,P?SYNONYM> 1 ,W?ZIPPER>
 		       <FCLEAR ,ZIPPER ,OPENBIT>
 		       <SETG LIT <LIT? ,HERE>>
 		       <TELL
@@ -869,7 +878,7 @@ the area.">)>
 though something was thrust into your hand, there's something there. Oops,
 it slipped away again." CR>)>)
 		      (<VERB? BOARD>
-		       <COND (<NOT <HELD? ,ZIPPER>>
+		       <COND (<NOT <IN? ,ZIPPER ,PLAYER>>
 			      <DONT-HAVE-THAT>)
 			     (<FSET? ,ZIPPER ,OPENBIT>
 			      <COND (<OR <EQUAL? ,HERE
@@ -879,9 +888,10 @@ it slipped away again." CR>)>)
 						 ,IN-PIPE-2>
 					 <EQUAL? ,HERE ,IN-SEWER ,RUINED-PIPE
 						 ,PAST-CABINET>
-					 <EQUAL? ,HERE ,CABINET>>
-				     <TELL
-"An impossible maneuver under the circumstances." CR>
+					 <EQUAL? ,HERE ,CABINET>
+					 <AND <EQUAL? ,HERE ,OUBLIETTE>
+					      <G? ,WATER-FLAG 0>>>
+				     <IMPOSSIBLE-MANEUVER>
 				     <RTRUE>)>
 			      <COND (<NOT ,ZIPPER-SCROLL?>
 				     <SETG ZIPPER-SCROLL? T>
@@ -1366,6 +1376,8 @@ hermit looks glum." CR>>
 "\"I like avalanches. They keep people away. Usually.\"" CR>)
 	       (<EQUAL? .OBJ ,ZORKMID>
 		<MATERIALISM>)
+	       (<EQUAL? .OBJ ,FISH ,BREAD>
+		<TELL "He perks up at the mention of food." CR>)
 	       (<EQUAL? .OBJ ,LIFE-CUBE ,HUT ,HERMIT>
 		<TELL
 "\"I've been living up here for many years. Wanted to get
@@ -1423,7 +1435,7 @@ of a rock not five minutes' walk from here. It was perfect.\"" CR>)>>
 			      <ROCKS-TUMBLING>)
 			     (ELSE
 			      <TELL ,ROCKS-PRECARIOUS ,PERIOD>)>)>)
-	       (<VERB? CLIMB-FOO CLIMB-UP CLIMB-ON>
+	       (<VERB? CLIMB-FOO CLIMB-UP CLIMB-ON CLIMB-OVER>
 		<DO-WALK ,P?UP>)
 	       (<VERB? RUB MOVE PUSH LESOCH KICK MALYON>
 		<COND (<EQUAL? ,HERE ,VOLCANO-BASE
@@ -1539,7 +1551,7 @@ trail heads west." CR>)>>
       (EAST TO CLIFF-BOTTOM)
       (IN TO OGRE-CAVE)
       (NORTH TO OGRE-CAVE)
-      (UP "There's no path that way.")
+      (UP "There's no way up here.")
       (ACTION CAVE-ENTRANCE-F)
       (FLAGS RLANDBIT OUTSIDE ONBIT)
       (GLOBAL GLOBAL-CLIFF GLOBAL-CAVE GLOBAL-ROCKS)
@@ -1664,6 +1676,9 @@ credit." CR>>
 "This small but cozy hole is the ogre's lair. Moldy, filthy furs piled
 in one corner make a crude bed. There is a rocky crawl up to the main
 part of the cave." CR>)
+	       (<EQUAL? .RARG ,M-ENTER>
+		<COND (<EQUAL? ,OHERE ,DULL-ROOM>
+		       <I-OGRE-KILLS-YOU T>)>)
 	       (<EQUAL? .RARG ,M-BEG>
 		<COND (<AND <VERB? LISTEN> <NOT ,PRSO>>
 		       <OGRE-NOISES>)
@@ -1686,6 +1701,7 @@ part of the cave." CR>)
 	 <SET L <LOC ,MAGIC-BOX>>
 	 <COND (<AND .L
 		     <IN? .L ,ROOMS>
+		     <NOT <EQUAL? .L ,EMPORIUM>>
 		     <NOT <GETP .L ,P?CUBE>>
 		     <EQUAL? <GETP ,HERE ,P?CUBE> ,MAGIC-BOX-CUBE>>
 		<COND (<EQUAL? .L ,CASTLE>
@@ -1818,7 +1834,7 @@ bear.">
 			      <TELL
 " He is currently six inches of concentrated ugliness.">)>
 		       <CRLF>)
-		      (<AND <VERB? GIVE WAVE-AT> <EQUAL? ,PRSI ,OGRE>>
+		      (<AND <VERB? GIVE SHOW WAVE-AT> <EQUAL? ,PRSI ,OGRE>>
 		       <GIVE-TO-OGRE>)
 		      (<VERB? LISTEN>
 		       <TELL CTHE ,OGRE " sounds ">

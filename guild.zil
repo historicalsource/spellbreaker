@@ -158,7 +158,7 @@ the south is the entry of the Guild Hall. ">
 efts, and salamanders. Toads and frogs hop excitedly about.">)
 		      (ELSE
 		       <TELL
-"There is a meeting of the Guildmasters going on. You are standing among
+"There is a meeting of the guildmasters going on. You are standing among
 a group of about ten sorcerers, each the master of an Enchanters Guild chapter
 somewhere in the land.">
 		       <COND (<G? ,OCOUNT 0>
@@ -174,6 +174,7 @@ somewhere in the land.">
 'ORKAN ", one of your colleagues, says, \"Stay. Be quiet. Don't
 embarrass us.\"" CR>)
 			     (<AND <VERB? SAY> <NOT ,PRSO>>
+			      <END-QUOTE>
 			      <TELL
 'ORKAN " quiets you. \"Interruptions will only annoy them.\"" CR>)
 			     (<AND <VERB? LISTEN>
@@ -528,10 +529,13 @@ CTHE ,SHADOW " snatches it greedily." CR>)
 "The frozen shadow is impervious to harm." CR>)
 			     (ELSE <FREEZES-YOU>)>)
 		      (<VERB? ESPNIS>
-		       <TELL
+		       <COND (<EQUAL? ,HERE ,TIME-STOPPED?>
+			      <TELL ,NOTHING-HAPPENS>)
+			     (ELSE
+			      <TELL
 "The shadow begins to nod off but with great effort resists and
 awakens. ">
-		       <FREEZES-YOU>)
+			      <FREEZES-YOU>)>)
 		      (<VERB? YOMIN>
 		       <TELL
 "You feel your own innermost desires, petty jealousies, and unworthy
@@ -544,6 +548,8 @@ the background in a disturbing way." CR>)
 		      (<AND <VERB? TELL> ,FROZEN?>
 		       <TELL "You cannot speak." CR>
 		       <END-QUOTE>)
+		      (<VERB? EMPATHIZE>
+		       <TELL "You sense in return a blast of cold." CR>)
 		      (<AND <NOT ,FROZEN?>
 			    <G? ,SHADOW-COUNT 4>
 			    <L? ,SHADOW-COUNT 8>>
@@ -648,7 +654,10 @@ you free it!" CR>)
 			      <FREEZES-YOU>)>)
 		      (<AND <VERB? PUT>
 			    <EQUAL? ,PRSI ,HYPERCUBE>>
-		       <COND (<EQUAL? ,TIME-STOPPED? ,HERE>
+		       <COND (<EQUAL? ,PRSO ,ME>
+			      <PERFORM ,V?BOARD ,PRSI>
+			      <RTRUE>)
+			     (<EQUAL? ,TIME-STOPPED? ,HERE>
 			      <COND (<SET F <FIRST? ,HYPERCUBE>>
 				     <TELL
 CTHE .F " is already there." CR>)

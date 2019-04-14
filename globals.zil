@@ -5,6 +5,17 @@
 <DIRECTIONS ;"Do not change the order of the first 8 without consulting MARC!"
  	    NORTH NE EAST SE SOUTH SW WEST NW UP DOWN IN OUT>
 
+<SYNONYM NORTH N>
+<SYNONYM SOUTH S>
+<SYNONYM EAST E>
+<SYNONYM WEST W>
+<SYNONYM DOWN D>
+<SYNONYM UP U>
+<SYNONYM NE NORTHEAST>
+<SYNONYM NW NORTHWEST>
+<SYNONYM SE SOUTHEAST>
+<SYNONYM SW SOUTHWEST>
+
 <GLOBAL HERE <>>
 
 <GLOBAL LIT <>>
@@ -35,13 +46,10 @@
 <CONSTANT DIR-DIR 2>
 <CONSTANT DIR-NAME 3>
 
-<ROUTINE DIR-BASE (DIR I O "AUX" (CNT 0) (L <GET ,DIR-TABLE 0>))
-	 <REPEAT ()
-		 <COND (<G? .CNT .L> <RFALSE>)
-		       (<EQUAL? <GET ,DIR-TABLE <+ .CNT .I>> .DIR>
-			<RETURN <GET ,DIR-TABLE <+ .CNT .O>>>)
-		       (ELSE
-			<SET CNT <+ .CNT 3>>)>>>
+<ROUTINE DIR-BASE (DIR I O "AUX" (L <GET ,DIR-TABLE 0>))
+	 <DO (CNT 0 .L 3)
+	     <COND (<EQUAL? <GET ,DIR-TABLE <+ .CNT .I>> .DIR>
+		    <RETURN <GET ,DIR-TABLE <+ .CNT .O>>>)>>>
 
 "global objects and associated routines"
 
@@ -188,7 +196,7 @@ Always return RFALSE (not handled) if you have resolved the problem."
 <OBJECT LIGHT
 	(IN GLOBAL-OBJECTS)
 	(DESC "light")
-	(SYNONYM LIGHT LIGHTS PILE)
+	(SYNONYM LIGHT LIGHTS PHOTONS)
 	(ADJECTIVE PILE)
         (ACTION LIGHT-F)>
 
@@ -423,7 +431,7 @@ the desired direction." CR>)
 	(IN GLOBAL-OBJECTS)
 	(DESC "north wall")
 	(SYNONYM WALL)
-	(ADJECTIVE NORTH N)
+	(ADJECTIVE NORTH)
 	(ACTION WALL-F)
 	(EXITS %,C-NORTH)
 	(GENERIC GENERIC-RANDOM-F)>
@@ -432,7 +440,7 @@ the desired direction." CR>)
 	(IN GLOBAL-OBJECTS)
 	(DESC "east wall")
 	(SYNONYM WALL)
-	(ADJECTIVE EAST E BLANK)
+	(ADJECTIVE EAST BLANK)
 	(ACTION WALL-F)
 	(EXITS %,C-EAST)
 	(GENERIC GENERIC-RANDOM-F)>
@@ -441,7 +449,7 @@ the desired direction." CR>)
 	(IN GLOBAL-OBJECTS)
 	(DESC "west wall")
 	(SYNONYM WALL)
-	(ADJECTIVE WEST W)
+	(ADJECTIVE WEST)
 	(ACTION WALL-F)
 	(EXITS %,C-WEST)
 	(GENERIC GENERIC-RANDOM-F)>
@@ -450,7 +458,7 @@ the desired direction." CR>)
 	(IN GLOBAL-OBJECTS)
 	(DESC "south wall")
 	(SYNONYM WALL)
-	(ADJECTIVE SOUTH S)
+	(ADJECTIVE SOUTH)
 	(ACTION WALL-F)
 	(EXITS %,C-SOUTH)
 	(GENERIC GENERIC-RANDOM-F)>
@@ -459,7 +467,7 @@ the desired direction." CR>)
 	(IN GLOBAL-OBJECTS)
 	(DESC "northeast wall")
 	(SYNONYM WALL)
-	(ADJECTIVE NORTHEAST NE)
+	(ADJECTIVE NE)
 	(ACTION WALL-F)
 	(EXITS %,C-NE)
 	(GENERIC GENERIC-RANDOM-F)>
@@ -468,7 +476,7 @@ the desired direction." CR>)
 	(IN GLOBAL-OBJECTS)
 	(DESC "northwest wall")
 	(SYNONYM WALL)
-	(ADJECTIVE NORTHWEST NW)
+	(ADJECTIVE NW)
 	(ACTION WALL-F)
 	(EXITS %,C-NW)
 	(GENERIC GENERIC-RANDOM-F)>
@@ -477,7 +485,7 @@ the desired direction." CR>)
 	(IN GLOBAL-OBJECTS)
 	(DESC "southeast wall")
 	(SYNONYM WALL)
-	(ADJECTIVE SOUTHEAST SE)
+	(ADJECTIVE SE)
 	(ACTION WALL-F)
 	(EXITS %,C-SE)
 	(GENERIC GENERIC-RANDOM-F)>
@@ -486,7 +494,7 @@ the desired direction." CR>)
 	(IN GLOBAL-OBJECTS)
 	(DESC "southwest wall")
 	(SYNONYM WALL)
-	(ADJECTIVE SOUTHWEST SW)
+	(ADJECTIVE SW)
 	(ACTION WALL-F)
 	(EXITS %,C-SW)
 	(GENERIC GENERIC-RANDOM-F)>
@@ -530,8 +538,12 @@ the desired direction." CR>)
 		      (ELSE
 		       <TELL
 "It's still there." CR>)>)
-	       (<AND <VERB? PUT> <EQUAL? ,GROUND ,PRSI>>
-		<PERFORM ,V?PLANT ,PRSO>
+	       (<AND <VERB? PUT>
+		     <EQUAL? ,GROUND ,PRSI>>
+		<COND (<EQUAL? ,PRSO ,WEED>
+		       <PERFORM ,V?PLANT ,WEED>)
+		      (ELSE
+		       <PERFORM ,V?DROP ,PRSO>)>
 		<RTRUE>)
 	       (<VERB? CLIMB-UP CLIMB-ON CLIMB-FOO BOARD>
 		<TELL ,WASTE-OF-TIME>)
@@ -551,9 +563,14 @@ the desired direction." CR>)
 
 <OBJECT WALLS
 	(IN GLOBAL-OBJECTS)
-	(FLAGS NDESCBIT TOUCHBIT)
 	(DESC "wall")
-	(SYNONYM WALL WALLS)>
+	(SYNONYM WALL WALLS)
+	(FLAGS NDESCBIT TOUCHBIT)
+	(ACTION WALLS-F)>
+
+<ROUTINE WALLS-F ()
+	 <COND (<FSET? ,HERE ,RAIRBIT>
+		<TELL "What wall?" CR>)>>
 
 <OBJECT GLOBAL-GRUE
 	(IN GLOBAL-OBJECTS)

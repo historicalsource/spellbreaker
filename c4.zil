@@ -69,11 +69,11 @@ like a deflated balloon on the ground.">
 ones can do here.\"">)>
 	 <CRLF>>
 
-<GLOBAL ROCK-MOVED? <>>
+<GLOBAL ROCK-MOVED?:FLAG <>>
 
-<GLOBAL YOU-LOC 5>
-<GLOBAL ROCK-LOC 5>
-<GLOBAL OTHER-ROCK-LOC 7>
+<GLOBAL YOU-LOC:NUMBER 5>
+<GLOBAL ROCK-LOC:NUMBER 5>
+<GLOBAL OTHER-ROCK-LOC:NUMBER 7>
 
 <ROUTINE DESCRIBE-PLAIN ("OPTIONAL" (ROCKS? T))
 	 <COND (<HELD? ,PLAYER ,ROCK>
@@ -105,7 +105,7 @@ ones can do here.\"">)>
 		       <ROCK-DIRECTION ,OTHER-ROCK-LOC>)>
 		<TELL ".">)>>
 
-<GLOBAL PLAIN-WALLS
+<GLOBAL PLAIN-WALLS:TABLE
 	<TABLE #BYTE 0
 	       #BYTE %<+ 2 8 128>	;"1 -- E, S, SW"
 	       #BYTE %<+ 2 4 8>		;"2 -- E, W, S"
@@ -208,9 +208,9 @@ carefully before answering. ">
 one, though not as odd as the last. It was
 as unprepossessing as you. Of course, I am the most handsome.\"" CR>)>>
 
-<GLOBAL ROCK-TALKED? <>>
-<GLOBAL ROCK-BRIBED? <>>
-<GLOBAL TRIED-BOARDING? <>>
+<GLOBAL ROCK-TALKED?:FLAG <>>
+<GLOBAL ROCK-BRIBED?:FLAG <>>
+<GLOBAL TRIED-BOARDING?:FLAG <>>
 
 <ROUTINE ROCK-F ("OPTIONAL" (RARG <>))
 	 <COND (<EQUAL? ,WINNER ,ROCK>
@@ -329,7 +329,7 @@ rock says, \"Hey! What is this? What about my privacy?\"">
 nice. Then you could ride on top and admire me from that angle. It's a
 rare privilege.\"" CR>>
 
-<GLOBAL IT-TICKLES "The rock bobs in place. \"That tickles!\"|">
+<GLOBAL IT-TICKLES:STRING "The rock bobs in place. \"That tickles!\"|">
 
 <ROUTINE ROCK-WALK (DIR "AUX" ROW COL)
 	 <QUEUE I-OTHER-ROCK -1>
@@ -437,10 +437,10 @@ settle yourself carefully on top. ">
 		      (<NOT <EQUAL? ,OTHER-ROCK-LOC ,YOU-LOC>>
 		       <TELL ,TOO-FAR>)>)>>
 
-<GLOBAL ROCK-IRRITATION 
+<GLOBAL ROCK-IRRITATION:STRING 
 "The rock grumbles in irritation. \"Go away,\" it says.|">
 
-<GLOBAL TOO-FAR "It's too far away.|">
+<GLOBAL TOO-FAR:STRING "It's too far away.|">
 
 "LIGHT"
 
@@ -578,7 +578,7 @@ the bright blue background." CR>)
 "A rabbit hops across the meadow, twitches its nose at you, and
 then scampers away." CR>)>)>>
 
-<GLOBAL RABBIT-FLAG <>>
+<GLOBAL RABBIT-FLAG:FLAG <>>
 
 <OBJECT SHEARS
 	(IN MEADOW-ROOM)
@@ -593,7 +593,7 @@ then scampers away." CR>)>)>>
 		<TELL
 "This is a very nice pair of pruning shears, such as a gardener
 would own." CR>)
-	       (<AND <VERB? CUT>
+	       ;(<AND <VERB? CUT>
 		     <NOT <HELD? ,SHEARS>>>
 		<NOT-HOLDING ,SHEARS>)>>
 
@@ -629,7 +629,7 @@ would own." CR>)
 in the meadow. It's like a well-kept garden.">)>
 	 <CRLF>>
 
-<GLOBAL WEED-PLANTED? 2>
+<GLOBAL WEED-PLANTED?:NUMBER 2>
 
 <ROUTINE WEED-F ()
 	 <COND (<VERB? EXAMINE>
@@ -667,7 +667,12 @@ earth with it." CR>)>
 		       <TELL
 "You now have a weed cutting." CR>)>)
 	       (<AND <VERB? PLANT>
-		     <EQUAL? ,PRSI <> ,GROUND>>
+		     <OR <EQUAL? ,PRSI ,GROUND ,GLOBAL-CAVE>
+			 <AND <EQUAL? ,PRSI ,PSEUDO-OBJECT>
+			      <EQUAL? ,P-PNAM ,W?DIRT>>
+			 <AND <NOT ,PRSI>
+			      <OR <FSET? ,HERE ,OUTSIDE>
+				  <EQUAL? ,HERE ,OGRE-CAVE ,OGRE-BEDROOM>>>>>
 		<COND (<AND <FSET? ,HERE ,RLANDBIT>
 			    <NOT <GETP ,HERE ,P?CUBE>>
 			    <IN? ,WINNER ,HERE>>
@@ -828,7 +833,7 @@ fluid." CR>)
       (FLAGS RLANDBIT)
       (THINGS <PSEUDO (BLACK MARBLE MARBLE-PSEUDO)>)>
 
-<GLOBAL MAZE-EXIT-FLAG <>>
+<GLOBAL MAZE-EXIT-FLAG:FLAG <>>
 
 <ROUTINE MAZE-ANTEROOM-F (RARG)
 	 <COND (<EQUAL? .RARG ,M-LOOK>
@@ -845,10 +850,11 @@ rose.">)>
 	       (<AND <EQUAL? .RARG ,M-LEAVE>
 		     <NOT <VERB? BLORPLE>>>
 		<SETG MAZE-EXIT-FLAG <>>
-		<PUT ,MAZE-ANTEROOM ,P?EXITS 0>
+		<PUTP ,MAZE-ANTEROOM ,P?EXITS 0>
 		<OCT-HOLE-DISAPPEARS>)>>
 
 <ROUTINE OCT-HOLE-DISAPPEARS ()
+	 <REMOVE ,OCTAGONAL-HOLE>
 	 <TELL
 "You slide through the " ,OCT-HOLE ", which constricts and disappears as
 soon as you are through it." CR CR>>
@@ -873,7 +879,7 @@ every particular." CR>)
 delicate filigree one might expect on a real but ornamental counterpart is
 here. As though that challenge was not enough, the artist set the carving deep
 in the stone of the wall." CR>)>)
-	       (<VERB? OPEN>
+	       (<VERB? OPEN REZROV>
 		<YOU-CANT-X-PRSO "open">)
 	       (<VERB? CLOSE>
 		<YOU-CANT-X-PRSO "close">)
@@ -916,17 +922,13 @@ through. You notice that the arm pointing north is now dull pot-metal.">
 		<TELL "There is a " 'COMPASS-ROSE " here">)>
 	 <TELL ,PERIOD>>
 
-<GLOBAL COMPASS-ROSE-STATE 0>
-<GLOBAL COMPASS-ROSE-ARMS 0>
+<GLOBAL COMPASS-ROSE-STATE:NUMBER 0>
+<GLOBAL COMPASS-ROSE-ARMS:NUMBER 0>
 
-<ROUTINE ARM-DIRECTION (N "AUX" (CNT 1) (L <GET ,DIR-TABLE 0>))
-	 <REPEAT ()
-		 <COND (<G? .CNT .L>
-			<RETURN>)
-		       (<EQUAL? <GET ,DIR-TABLE .CNT> .N>
-			<RETURN <GET ,DIR-TABLE <+ .CNT 2>>>)
-		       (ELSE
-			<SET CNT <+ .CNT 3>>)>>>
+<ROUTINE ARM-DIRECTION (N "AUX" (L <GET ,DIR-TABLE 0>))
+	 <DO (CNT 1 .L 3)
+	     <COND (<EQUAL? <GET ,DIR-TABLE .CNT> .N>
+		    <RETURN <GET ,DIR-TABLE <+ .CNT 2>>>)>>>
 
 <ROUTINE COMPASS-ROSE-F ("AUX" (N 1) (1ST? T))
 	 <COND (<VERB? EXAMINE>
@@ -986,7 +988,7 @@ the north wall of the room.">)>
 	(IN LOCAL-GLOBALS)
 	(DESC "north rune")
 	(SYNONYM RUNE RUNES)
-	(ADJECTIVE NORTH N SILVER LEAD)
+	(ADJECTIVE NORTH SILVER LEAD)
 	(FLAGS NDESCBIT READBIT)
 	(EXITS %,C-NORTH)
 	(GENERIC GENERIC-RANDOM-F)
@@ -996,7 +998,7 @@ the north wall of the room.">)>
 	(IN LOCAL-GLOBALS)
 	(DESC "east rune")
 	(SYNONYM RUNE RUNES)
-	(ADJECTIVE EAST E SILVER LEAD)
+	(ADJECTIVE EAST SILVER LEAD)
 	(FLAGS NDESCBIT READBIT)
 	(EXITS %,C-EAST)
 	(GENERIC GENERIC-RANDOM-F)
@@ -1006,7 +1008,7 @@ the north wall of the room.">)>
 	(IN LOCAL-GLOBALS)
 	(DESC "west rune")
 	(SYNONYM RUNE RUNES)
-	(ADJECTIVE WEST W SILVER LEAD GOLD)
+	(ADJECTIVE WEST SILVER LEAD GOLD)
 	(FLAGS NDESCBIT READBIT)
 	(EXITS %,C-WEST)
 	(GENERIC GENERIC-RANDOM-F)
@@ -1016,7 +1018,7 @@ the north wall of the room.">)>
 	(IN LOCAL-GLOBALS)
 	(DESC "south rune")
 	(SYNONYM RUNE RUNES)
-	(ADJECTIVE SOUTH S SILVER LEAD)
+	(ADJECTIVE SOUTH SILVER LEAD)
 	(FLAGS NDESCBIT READBIT)
 	(EXITS %,C-SOUTH)
 	(GENERIC GENERIC-RANDOM-F)
@@ -1026,7 +1028,7 @@ the north wall of the room.">)>
 	(IN LOCAL-GLOBALS)
 	(DESC "northeast rune")
 	(SYNONYM RUNE RUNES)
-	(ADJECTIVE NORTHEAST NE SILVER LEAD)
+	(ADJECTIVE NE SILVER LEAD)
 	(FLAGS NDESCBIT READBIT)
 	(EXITS %,C-NE)
 	(GENERIC GENERIC-RANDOM-F)
@@ -1036,7 +1038,7 @@ the north wall of the room.">)>
 	(IN LOCAL-GLOBALS)
 	(DESC "northwest rune")
 	(SYNONYM RUNE RUNES)
-	(ADJECTIVE NORTHWEST NW SILVER LEAD)
+	(ADJECTIVE NW SILVER LEAD)
 	(FLAGS NDESCBIT READBIT)
 	(EXITS %,C-NW)
 	(GENERIC GENERIC-RANDOM-F)
@@ -1046,7 +1048,7 @@ the north wall of the room.">)>
 	(IN LOCAL-GLOBALS)
 	(DESC "southeast rune")
 	(SYNONYM RUNE RUNES)
-	(ADJECTIVE SOUTHEAST SE SILVER LEAD)
+	(ADJECTIVE SE SILVER LEAD)
 	(FLAGS NDESCBIT READBIT)
 	(EXITS %,C-SE)
 	(GENERIC GENERIC-RANDOM-F)
@@ -1056,7 +1058,7 @@ the north wall of the room.">)>
 	(IN LOCAL-GLOBALS)
 	(DESC "southwest rune")
 	(SYNONYM RUNE RUNES)
-	(ADJECTIVE SOUTHWEST SW SILVER LEAD)
+	(ADJECTIVE SW SILVER LEAD)
 	(FLAGS NDESCBIT READBIT)
 	(EXITS %,C-SW)
 	(GENERIC GENERIC-RANDOM-F)
@@ -1096,19 +1098,35 @@ of inlaid ">
 	(SYNONYM HOLE DOOR)
 	(ADJECTIVE OCTAGONAL)
 	(DESC "octagonal hole")
-	(FLAGS DOORBIT NDESCBIT AN CONTBIT OPENBIT)
+	(FLAGS DOORBIT NDESCBIT AN CONTBIT OPENBIT VEHBIT)
 	(GENERIC GENERIC-HOLE-F)
 	(ACTION OCTAGONAL-HOLE-F)>
 
-<ROUTINE OCTAGONAL-HOLE-F ("AUX" E)
+<ROUTINE OCTAGONAL-HOLE-F ("AUX" E PT PTS)
 	 <COND (<AND <EQUAL? ,HERE ,MAZE-2>
-		     <NOT <IN? ,MAZE-2-DOOR ,HERE>>>
+		     <IN? ,MAZE-2-DOOR ,HERE>>
 		<MAZE-2-DOOR-F>)
+	       (<VERB? REZROV>
+		<TELL ,IT-IS-ALREADY "open." CR>)
 	       (<VERB? LOOK-INSIDE>
 		<TELL ,NOW-BLACK CR>)
 	       (<VERB? EXAMINE>
 		<TELL "It looks like an " ,OCT-HOLE ,PERIOD>)
-	       (<VERB? THROUGH>
+	       (<AND <VERB? PUT THROW DROP>
+		     <HELD? ,PRSO>
+		     <EQUAL? ,PRSI ,OCTAGONAL-HOLE>>
+		<SET E <GETP ,HERE ,P?EXITS>>
+		<SET E <DIR-BASE .E ,DIR-BIT ,DIR-DIR>>
+		<SET PT <GETPT ,HERE .E>>
+		<SET PTS <PTSIZE .PT>>
+		<COND (<OR <EQUAL? .PTS ,UEXIT>
+			   <AND <EQUAL? .PTS ,CEXIT>
+				<VALUE <GETB .PT ,CEXITFLAG>>>>
+		       <MOVE ,PRSO <GETB .PT ,REXIT>>
+		       <TELL CTHE ,PRSO " disappears into the hole." CR>)
+		      (ELSE
+		       <TELL "It won't go." CR>)>)
+	       (<VERB? THROUGH BOARD>
 		<SET E <GETP ,HERE ,P?EXITS>>
 		<COND (<L? .E 256>
 		       <DO-WALK <DIR-BASE .E ,DIR-BIT ,DIR-DIR>>)>)>>
@@ -1121,7 +1139,7 @@ of inlaid ">
 	(FLAGS AN NDESCBIT TAKEBIT TRYTAKEBIT)
 	(ACTION MAZE-2-DOOR-F)>
 
-<GLOBAL OCT-HOLE "octagonal hole">
+<GLOBAL OCT-HOLE:STRING "octagonal hole">
 
 <ROUTINE DESCRIBE-PLUG ()
 	 <TELL
@@ -1389,20 +1407,17 @@ appears in the wall below the rune.">
 			     (ELSE
 			      <TELL ,NOTHING-HAPPENS>)>)>)>>
 
-<ROUTINE TELL-WALLS ("OPTIONAL" (N <>) "AUX" (CNT 1)
-		     (L <GET ,DIR-TABLE 0>) (1ST? T) (OLD <>))
+<ROUTINE TELL-WALLS ("OPTIONAL" (N <>)
+		     "AUX" (L <GET ,DIR-TABLE 0>) (1ST? T) (OLD <>))
 	 <COND (<NOT .N> <SET N <GETP ,HERE ,P?WALLS>>)>
-	 <REPEAT ()
-		 <COND (<G? .CNT .L>
-			<TELL " and " .OLD>
-			<RETURN>)
-		       (<NOT <ZERO? <BAND <GET ,DIR-TABLE .CNT> .N>>>
-			<COND (.OLD
-			       <COND (.1ST? <SET 1ST? <>>)
-				     (ELSE <TELL ", ">)>
-			       <TELL .OLD>)>
-			<SET OLD <GET ,DIR-TABLE <+ .CNT 2>>>)>
-		 <SET CNT <+ .CNT 3>>>>
+	 <DO (CNT 1 .L 3)
+	     (<TELL " and " .OLD>)
+	     <COND (<NOT <ZERO? <BAND <GET ,DIR-TABLE .CNT> .N>>>
+		    <COND (.OLD
+			   <COND (.1ST? <SET 1ST? <>>)
+				 (ELSE <TELL ", ">)>
+			   <TELL .OLD>)>
+		    <SET OLD <GET ,DIR-TABLE <+ .CNT 2>>>)>>>
 
 "MAGIC"
 
@@ -1468,11 +1483,11 @@ black emptiness to the east." CR>)
 	 <COND (<EQUAL? <COUNT-CUBES> 13> <RTRUE>)
 	       (ELSE <RFALSE>)>>
 
-<ROUTINE COUNT-CUBES ("AUX" (CNT 0) (N 0))
-	 <REPEAT ()
-		 <COND (<GOT? <GET ,CUBE-LIST <* .CNT 2>>>
-			<SET N <+ .N 1>>)>
-		 <COND (<IGRTR? CNT 12> <RETURN .N>)>>>
+<ROUTINE COUNT-CUBES ("AUX" (N 0))
+	 <DO (CNT 0 12)
+	     <COND (<GOT? <GET ,CUBE-LIST <* .CNT 2>>>
+		    <SET N <+ .N 1>>)>>
+	 .N>
 
 <ROUTINE MAGIC-DOOR-EXIT ()
 	 <COND (<HAS-ALL-CUBES?>
@@ -1571,6 +1586,7 @@ You drown as well.">)
 		       <QUEUE I-WATER-RISING 3>)>)
 	       (<EQUAL? .RARG ,M-LEAVE>
 		<REMOVE ,PLAYER>
+		<DEQUEUE I-WATER-RISING>
 		<COND (<AND <NOT ,DEAD?>
 			    <ONLY? ,ZIPPER ,HERE>
 			    <ONLY? ,GIRGOL-SCROLL ,ZIPPER>
@@ -1589,9 +1605,9 @@ rocks and boulders">
 		       <JIGS-UP
 ", again and again. Finally, you succumb.">)>)>>
 
-<GLOBAL RUINS-SCORE 25>
+<GLOBAL RUINS-SCORE:NUMBER 25>
 
-<GLOBAL TIME-SICK
+<GLOBAL TIME-SICK:STRING
 "As you leave, your consciousness is wrenched as though your memories
 were being torn apart. ">
 
@@ -1633,7 +1649,7 @@ were being torn apart. ">
 		       <TELL "closed.">)>
 		<CRLF>)>>
 
-<GLOBAL WATER-TABLE
+<GLOBAL WATER-TABLE:TABLE
 	<PTABLE
 "You are in a small area not yet flooded."
 "The water has left only a tiny area dry."
@@ -1664,6 +1680,7 @@ imprisonment. A massive oak cabinet dominates one wall. ">
 		<TELL-OPEN-CLOSED ,PAST-CABINET>
 		<TELL-OPEN-CLOSED ,CELL-DOOR>)
 	       (<EQUAL? .RARG ,M-LEAVE>
+		<DEQUEUE I-PRISON-GUARDS>
 		<REMOVE ,PLAYER>
 		<COND (<AND <NOT ,DEAD?>
 			    <NOT <FSET? ,PAST-CABINET ,RMUNGBIT>>
@@ -1725,11 +1742,11 @@ the shouts of guards and the rattle of weapons." CR>)
 		<TELL ,PERIOD>
 		<RFALSE>)>>
 
-<GLOBAL PAST-CELL-GUARDS-KILL-YOU
+<GLOBAL PAST-CELL-GUARDS-KILL-YOU:STRING
 "You exit into a tangle of guards, who promptly dispatch you for escaping
 and resisting arrest.">
 
-<GLOBAL DOOR-LOCKED "The door is closed and locked">
+<GLOBAL DOOR-LOCKED:STRING "The door is closed and locked">
 
 "CONNECTIVITY CUBE"
 
@@ -1790,7 +1807,7 @@ a similar gap." CR>)
 	(SYNONYM QWORD)
 	(FLAGS NDESCBIT)>
 
-<GLOBAL CUBE-LIST
+<GLOBAL CUBE-LIST:TABLE
 	<PTABLE EARTH-CUBE <VOC "AQ" ADJECTIVE>
 		WATER-CUBE <VOC "BQ" ADJECTIVE>
 		AIR-CUBE <VOC "CQ" ADJECTIVE>

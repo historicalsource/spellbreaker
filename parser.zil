@@ -33,13 +33,20 @@ with 'P-'. Local variables are not restricted in any way."
 
 <GLOBAL WINNER 0>
 
-<GLOBAL P-LEXV <ITABLE BYTE 120>>
-<GLOBAL AGAIN-LEXV <ITABLE BYTE 120>>
-<GLOBAL RESERVE-LEXV <ITABLE BYTE 120>>
+<GLOBAL P-LEXV
+	<ITABLE 59 (LEXV) 0 #BYTE 0 #BYTE 0> ;<ITABLE BYTE 120>>
+<GLOBAL AGAIN-LEXV
+	<ITABLE 59 (LEXV) 0 #BYTE 0 #BYTE 0> ;<ITABLE BYTE 120>>
+<GLOBAL RESERVE-LEXV
+	<ITABLE 59 (LEXV) 0 #BYTE 0 #BYTE 0> ;<ITABLE BYTE 120>>
 <GLOBAL RESERVE-PTR <>>
 
-<GLOBAL P-INBUF <ITABLE BYTE 60>> ;"INBUF - Input buffer for READ"
-<GLOBAL OOPS-INBUF <ITABLE BYTE 60>>
+<GLOBAL P-INBUF
+	<ITABLE 120 (BYTE LENGTH) 0>
+	;<ITABLE BYTE 60>> ;"INBUF - Input buffer for READ"
+<GLOBAL OOPS-INBUF
+	<ITABLE 120 (BYTE LENGTH) 0>
+	;<ITABLE BYTE 60>>
 <GLOBAL OOPS-TABLE <TABLE <> <> <> <>>>
 <CONSTANT O-PTR 0>	"word pointer to unknown token in P-LEXV"
 <CONSTANT O-START 1>	"word pointer to sentence start in P-LEXV"
@@ -82,10 +89,10 @@ with 'P-'. Local variables are not restricted in any way."
 	<TABLE 0 0 0 0 0 0 0 0 0 0>>
 
 <GLOBAL P-VTBL
-	<TABLE 0 0 0 0>>
+	<TABLE 0 #BYTE 0 #BYTE 0>>
 
 <GLOBAL P-OVTBL
-	<TABLE 0 0 0 0>>
+	<TABLE 0 #BYTE 0 #BYTE 0>>
 
 <GLOBAL P-NCN 0>
 
@@ -262,13 +269,14 @@ with 'P-'. Local variables are not restricted in any way."
 		       <SETG QUOTE-FLAG <>>
 		       <RETURN>)
 		      (<SET WRD <KNOWN-WORD? .PTR .VERB>>
+		       <COND (<ZERO? ,P-LEN> <SET NW 0>)
+			     (T <SET NW <GET ,P-LEXV <+ .PTR ,P-LEXELEN>>>)>
 		       <COND (<AND <EQUAL? .WRD ,W?TO>
 				   <EQUAL? .VERB ,ACT?TELL ,ACT?ASK>
 				   ;"next clause added 8/20/84 by JW to
 				     enable TELL MY NAME TO BEAST"
 				   <NOT <ZERO?
-					 <WT? <GET ,P-LEXV <+ .PTR ,P-LEXELEN>>
-					      ,PS?VERB ,P1?VERB>>>>
+					 <WT? .NW ,PS?VERB ,P1?VERB>>>>
 			      <PUT ,P-ITBL ,P-VERB ,ACT?TELL>
 			      <SET WRD ,W?QUOTE>)
 			     (<AND <EQUAL? .WRD ,W?THEN>
@@ -315,9 +323,7 @@ with 'P-'. Local variables are not restricted in any way."
 				   <OR <EQUAL? .LEN 1>
 				       <AND <EQUAL? .LEN 2>
 					    <EQUAL? .VERB ,ACT?WALK ;,ACT?FLY>>
-				       <AND <EQUAL? <SET NW
-						     <GET ,P-LEXV
-							  <+ .PTR ,P-LEXELEN>>>
+				       <AND <EQUAL? .NW
 					            ,W?THEN
 					            ,W?PERIOD
 					            ,W?QUOTE>
@@ -353,9 +359,7 @@ with 'P-'. Local variables are not restricted in any way."
 					   <NOT <ZERO? <WT? .WRD ,PS?OBJECT>>>>
 				       <SET VAL 0>>>
 			      <COND (<AND <G? ,P-LEN 1>
-					  <EQUAL? <GET ,P-LEXV
-						       <+ .PTR ,P-LEXELEN>>
-						  ,W?OF>
+					  <EQUAL? .NW ,W?OF>
 					  <ZERO? .VAL>
 					  <NOT <EQUAL? .WRD
 						       ,W?ALL ,W?ONE ,W?A>>
@@ -364,8 +368,7 @@ with 'P-'. Local variables are not restricted in any way."
 				     <SET OF-FLAG T>)
 				    (<AND <NOT <ZERO? .VAL>>
 				          <OR <ZERO? ,P-LEN>
-					      <EQUAL? <GET ,P-LEXV <+ .PTR 2>>
-						      ,W?THEN ,W?PERIOD>>>
+					      <EQUAL? .NW ,W?THEN ,W?PERIOD>>>
 				     <SETG P-END-ON-PREP T>
 				     <COND (<L? ,P-NCN 2>
 					    <PUT ,P-ITBL ,P-PREP1 .VAL>
@@ -384,9 +387,7 @@ with 'P-'. Local variables are not restricted in any way."
 					    <RETURN>)>)>)
 			     (<EQUAL? .WRD ,W?OF>
 			      <COND (<OR <NOT .OF-FLAG>
-					 <EQUAL?
-					  <GET ,P-LEXV <+ .PTR ,P-LEXELEN>>
-					  ,W?PERIOD ,W?THEN>>
+					 <EQUAL? .NW ,W?PERIOD ,W?THEN>>
 				     <CANT-USE .PTR>
 				     <RFALSE>)
 				    (T
@@ -1207,15 +1208,15 @@ OOPS-INBUF, leaving the appropriate pointers in AGAIN-LEXV"
 
 <GLOBAL P-ADJN <>>
 
-<GLOBAL P-PRSO <ITABLE NONE 80>>
+<GLOBAL P-PRSO <ITABLE 80 <>>>
 
-<GLOBAL P-PRSI <ITABLE NONE 80>>
+<GLOBAL P-PRSI <ITABLE 80 <>>>
 
-<GLOBAL P-BUTS <ITABLE NONE 80>>
+<GLOBAL P-BUTS <ITABLE 80 <>>>
 
-<GLOBAL P-MERGE <ITABLE NONE 80>>
+<GLOBAL P-MERGE <ITABLE 80 <>>>
 
-<GLOBAL P-OCLAUSE <ITABLE NONE 80>>
+<GLOBAL P-OCLAUSE <ITABLE 80 <>>>
 
 <GLOBAL P-MATCHLEN 0>
 
@@ -1241,7 +1242,9 @@ OOPS-INBUF, leaving the appropriate pointers in AGAIN-LEXV"
 		  <COND (.WAS-ALL <SETG P-GETFLAGS ,P-ALL>)>
 		  <RETURN .WV>)
 		 (T
-		  <SET NW <GET .PTR ,P-LEXELEN>>
+		  <COND (<==? .EPTR <REST .PTR ,P-WORDLEN>>
+			 <SET NW 0>)
+			(T <SET NW <GET .PTR ,P-LEXELEN>>)>
 		  <COND (<EQUAL? .WRD ,W?ALL ,W?BOTH>
 			 <SETG P-GETFLAGS ,P-ALL>
 			 <COND (<EQUAL? .NW ,W?OF>
