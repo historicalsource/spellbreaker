@@ -33,3 +33,5 @@ This collection is meant for education, discussion, and historical work, allowin
 Researchers are encouraged to share their discoveries about the information in this source code and the history of Infocom and its many innovative employees.
 
 __Some Trivia and Notes on this Repository__
+
+* Disagreements between Lebling and the marketing department over the original name MAGE (or ARCHMAGE) meant that it was named Spellbreaker over his objection; the code shows that a random amount of the time, the game will call itself MAGE anyway.
